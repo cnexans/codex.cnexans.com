@@ -1,5 +1,10 @@
 \pagebreak
 
+
+```{=latex}
+\begin{landscape}
+```
+
 # Resumen de teoría de Análisis en $\mathbb{R}$
 
 ```{=latex}
@@ -557,4 +562,5 @@ Si $f$ es una función continua en $[a,b]$, entonces es uniformemente continua e
 
 ```{=latex}
 \end{multicols}
+\end{landscape} 
 ```
