@@ -20,19 +20,19 @@ Section GroupTheory.
     apply f_equal with (f := fun t => -a + t) in H.
 
     (* Instantiate the inverse and identity properties *)
-    destruct (inverse a).
-    destruct (identity b).
-    destruct (identity c).
+    destruct (inverse a) as [_ cancel_left_a].
+    destruct (identity b) as [_ left_identity_b].
+    destruct (identity c) as [_ left_identity_c].
 
     (* Cancel in the left side of the equation *)
     rewrite <- (associativity (-a) a b) in H.
-    rewrite -> H1 in H.
-    rewrite -> H3 in H.
+    rewrite -> cancel_left_a in H.
+    rewrite -> left_identity_b in H.
 
     (* Cancel in the right side of the equation *)
     rewrite <- (associativity (-a) a c) in H.
-    rewrite -> H1 in H.
-    rewrite -> H5 in H.
+    rewrite -> cancel_left_a in H.
+    rewrite -> left_identity_c in H.
 
     exact H.
   Qed.
