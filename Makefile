@@ -1,78 +1,42 @@
-# Makefile to build HTML and PDF from docs/**/*.md using Pandoc
+DOCS_DIR := docs
+PDF_DIR := release/pdf
+QUARTO_DIR := release/quarto
 
-ROOT := $(CURDIR)
-DOCS_DIR := $(ROOT)/docs
-HTML_DIR := $(ROOT)/release/html
-PDF_DIR := $(ROOT)/release/pdf
+.PHONY: all html pdf-separate pdf-book preview render clean
 
-# Discover all Markdown files recursively
-MD_FILES := $(shell find $(DOCS_DIR) -type f -name '*.md')
-# Map docs paths to output paths, preserving subdirectories
-HTML_FILES := $(patsubst $(DOCS_DIR)/%.md,$(HTML_DIR)/%.html,$(MD_FILES))
-PDF_FILES := $(patsubst $(DOCS_DIR)/%.md,$(PDF_DIR)/%.pdf,$(MD_FILES))
-ORDERED_MD_FILES := $(shell find $(DOCS_DIR) -type f -name '*.md' | sort)
-BOOK_PDF := $(PDF_DIR)/Libro.pdf
+# Default: build everything
+all: html pdf-separate pdf-book
 
-PANDOC := pandoc
-# Common flags: smart punctuation, standalone doc, numbered sections
-PANDOC_COMMON_FLAGS := --standalone -f markdown+smart --number-sections
-PANDOC_HTML_FLAGS := $(PANDOC_COMMON_FLAGS) --toc -t html5 --toc-depth=2 -V toc-title=Contenido
-# PDF: clickable links (internal+urls). TOC injected via include to make it its own section/page
-PANDOC_PDF_FLAGS := $(PANDOC_COMMON_FLAGS) --pdf-engine=xelatex --toc-depth=2 -V colorlinks=true -V urlcolor=cyan -V linkcolor=cyan --resource-path=.:./assets --syntax-highlighting=idiomatic
-TOC_TEX := $(ROOT)/pandoc/toc.tex
-HEADER_TEX := $(ROOT)/pandoc/header.tex
+# Quarto: render HTML book
+html:
+	cd $(DOCS_DIR) && quarto render --to html
 
-.PHONY: all html pdf book clean watch watch-book
+# Quarto: render combined PDF book
+pdf-book:
+	cd $(DOCS_DIR) && quarto render --to pdf
 
-all: html pdf book
+# Quarto: render each chapter as a separate PDF
+# Temporarily hides _quarto.yml so quarto treats each file as standalone
+pdf-separate:
+	@mkdir -p $(PDF_DIR)
+	@mv $(DOCS_DIR)/_quarto.yml $(DOCS_DIR)/_quarto.yml.bak
+	@for f in $$(find $(DOCS_DIR) -name '*.md' ! -name 'index.md' ! -name '_*' | sort); do \
+		name=$$(basename "$$f" .md); \
+		echo "Rendering $$name.pdf..."; \
+		(cd $(DOCS_DIR) && quarto render "$$(basename $$f)" --to pdf --output "$$name.pdf" 2>&1); \
+		mv -f "$(DOCS_DIR)/$$name.pdf" "$(PDF_DIR)/$$name.pdf" 2>/dev/null || true; \
+	done
+	@mv $(DOCS_DIR)/_quarto.yml.bak $(DOCS_DIR)/_quarto.yml
+	@echo "PDFs in $(PDF_DIR)/"
 
-html: $(HTML_FILES)
+# Quarto: live preview in browser (HTML with hot reload)
+preview:
+	cd $(DOCS_DIR) && quarto preview
 
-pdf: $(PDF_FILES)
-
-book: $(BOOK_PDF)
-
-# Build HTML, ensuring destination directories exist
-$(HTML_DIR)/%.html: $(DOCS_DIR)/%.md
-	@mkdir -p $(dir $@)
-	$(PANDOC) $(PANDOC_HTML_FLAGS) "$<" -o "$@"
-
-# Build PDF, ensuring destination directories exist
-
-$(PDF_DIR)/%.pdf: $(DOCS_DIR)/%.md $(HEADER_TEX)
-	@mkdir -p $(dir $@)
-	$(PANDOC) $(PANDOC_PDF_FLAGS) --include-in-header=$(HEADER_TEX) "$<" -o "$@"
+# Quarto: render all formats
+render:
+	cd $(DOCS_DIR) && quarto render
 
 clean:
-	rm -rf $(HTML_DIR) $(PDF_DIR)
-
-$(BOOK_PDF): $(ORDERED_MD_FILES) $(HEADER_TEX)
-	@mkdir -p $(dir $@)
-	$(PANDOC) $(PANDOC_PDF_FLAGS) --include-in-header=$(HEADER_TEX) $(ORDERED_MD_FILES) -o "$@"
-
-# Watch mode: rebuild when source files change
-# Uses fswatch on macOS or entr on Linux
-watch:
-	@echo "Watching for changes in $(DOCS_DIR) and $(ROOT)/pandoc..."
-	@echo "Press Ctrl+C to stop"
-	@if command -v fswatch >/dev/null 2>&1; then \
-		fswatch -o $(DOCS_DIR) $(ROOT)/pandoc $(ROOT)/Makefile | while read f; do make; echo "=== Rebuilt at $$(date) ==="; done; \
-	elif command -v entr >/dev/null 2>&1; then \
-		find $(DOCS_DIR) $(ROOT)/pandoc $(ROOT)/Makefile -type f | entr -c make; \
-	else \
-		echo "Error: Please install fswatch (brew install fswatch) or entr (brew install entr)"; \
-		exit 1; \
-	fi
-
-# Watch mode: rebuild only the book when source files change
-watch-book:
-	@echo "Watching for changes in $(DOCS_DIR) and $(ROOT)/pandoc (building book only)..."
-	@echo "Press Ctrl+C to stop"
-	@if command -v fswatch >/dev/null 2>&1; then \
-		fswatch -o $(DOCS_DIR) $(ROOT)/pandoc $(ROOT)/Makefile | while read f; do make book; echo "=== Book rebuilt at $$(date) ==="; done; \
-	elif command -v entr >/dev/null 2>&1; then \
-		find $(DOCS_DIR) $(ROOT)/pandoc $(ROOT)/Makefile -type f | entr -c make book; \
-	else \
-		echo "Error: Please install fswatch (brew install fswatch) or entr (brew install entr)"; \
-		exit 1; \
-	fi
+	rm -rf $(QUARTO_DIR) $(PDF_DIR)
+	rm -rf $(DOCS_DIR)/.quarto

@@ -22,9 +22,7 @@ En la siguiente tabla se pueden apreciar los simbolos y su significado en el len
 |       $\lor$      |            conjunción           |      $p\land q$      |               Mañana nevará y mañana lloverá               |
 | $\Rightarrow$     | implicación                     | $p\Rightarrow q$     | Si mañana llueve, entonces mañana nevará.                  |
 | $\Leftarrow$      | consecuente                     | $p\Leftarrow q$      | Que mañana llueva, es una consecuencia de que mañana nieve |
-| $\Leftrightarrow$ | equivalencia, doble implicación | $p\Leftrightarrow q$ | Mañana llueve, si y solo si, mañana nieva                  |          |
-
-\pagebreak
+| $\Leftrightarrow$ | equivalencia, doble implicación | $p\Leftrightarrow q$ | Mañana llueve, si y solo si, mañana nieva                  |
 
 ## Traducción de teoremas y proposiciones
 
@@ -66,8 +64,6 @@ Una vez se tengan habilidades básicas de lógica proposicional, se hablarán de
 	2. $\neg(P \lor Q \land R) \Rightarrow (p \Leftrightarrow s)$
 	3. $\neg(P \lor (Q \land R)) \Rightarrow (m \land n)$
 
-\pagebreak
-
 ## Metodos de demostracion basicos
 
 __Demostraciones que involucran implicacion__, para demostrar $P \Rightarrow Q$
@@ -83,7 +79,7 @@ $$x^2 - 2y > 9 - 4 = 5$$
 En ocasiones, no es sencillo demostrar por el método directo, por ejemplo, consideremos la siguiente proposición: si $p$ es un número primo y p divide a $ab$, entonces $p$ divide a $a$ o $p$ divide a $b$. Suponer la hipótesis no nos deja demostrar la conclusión tan fácilmente, para solucionar este problema, podemos conseguir otra expresión equivalente mas sencilla de demostrar utilizando teoremas de lógica [1, pag. 52-78]:
 
 1) **Equivalencia** $p \Leftrightarrow q$ se puede definir como $(p \Rightarrow q) \land (q \Rightarrow p)$
-2) **Contrareciproco**, $p \Rightarrow q$ es equivalente a $\neg q \Rightarrow \neg p$ . 
+2) **Contrareciproco**, $p \Rightarrow q$ es equivalente a $\neg q \Rightarrow \neg p$ .
 3) **Debilitamiento y fortalecimiento**
 	a. $p \land q \Rightarrow p$
 	b. $p \Rightarrow p \lor q$
@@ -110,7 +106,7 @@ __Análisis de casos__: por los teoremas agrupados en el punto 6, tenemos:
 
 "Para asegurarte de que todas tus afirmaciones esten bien justificadas, debes ser esceptico de cada inferencia que hagas en tus demostraciones. Si tienes dudas de que tu justificacion sea correcta, entonces no es correcta. Despues de todo, ¿Si tu propio razonamiento no te convence, como esperas convencer a alguien más?" [2, pag. 86].
 
-__Contradicción__: 
+__Contradicción__:
 
 1. Para demostrar $P$, podemos suponer que $\neg P$ es cierto y llegar a cualquier falsedad o contradicción, mediante teoremas conocidos.
 2. Podemos realizar el mismo procedimiento para demostrar una expresión que involucre una implicación.
@@ -126,10 +122,6 @@ $$P\land\neg Q$$
 
 Quiere decir que, para demostrar $P \Rightarrow Q$, podemos suponer que $P$ y $\neg Q$ son verdades y llegar a una contradicción.
 
-\pagebreak
-
 # Cuantificacion y logica de predicados
 
 Contenido
-
-\pagebreak

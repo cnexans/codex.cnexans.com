@@ -1,0 +1,30 @@
+project:
+  type: book
+  output-dir: ../release/quarto
+
+book:
+  title: "Ciencias matemáticas y de computación"
+  author: "Carlos Nexans"
+  language: es
+  chapters:
+    - index.md
+    - 02_Logica.md
+    - 03_Analisis_Real.md
+    - 10_Resumen_Analisis_Real.md
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    lang: es
+  pdf:
+    pdf-engine: xelatex
+    toc: true
+    toc-depth: 2
+    number-sections: false
+    lang: es
+    colorlinks: true
+    urlcolor: cyan
+    linkcolor: cyan
