@@ -3,7 +3,7 @@ project:
   output-dir: ../release/quarto
 
 book:
-  title: "Ciencias matemáticas y de computación"
+  title: "Codex"
   author: "Carlos Nexans"
   language: es
   navbar:
@@ -23,6 +23,7 @@ format:
     number-sections: false
     lang: es
     include-in-header: posthog.html
+    css: custom.css
   pdf:
     pdf-engine: xelatex
     toc: true

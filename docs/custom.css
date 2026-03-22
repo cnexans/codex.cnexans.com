@@ -1,0 +1,81 @@
+/* ================================================
+   Estilos académicos para libro de matemáticas
+   ================================================ */
+
+/* Ocultar iconos de todos los callouts */
+.callout .callout-icon-container {
+  display: none !important;
+}
+
+/* Header transparente — sin fondo de color */
+.callout .callout-header,
+.callout details > summary.callout-header {
+  background-color: transparent !important;
+  border-bottom: none !important;
+}
+
+/* Estilo base: solo borde izquierdo, sin bordes en otros lados */
+.callout {
+  border-radius: 2px !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  border-left-width: 4px !important;
+  border-left-style: solid !important;
+}
+
+/* Título en negrita */
+.callout .callout-title {
+  font-weight: 700;
+}
+
+/* ── Axioma — verde ─────────────────────────── */
+.callout-tip {
+  border-left-color: #2e7d32 !important;
+  background-color: #f1f8f1 !important;
+}
+
+/* ── Teorema / Lema / Proposición / Corolario — azul ── */
+.callout-note {
+  border-left-color: #1565c0 !important;
+  background-color: #f0f4ff !important;
+}
+
+/* ── Definición — naranja ───────────────────── */
+.callout-important {
+  border-left-color: #e65100 !important;
+  background-color: #fff8f0 !important;
+}
+.callout-important > .callout-header::before,
+.callout-important details > summary::before {
+  display: none;
+}
+
+/* ── Demostración — gris, colapsable, cierra con QED ── */
+.callout-caution {
+  border-left-color: #757575 !important;
+  background-color: #fafafa !important;
+}
+
+.callout-caution .callout-title {
+  font-style: italic;
+  font-weight: 400 !important;
+}
+
+/* QED al final de cada demostración */
+.callout-caution .callout-body-container::after {
+  content: "QED";
+  display: block;
+  text-align: right;
+  font-style: italic;
+  color: #757575;
+  font-size: 0.9em;
+  padding-top: 0.4em;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 0.6em;
+}
+
+/* Flecha de colapsar más discreta */
+.callout-caution details > summary .callout-toggle {
+  color: #9e9e9e;
+}
