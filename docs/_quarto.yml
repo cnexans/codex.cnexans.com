@@ -6,16 +6,19 @@ book:
   title: "Ciencias matemáticas y de computación"
   author: "Carlos Nexans"
   language: es
+  navbar:
+    background: light
+    search: true
   chapters:
     - index.md
     - 02_Logica.md
     - 03_Analisis_Real.md
-    - 10_Resumen_Analisis_Real.md
 
 format:
   html:
     theme: cosmo
     toc: true
+    toc-location: left
     toc-depth: 2
     number-sections: false
     lang: es
