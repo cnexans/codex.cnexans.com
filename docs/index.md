@@ -1,6 +1,6 @@
 ---
-title: "Ciencias matemáticas y de computación"
+title: "Codex"
 author: "Carlos Nexans"
 ---
 
-Apuntes de ciencias matemáticas y de computación.
+Apuntes compilados en todas las áreas de estudio a las que me he dedicado.

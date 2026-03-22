@@ -1,4 +1,4 @@
-# Métodos de demostración y lógica simbólica.
+# Cómo demostrar
 
 A menudo, las matemáticas del colegio y del bachillerato suponen resolver ecuaciones, desigualdades y realizar operaciones bien definidas mendiante procesos y métodos, no obstante, como se ha visto desde Matemáticas I, hay que ser capaz de enfrentarse también a funciones, conjuntos y otros objetos matemáticos. Lo que une todos estos conocimientos es el *razonamiento deductivo*.
 
