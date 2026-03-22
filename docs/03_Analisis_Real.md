@@ -4,6 +4,8 @@ Los números reales forman una estructura algebraica con operaciones de suma y p
 
 ## Construcción Axiomática
 
+### Axiomas de suma
+
 ::: {.callout-tip title="Axioma — Conmutatividad de la suma"}
 Para todo $a,b \in \mathbb{R}$: $a + b = b + a$
 :::
@@ -19,6 +21,8 @@ Existe $0 \in \mathbb{R}$ tal que para todo $a \in \mathbb{R}$: $a + 0 = 0 + a =
 ::: {.callout-tip title="Axioma — Elemento opuesto de la suma"}
 Para todo $a \in \mathbb{R}$ existe $(-a) \in \mathbb{R}$ tal que: $a + (-a) = 0$
 :::
+
+### Axiomas de producto
 
 ::: {.callout-tip title="Axioma — Conmutatividad del producto"}
 Para todo $a,b \in \mathbb{R}$: $a \cdot b = b \cdot a$
@@ -40,6 +44,8 @@ Para todo $a \neq 0$ existe $a^{-1} \in \mathbb{R}$ tal que: $a \cdot a^{-1} = 1
 Para todo $a,b,c \in \mathbb{R}$: $a(b + c) = ab + ac$
 :::
 
+### Axiomas de orden
+
 ::: {.callout-tip title="Axioma — Reflexividad del orden"}
 Para todo $a \in \mathbb{R}$: $a \leq a$
 :::
@@ -59,6 +65,8 @@ Para todo $a,b,c \in \mathbb{R}$: $a \leq b \Rightarrow a + c \leq b + c$
 ::: {.callout-tip title="Axioma — Compatibilidad del orden con el producto"}
 Para todo $a,b,c \in \mathbb{R}$: $a \leq b \land c \geq 0 \Rightarrow ac \leq bc$
 :::
+
+### Axioma de completitud
 
 ::: {.callout-tip title="Axioma — Completitud"}
 Todo conjunto no vacío de números reales que está acotado superiormente tiene un supremo en $\mathbb{R}$.
