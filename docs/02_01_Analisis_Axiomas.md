@@ -1,12 +1,14 @@
 ---
-title: "Construcción Axiomática de ℝ"
+title: "Construcción Axiomática"
 ---
 
-Los números reales forman una estructura algebraica con operaciones de suma y producto, y una relación de orden que cumple ciertas propiedades fundamentales. A continuación se presentan los axiomas y teoremas más importantes que caracterizan a $\mathbb{R}$.
+Este desarrollo de los números reales es axiomático, partimos de la base de que $\mathbb{R}$ es un conjunto no vacío que cumple ciertas propiedades. Estas propiedades, desde un punto de vista algebráico, le otorgan el carácter de cuerpo ordenado completo.
 
 ## Construcción Axiomática
 
-### Axiomas de suma
+### Axiomas de cuerpo
+
+#### Axiomas de suma
 
 ::: {.callout-tip title="Axioma — Conmutatividad de la suma"}
 Para todo $a,b \in \mathbb{R}$: $a + b = b + a$
@@ -24,7 +26,7 @@ Existe $0 \in \mathbb{R}$ tal que para todo $a \in \mathbb{R}$: $a + 0 = 0 + a =
 Para todo $a \in \mathbb{R}$ existe $(-a) \in \mathbb{R}$ tal que: $a + (-a) = 0$
 :::
 
-### Axiomas de producto
+#### Axiomas de producto
 
 ::: {.callout-tip title="Axioma — Conmutatividad del producto"}
 Para todo $a,b \in \mathbb{R}$: $a \cdot b = b \cdot a$
@@ -47,6 +49,7 @@ Para todo $a,b,c \in \mathbb{R}$: $a(b + c) = ab + ac$
 :::
 
 ### Axiomas de orden
+
 
 ::: {.callout-tip title="Axioma — Reflexividad del orden"}
 Para todo $a \in \mathbb{R}$: $a \leq a$

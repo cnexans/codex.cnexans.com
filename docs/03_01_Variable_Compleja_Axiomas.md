@@ -29,7 +29,7 @@ $$(x_1, y_1) + (x_2, y_2) = (x_1 + x_2,\ y_1 + y_2)$$
 $$(x_1, y_1) \cdot (x_2, y_2) = (x_1 x_2 - y_1 y_2,\ x_1 y_2 + x_2 y_1)$$
 :::
 
-## Forma binómica
+## Forma algebráica
 
 Los números reales se identifican con los complejos de la forma $(x, 0)$, y se introduce la unidad imaginaria:
 
