@@ -2,7 +2,7 @@ DOCS_DIR := docs
 PDF_DIR := release/pdf
 QUARTO_DIR := release/quarto
 
-.PHONY: all html pdf-separate pdf-book preview render clean
+.PHONY: all html pdf-separate pdf-book preview watch render clean
 
 # Default: build everything
 all: html pdf-separate pdf-book
@@ -30,7 +30,8 @@ pdf-separate:
 	@echo "PDFs in $(PDF_DIR)/"
 
 # Quarto: live preview in browser (HTML with hot reload)
-preview:
+preview: watch
+watch:
 	cd $(DOCS_DIR) && quarto preview
 
 # Quarto: render all formats

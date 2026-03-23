@@ -4,3 +4,4 @@ node_modules/*
 # Generated output (built by CI and make)
 release/
 .quarto/
+tmp

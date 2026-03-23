@@ -159,7 +159,7 @@ Como $f$ es continua en $[a,b]$, por el Teorema de Weierstrass alcanza su máxim
 
 **Caso 1:** Alguno de $x_1$, $x_2$ está en el interior $(a,b)$. Entonces por el Teorema de Fermat, $f'(x_1) = 0$ o $f'(x_2) = 0$.
 
-**Caso 2:** $x_1$ y $x_2$ están ambos en los extremos. Como $f(a) = f(b)$, el máximo y mínimo son iguales, luego $f$ es constante y $f' \equiv 0$.
+**Caso 2:** $x_1$ y $x_2$ están ambos en los extremos. Como $f(a) = f(b)$, el máximo y mínimo son iguales, luego $f$ es constante y $f' = 0$.
 :::
 :::
 
