@@ -1,0 +1,31 @@
+name: Release PDF
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install system dependencies
+        run: sudo apt-get install -y librsvg2-bin
+
+      - name: Install TinyTeX
+        run: quarto install tinytex
+
+      - name: Render PDF
+        run: cd docs && quarto render --to pdf
+
+      - name: Upload PDF to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/quarto/*.pdf
