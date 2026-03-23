@@ -163,6 +163,19 @@ Como $f$ es continua en $[a,b]$, por el Teorema de Weierstrass alcanza su máxim
 :::
 :::
 
+::: {.callout-note title="Teorema — Teorema del Valor Medio (Lagrange)"}
+Sea $f:[a,b] \to \mathbb{R}$ continua en $[a,b]$ y derivable en $(a,b)$. Entonces existe $c \in (a,b)$ tal que:
+$$f'(c) = \frac{f(b) - f(a)}{b - a}$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Considere la función auxiliar:
+$$g(x) = f(x) - \frac{f(b) - f(a)}{b-a}(x-a) - f(a)$$
+
+Se verifica que $g(a) = 0$ y $g(b) = 0$. Por el Teorema de Rolle, existe $c \in (a,b)$ tal que $g'(c) = 0$:
+$$g'(x) = f'(x) - \frac{f(b) - f(a)}{b-a} \implies f'(c) = \frac{f(b) - f(a)}{b - a}$$
+:::
+:::
+
 ::: {.callout-note title="Teorema — Teorema de Cauchy (valor medio generalizado)"}
 Si $f$ y $g$ son continuas en $[a,b]$ y derivables en $(a,b)$, entonces existe $c \in (a,b)$ tal que:
 

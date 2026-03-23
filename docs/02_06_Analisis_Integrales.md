@@ -147,7 +147,30 @@ Sea $f:[a,b] \to \mathbb{R}$ integrable. La **función integral** de $f$ es:
 $$F:[a,b] \to \mathbb{R}, \qquad F(x) = \int_a^x f(t)\,dt$$
 :::
 
-*Véase el Teorema Fundamental del Cálculo en la sección Límites y Continuidad.*
+::: {.callout-note title="Teorema — Teorema Fundamental del Cálculo"}
+Sea $f:[a,b] \to \mathbb{R}$ una función integrable en $[a,b]$. Sea $F(x) = \displaystyle\int_a^x f(t)\,dt$ la función integral.
+
+1. $F$ es uniformemente continua en $[a,b]$.
+2. Si $f$ es continua en $x_0 \in [a,b]$, entonces $F$ es derivable en $x_0$ y $F'(x_0) = f(x_0)$.
+3. Si $G$ es una primitiva de $f$ en $[a,b]$, entonces:
+$$\int_a^b f(x)\,dx = G(b) - G(a)$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+**Parte 1: continuidad uniforme de $F$.**
+
+Como $f$ es integrable, es acotada: $\exists M > 0$ tal que $|f(t)| \leq M$. Para $x, y \in [a,b]$:
+$$|F(x) - F(y)| = \left|\int_y^x f(t)\,dt\right| \leq M|x-y|$$
+
+Dado $\varepsilon > 0$, tome $\delta = \varepsilon/M$: si $|x-y| < \delta$ entonces $|F(x)-F(y)| < \varepsilon$.
+
+**Parte 2: $F'(x_0) = f(x_0)$ cuando $f$ es continua en $x_0$.**
+
+Para $h > 0$ con $|h| < \delta$ (donde $\delta$ viene de la continuidad de $f$ en $x_0$):
+$$\left|\frac{F(x_0+h) - F(x_0)}{h} - f(x_0)\right| = \frac{1}{|h|}\left|\int_{x_0}^{x_0+h}(f(t) - f(x_0))\,dt\right| < \varepsilon$$
+
+**Parte 3:** Si $G$ es primitiva de $f$, entonces $G' = F'$, luego $G - F$ es constante. Evaluando en $x = a$: $G(b) - G(a) = F(b) - F(a) = \int_a^b f(t)\,dt$.
+:::
+:::
 
 ### Métodos de integración
 
