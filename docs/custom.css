@@ -1,20 +1,155 @@
 /* ================================================
-   Estilos académicos para libro de matemáticas
+   Estilos académicos — inspirado en Crafting Interpreters
+   Fuentes: Crimson Text (prosa), Source Sans Pro (UI),
+            Source Code Pro (código)
    ================================================ */
 
-/* Ocultar iconos de todos los callouts */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Source+Code+Pro:wght@400&family=Source+Sans+3:wght@300;400;600&display=swap');
+
+/* ── Tipografía base ─────────────────────────────── */
+body {
+  font-family: "Crimson Text", Georgia, serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #222;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Crimson Text", Georgia, serif;
+}
+
+h1 { font-size: 2.6rem; line-height: 1.15; }
+h2 { font-size: 1.85rem; font-weight: 600; }
+h3 { font-size: 1.4rem; font-style: italic; }
+
+p, li, td, th {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* ── Código ──────────────────────────────────────── */
+code, pre, .sourceCode, .cell-code {
+  font-family: "Source Code Pro", Menlo, Consolas, Monaco, monospace !important;
+  font-size: 0.82rem;
+}
+
+code {
+  color: #595959;
+  background: #faf8f5;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+pre {
+  background: #faf8f5 !important;
+  border: 1px solid #e8e4df;
+  border-radius: 4px;
+}
+
+/* ── Sidebar / Navegación ────────────────────────── */
+#quarto-sidebar,
+.sidebar.sidebar-navigation {
+  background-color: #29313d !important;
+  font-family: "Source Sans 3", sans-serif !important;
+  font-weight: 300;
+  font-size: 14px;
+}
+
+/* Links de navegación */
+#quarto-sidebar a,
+.sidebar.sidebar-navigation a {
+  color: #7aa0b8 !important;
+  font-family: "Source Sans 3", sans-serif !important;
+  font-weight: 300;
+}
+
+#quarto-sidebar a:hover,
+.sidebar.sidebar-navigation a:hover {
+  color: #dee9ed !important;
+  text-decoration: none;
+}
+
+/* Títulos de parte/sección en la sidebar */
+#quarto-sidebar .sidebar-section .sidebar-section-item,
+.sidebar .sidebar-section > .sidebar-item-text {
+  color: #7aa0b8 !important;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 12px;
+}
+
+/* Ítem activo */
+#quarto-sidebar .sidebar-item.active > .sidebar-item-container .sidebar-item-text,
+.sidebar .active > .sidebar-item-text {
+  color: #dee9ed !important;
+  font-weight: 400;
+}
+
+/* Separadores */
+#quarto-sidebar hr,
+.sidebar hr {
+  border-color: #3b4b5e;
+}
+
+/* ── Navbar ──────────────────────────────────────── */
+.navbar {
+  background-color: #29313d !important;
+  font-family: "Source Sans 3", sans-serif !important;
+  font-weight: 300;
+}
+
+.navbar-brand, .navbar-title {
+  font-family: "Source Sans 3", sans-serif !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #dee9ed !important;
+}
+
+.navbar a { color: #7aa0b8 !important; }
+.navbar a:hover { color: #dee9ed !important; }
+
+/* ── Layout: contenido a ancho completo ──────────── */
+.page-columns {
+  max-width: 100% !important;
+}
+
+#quarto-content {
+  max-width: 100%;
+}
+
+/* Columna de texto principal */
+.page-columns .page-content,
+article.content {
+  max-width: 760px;
+}
+
+/* ── Tablas ──────────────────────────────────────── */
+table {
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 0.92rem;
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+th {
+  font-weight: 600;
+  border-bottom: 2px solid #dee9ed;
+}
+
+/* ── Callouts: sin iconos, borde izquierdo ───────── */
 .callout .callout-icon-container {
   display: none !important;
 }
 
-/* Header transparente — sin fondo de color */
 .callout .callout-header,
 .callout details > summary.callout-header {
   background-color: transparent !important;
   border-bottom: none !important;
 }
 
-/* Estilo base: solo borde izquierdo, sin bordes en otros lados */
 .callout {
   border-radius: 2px !important;
   border-top: none !important;
@@ -22,36 +157,41 @@
   border-bottom: none !important;
   border-left-width: 4px !important;
   border-left-style: solid !important;
+  overflow-x: auto;
 }
 
-/* Título en negrita */
 .callout .callout-title {
+  font-family: "Source Sans 3", sans-serif;
   font-weight: 700;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* ── Axioma — verde ─────────────────────────── */
+/* ── Axioma — verde ──────────────────────────────── */
 .callout-tip {
   border-left-color: #2e7d32 !important;
   background-color: #f1f8f1 !important;
 }
 
-/* ── Teorema / Lema / Proposición / Corolario — azul ── */
+/* ── Teorema / Lema / Proposición — azul ────────── */
 .callout-note {
   border-left-color: #1565c0 !important;
   background-color: #f0f4ff !important;
 }
 
-/* ── Definición — naranja ───────────────────── */
+/* ── Definición — naranja ────────────────────────── */
 .callout-important {
   border-left-color: #e65100 !important;
   background-color: #fff8f0 !important;
 }
+
 .callout-important > .callout-header::before,
 .callout-important details > summary::before {
   display: none;
 }
 
-/* ── Demostración — gris, colapsable, cierra con QED ── */
+/* ── Demostración — gris, colapsable, QED ────────── */
 .callout-caution {
   border-left-color: #757575 !important;
   background-color: #fafafa !important;
@@ -60,46 +200,30 @@
 .callout-caution .callout-title {
   font-style: italic;
   font-weight: 400 !important;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-/* QED al final de cada demostración */
 .callout-caution .callout-body-container::after {
   content: "QED";
   display: block;
   text-align: right;
   font-style: italic;
   color: #757575;
-  font-size: 0.9em;
+  font-size: 0.9rem;
   padding-top: 0.4em;
   border-top: 1px solid #e0e0e0;
   margin-top: 0.6em;
 }
 
-/* Flecha de colapsar más discreta */
 .callout-caution details > summary .callout-toggle {
   color: #9e9e9e;
 }
 
-/* ── Scroll horizontal en mobile ───────────────
-   Evita que ecuaciones y tablas anchas rompan
-   el layout — se desplazan dentro de su bloque. */
-body {
-  overflow-x: hidden;
-}
-
+/* ── Ecuaciones MathJax en mobile ────────────────── */
 .mjx-container,
 mjx-container {
   overflow-x: auto;
   overflow-y: hidden;
-  max-width: 100%;
-}
-
-.callout {
-  overflow-x: auto;
-}
-
-table {
-  display: block;
-  overflow-x: auto;
   max-width: 100%;
 }
