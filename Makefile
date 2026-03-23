@@ -2,10 +2,14 @@ DOCS_DIR := docs
 PDF_DIR := release/pdf
 QUARTO_DIR := release/quarto
 
-.PHONY: all html pdf-separate pdf-book preview watch render clean
+.PHONY: all html pdf-separate pdf-book preview watch render images clean
 
 # Default: build everything
 all: html pdf-separate pdf-book
+
+# Genera las imágenes SVG (requiere .venv con matplotlib/numpy)
+images:
+	.venv/bin/python3 scripts/gen_images.py
 
 # Quarto: render HTML book
 html:

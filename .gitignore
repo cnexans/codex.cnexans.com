@@ -1,5 +1,6 @@
 node_modules/*
 .DS_Store
+.venv/
 
 # Generated output (built by CI and make)
 release/

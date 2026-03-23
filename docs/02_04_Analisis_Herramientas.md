@@ -140,7 +140,28 @@ $$\sum_{k=0}^{n} \binom{n}{k} = 2^n$$
 ::: {.callout-note title="Teorema — Desigualdad trigonométrica"}
 Para $x \in (0, \pi/2)$:
 $$\sin x \le x \le \tan x$$
-Esta propiedad es clave para probar que $\displaystyle \lim_{x \to 0} \frac{\sin x}{x} = 1$
+Esta propiedad es clave para probar que $\displaystyle \lim_{x \to 0} \frac{\sin x}{x} = 1$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Comparando áreas en el círculo unitario con ángulo $x$:
+
+![](img/analisis/desigualdad-trigonometrica.svg){width=55% fig-align="center"}
+
+- **Triángulo $OAP$:** vértices en $O=(0,0)$, $A=(1,0)$, $P=(\cos x, \sin x)$. Área $= \tfrac{1}{2}\sin x$.
+- **Sector circular $OAP$:** Área $= \tfrac{x}{2}$.
+- **Triángulo $OAT$:** vértices en $O$, $A=(1,0)$, $T=(1, \tan x)$. Área $= \tfrac{1}{2}\tan x$.
+
+Como triángulo $OAP \subset$ sector $\subset$ triángulo $OAT$:
+$$\frac{1}{2}\sin x \;\le\; \frac{x}{2} \;\le\; \frac{1}{2}\tan x$$
+
+Multiplicando por $2$ y dividiendo por $\sin x > 0$:
+$$1 \;\le\; \frac{x}{\sin x} \;\le\; \frac{1}{\cos x}$$
+
+Tomando recíprocos (la desigualdad se invierte):
+$$\cos x \;\le\; \frac{\sin x}{x} \;\le\; 1$$
+
+Como $\cos x \to 1$ cuando $x \to 0$, por el Teorema del Sandwich: $\displaystyle\lim_{x \to 0} \frac{\sin x}{x} = 1$.
+:::
 :::
 
 ::: {.callout-note title="Teorema — Identidades pitagóricas"}
