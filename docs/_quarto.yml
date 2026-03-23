@@ -11,15 +11,15 @@ book:
     search: true
   chapters:
     - index.md
-    - 02_Logica.md
+    - 01_Logica.md
     - part: "Análisis Real"
       chapters:
-        - 03_Axiomas.md
-        - 04_Sucesiones.md
-        - 05_Limites.md
-        - 06_Herramientas.md
-        - 07_Derivadas.md
-        - 08_Integrales.md
+        - 02_01_Axiomas.md
+        - 02_02_Sucesiones.md
+        - 02_03_Limites.md
+        - 02_04_Herramientas.md
+        - 02_05_Derivadas.md
+        - 02_06_Integrales.md
 
 filters:
   - callout-numbers.lua
