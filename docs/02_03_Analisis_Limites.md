@@ -14,12 +14,55 @@ $0 < |x - a| < \delta \Rightarrow |f(x) - l| < \varepsilon$.
 
 ::: {.callout-note title="Teorema — Unicidad del límite funcional"}
 Si una función tiene límite en un punto, este es único.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Supongamos que $\lim_{x \to x_0} f(x) = l_1$ y $\lim_{x \to x_0} f(x) = l_2$ con $l_1 \neq l_2$. Sea $\varepsilon = \frac{|l_1 - l_2|}{2} > 0$.
+
+Existen $\delta_1, \delta_2 > 0$ tales que:
+- $0 < |x - x_0| < \delta_1 \Rightarrow |f(x) - l_1| < \varepsilon$
+- $0 < |x - x_0| < \delta_2 \Rightarrow |f(x) - l_2| < \varepsilon$
+
+Para $\delta = \min(\delta_1, \delta_2)$ y cualquier $x$ con $0 < |x - x_0| < \delta$:
+$$|l_1 - l_2| \leq |l_1 - f(x)| + |f(x) - l_2| < \varepsilon + \varepsilon = |l_1 - l_2|$$
+Contradicción. Por tanto $l_1 = l_2$.
+:::
 :::
 
 ::: {.callout-note title="Teorema — Teorema del Sandwich para funciones"}
 Sean $f, g, h$ funciones definidas en $(a,b)$, salvo quizás en $x_0 \in (a,b)$. Si
 $$g(x) \le f(x) \le h(x)$$
 y $\displaystyle\lim_{x \to x_0} g(x) = \lim_{x \to x_0} h(x) = l$, entonces $\displaystyle\lim_{x \to x_0} f(x) = l$.
+:::
+
+::: {.callout-important title="Límite notable — $\\lim_{x \\to 0} \\dfrac{\\sin x}{x} = 1$"}
+$$\lim_{x \to 0} \frac{\sin x}{x} = 1$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Para $x \in (0, \pi/2)$, la comparación de áreas geométricas en el círculo unitario da:
+$$\sin x < x < \tan x$$
+
+Dividiendo por $\sin x > 0$:
+$$1 < \frac{x}{\sin x} < \frac{1}{\cos x} \quad \Rightarrow \quad \cos x < \frac{\sin x}{x} < 1$$
+
+Como $\lim_{x \to 0^+} \cos x = 1$, por el Teorema del Sandwich:
+$$\lim_{x \to 0^+} \frac{\sin x}{x} = 1$$
+
+Para $x \in (-\pi/2, 0)$, se usa que $\frac{\sin x}{x} = \frac{\sin(-x)}{-x}$ (función par), obteniendo el mismo límite lateral. Por tanto $\lim_{x \to 0} \frac{\sin x}{x} = 1$.
+:::
+:::
+
+::: {.callout-important title="Lema — Acotación local del límite"}
+Sea $\lim_{x \to x_0} f(x) = l$.
+
+a) Si $b > l$, entonces existe $\delta > 0$ tal que $f(x) < b$ para todo $x$ con $0 < |x - x_0| < \delta$.
+
+b) Si $b < l$, entonces existe $\delta > 0$ tal que $f(x) > b$ para todo $x$ con $0 < |x - x_0| < \delta$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+**(a)** Sea $\varepsilon = b - l > 0$. Existe $\delta > 0$ con $|f(x) - l| < \varepsilon$ para $0 < |x - x_0| < \delta$. Entonces $f(x) < l + \varepsilon = l + (b-l) = b$.
+
+**(b)** Sea $\varepsilon = l - b > 0$. Existe $\delta > 0$ con $|f(x) - l| < \varepsilon$ para $0 < |x - x_0| < \delta$. Entonces $f(x) > l - \varepsilon = l - (l-b) = b$.
+:::
 :::
 
 ::: {.callout-note title="Teorema — Lema de orden para límites funcionales"}
@@ -118,6 +161,26 @@ Sean $f$ y $g$ continuas en $x_0$. Entonces son continuas en $x_0$:
 Además, los polinomios $P(x)$, las funciones $a^x$, $\log x$ (para $x>0$), $\sin x$, $\cos x$ son continuas en todo su dominio.
 :::
 
+::: {.callout-caution title="Ejemplo — $a^x$ es continua en $\\mathbb{R}$ para $a > 0$" collapse="true"}
+Sea $x_0 \in \mathbb{R}$. Queremos mostrar $\lim_{x \to x_0} a^x = a^{x_0}$.
+
+$$|a^x - a^{x_0}| = a^{x_0} |a^{x-x_0} - 1|$$
+
+Sea $h = x - x_0$. Basta mostrar que $\lim_{h \to 0} a^h = 1$.
+
+- **Caso $a > 1$:** Para $h > 0$ pequeño, $a^h = e^{h \log a}$. Como $\log a > 0$, dado $\varepsilon > 0$ se elige $\delta = \frac{\log(1+\varepsilon)}{\log a}$. Para $|h| < \delta$: $|a^h - 1| < \varepsilon$.
+
+- **Caso $0 < a < 1$:** Análogo con $\log a < 0$.
+
+Por tanto $a^x$ es continua en todo $\mathbb{R}$.
+:::
+
+::: {.callout-caution title="Ejemplo — $\\lim_{x \\to +\\infty} a^x = 0$ para $0 < a < 1$" collapse="true"}
+Como $0 < a < 1$, tenemos $\log a < 0$. Sea $\varepsilon > 0$. Tomamos $S = \frac{\log \varepsilon}{\log a} > 0$ (nótese que $\log a < 0$, así que $S > 0$ si $\varepsilon < 1$). Para $x > S$:
+$$x \log a < S \log a = \log \varepsilon \quad \Rightarrow \quad a^x = e^{x \log a} < e^{\log \varepsilon} = \varepsilon$$
+Por lo tanto $\lim_{x \to +\infty} a^x = 0$.
+:::
+
 ::: {.callout-note title="Teorema — Ley de conservación de signo"}
 Sea $f:(a,b)\to\mathbb{R}$ continua en $x_0 \in (a,b)$ y $f(x_0) \ne 0$. Entonces existe $\delta > 0$ tal que:
 $$|x - x_0| < \delta \Rightarrow f(x) \ne 0$$
@@ -176,6 +239,20 @@ A diferencia de la continuidad ordinaria, aquí $\delta$ depende sólo de $\vare
 
 ::: {.callout-note title="Teorema — Teorema de Heine-Cantor"}
 Si $f$ es continua en $[a,b]$, entonces $f$ es uniformemente continua en $[a,b]$.
+:::
+
+::: {.callout-caution title="Ejemplo — Continuidad de $f(x) = 1/x$ en $x_0 \\neq 0$" collapse="true"}
+Sea $x_0 \neq 0$. Queremos encontrar $\delta$ tal que $|x - x_0| < \delta \Rightarrow |1/x - 1/x_0| < \varepsilon$.
+
+$$\left|\frac{1}{x} - \frac{1}{x_0}\right| = \frac{|x - x_0|}{|x| \cdot |x_0|}$$
+
+Restringimos $|x - x_0| < |x_0|/2$, lo que garantiza $|x| > |x_0|/2$. Entonces:
+$$\frac{|x - x_0|}{|x| \cdot |x_0|} < \frac{|x - x_0|}{(|x_0|/2) \cdot |x_0|} = \frac{2|x - x_0|}{|x_0|^2}$$
+
+Eligiendo $\delta = \min\!\left(\frac{|x_0|}{2},\, \frac{\varepsilon |x_0|^2}{2}\right)$, para $|x - x_0| < \delta$:
+$$\left|\frac{1}{x} - \frac{1}{x_0}\right| < \frac{2\delta}{|x_0|^2} \leq \frac{2 \cdot \frac{\varepsilon |x_0|^2}{2}}{|x_0|^2} = \varepsilon$$
+
+Por tanto $f(x) = 1/x$ es continua en todo $x_0 \neq 0$.
 :::
 
 

@@ -39,17 +39,74 @@ brew install --cask quarto
 2. Agregarlo en `docs/_quarto.yml` bajo la sección `chapters`.
 3. Usar Markdown estándar con matemáticas en LaTeX (`$...$` o `$$...$$`).
 
-Para teoremas, definiciones y notas, usar callouts de Quarto:
+Para teoremas, definiciones y notas, ver la sección [Callouts](#callouts) más abajo.
+
+## Callouts
+
+El proyecto usa un sistema de callouts con numeración automática por capítulo via `docs/callout-numbers.lua`. Los contadores se reinician en cada capítulo.
+
+### Tipos y contadores
+
+| Tipo | Color | Contador | Uso |
+|---|---|---|---|
+| `.callout-tip` | Verde | Axioma N | Axiomas |
+| `.callout-important` | Naranja | Definición N | Definiciones |
+| `.callout-note` | Azul | Teorema N | Teoremas, proposiciones, lemas, corolarios, ejemplos |
+| `.callout-note` | Azul | Método N | Métodos de demostración (título comienza con `Método`) |
+| `.callout-caution` | Gris | — | Demostraciones (incluye QED al final) |
+
+### Sintaxis básica
 
 ```markdown
-::: {.callout-note title="Teorema"}
-Todo espacio métrico compacto es completo.
+::: {.callout-tip title="Axioma — Completitud"}
+Todo conjunto no vacío acotado superiormente tiene supremo.
 :::
 
-::: {.callout-tip title="Definición"}
-Un espacio topológico es **compacto** si toda cubierta abierta admite una subcubierta finita.
+::: {.callout-important title="Definición — Continuidad"}
+Sea $f:(a,b)\to\mathbb{R}$ y $x_0\in(a,b)$. Se dice que $f$ es continua en $x_0$ si $\lim_{x\to x_0} f(x) = f(x_0)$.
+:::
+
+::: {.callout-note title="Teorema — Valor Medio"}
+Sea $f$ continua en $[a,b]$ y derivable en $(a,b)$. Existe $c \in (a,b)$ tal que $f'(c) = \frac{f(b)-f(a)}{b-a}$.
+:::
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Aplicar el Teorema de Rolle a $g(x) = f(x) - \frac{f(b)-f(a)}{b-a}(x-a)$...
 :::
 ```
+
+### Demostraciones colapsables
+
+Las demostraciones pueden anidarse dentro del teorema correspondiente con `collapse="true"`:
+
+```markdown
+::: {.callout-note title="Teorema — Bolzano"}
+Sea $f$ continua en $[a,b]$ con $f(a) < 0$ y $f(b) > 0$. Existe $c \in (a,b)$ tal que $f(c) = 0$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Sea $c = \sup\{x \in [a,b] : f(x) < 0\}$...
+:::
+:::
+```
+
+### Títulos con LaTeX
+
+El atributo `title="..."` trata el contenido como texto plano — el LaTeX no se renderiza. Para títulos con fórmulas, usar un heading `##` dentro del div:
+
+```markdown
+<!-- NO funciona: el LaTeX queda como texto plano -->
+::: {.callout-important title="Proposición — Binomio en $\mathbb{C}$"}
+:::
+
+<!-- SÍ funciona: el heading pasa por el pipeline de Pandoc -->
+::: {.callout-important}
+## Proposición — Binomio en $\mathbb{C}$
+
+contenido...
+:::
+```
+
+Ambas sintaxis son numeradas correctamente por el Lua filter.
 
 ## CI/CD
 

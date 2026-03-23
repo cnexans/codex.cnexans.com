@@ -12,6 +12,31 @@ Una sucesión $(a_n)$ es una función $a:\mathbb{N}_0 \to \mathbb{R}$.
 $\displaystyle \lim_{n \to \infty} a_n = l$ si $\forall \varepsilon > 0, \exists n_0 \in \mathbb{N}$ tal que $n \ge n_0 \Rightarrow |a_n - l| < \varepsilon$.
 :::
 
+::: {.callout-caution title="Ejemplo — $\\lim_{n\\to\\infty} \\dfrac{n^2+2n+1}{n^2-3n-2} = 1$" collapse="true"}
+Sea $a_n = \dfrac{n^2+2n+1}{n^2-3n-2}$. Queremos mostrar que $|a_n - 1| < \varepsilon$ para $n$ suficientemente grande.
+
+$$|a_n - 1| = \left|\frac{n^2+2n+1 - (n^2-3n-2)}{n^2-3n-2}\right| = \left|\frac{5n+3}{n^2-3n-2}\right|$$
+
+Para $n$ grande, $n^2 - 3n - 2 > n^2/2$ (pues $3n + 2 < n^2/2$ para $n \geq 7$), por lo tanto:
+$$|a_n - 1| \leq \frac{5n+3}{n^2/2} = \frac{2(5n+3)}{n^2} \leq \frac{16}{n}$$
+
+Dado $\varepsilon > 0$, tomando $N = \max\left(7, \lceil 16/\varepsilon \rceil\right)$, para $n > N$ se tiene $|a_n - 1| \leq 16/n < \varepsilon$.
+:::
+
+::: {.callout-important title="Proposición — Equivalencia de la definición de límite"}
+Sea $(a_n)$ una sucesión y $l \in \mathbb{R}$. Son equivalentes:
+
+a) $\lim_{n \to \infty} a_n = l$
+
+b) $\lim_{n \to \infty} |a_n - l| = 0$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+$(a) \Rightarrow (b)$: Sea $\varepsilon > 0$. Dado que $\lim a_n = l$, existe $N$ tal que para $n > N$, $|a_n - l| < \varepsilon$. Luego $\bigl||a_n - l| - 0\bigr| = |a_n - l| < \varepsilon$, así que $\lim |a_n - l| = 0$.
+
+$(b) \Rightarrow (a)$: Sea $\varepsilon > 0$. Existe $N$ tal que para $n > N$, $\bigl||a_n - l| - 0\bigr| = |a_n - l| < \varepsilon$, por lo tanto $\lim a_n = l$.
+:::
+:::
+
 ::: {.callout-important title="Definición — Límites infinitos de sucesión"}
 Sea $(a_n)$ una sucesión.
 
@@ -54,9 +79,37 @@ Sean $(a_n)$, $(b_n)$ sucesiones convergentes con límites $l_1, l_2$:
 5. $\lim |a_n| = |l_1|$
 :::
 
+::: {.callout-important title="Proposición — Aritmética con límites infinitos"}
+Sean $(a_n)$ sucesión acotada y $(b_n)$ con $\lim_{n\to\infty} b_n = +\infty$. Entonces:
+
+a) $\lim_{n\to\infty}(a_n + b_n) = +\infty$
+
+b) $\lim_{n\to\infty} \dfrac{a_n}{b_n} = 0$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+**(a)** Como $a_n$ es acotada, existe $M > 0$ con $|a_n| \leq M$ para todo $n$. Sea $R > 0$. Dado que $b_n \to +\infty$, existe $N$ con $b_n > R + M$ para $n > N$. Entonces:
+$$a_n + b_n > -M + (R + M) = R$$
+Por lo tanto $\lim(a_n + b_n) = +\infty$.
+
+**(b)** Sea $\varepsilon > 0$. Como $a_n$ es acotada, $|a_n| \leq M$. Dado que $b_n \to +\infty$, existe $N$ con $b_n > M/\varepsilon$ para $n > N$. Entonces:
+$$\left|\frac{a_n}{b_n}\right| = \frac{|a_n|}{b_n} \leq \frac{M}{b_n} < \varepsilon$$
+:::
+:::
+
 ::: {.callout-note title="Teorema — Límites especiales de sucesiones"}
 1. $\lim_{n\to\infty} \sqrt[n]{a_n} = 1$ si $(a_n)$ es de términos positivos con $\lim a_n = l > 0$.
 2. $\lim_{n\to\infty} r^n = 0$ para todo $|r| < 1$.
+:::
+
+::: {.callout-important title="Lema — $\\lim_{n\\to\\infty} n^{1/n} = 1$"}
+$$\lim_{n \to \infty} n^{1/n} = 1$$
+
+Más generalmente, para $r > 0$ fijo:
+$$\lim_{n\to\infty} r^n = \begin{cases} +\infty & \text{si } r > 1 \\ 1 & \text{si } r = 1 \\ 0 & \text{si } 0 \leq r < 1 \end{cases}$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Escribamos $n^{1/n} = 1 + h_n$ con $h_n \geq 0$. Entonces $n = (1+h_n)^n \geq \binom{n}{2} h_n^2 = \frac{n(n-1)}{2} h_n^2$, así que $h_n^2 \leq \frac{2}{n-1}$, es decir $0 \leq h_n \leq \sqrt{\frac{2}{n-1}} \to 0$. Por el Teorema del Sandwich, $h_n \to 0$ y por tanto $n^{1/n} \to 1$.
+:::
 :::
 
 ::: {.callout-note title="Teorema — Límites con potencias y polinomios"}
@@ -73,6 +126,14 @@ Una sucesión es monótona si es creciente ($a_n \le a_{n+1}$) o decreciente ($a
 
 ::: {.callout-note title="Teorema — Convergencia de sucesiones monótonas"}
 Si una sucesión es monótona y acotada, entonces converge.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Consideremos el caso creciente y acotada superiormente. Sea $s = \sup\{a_n : n \in \mathbb{N}\}$, que existe por el Axioma del Supremo. Sea $\varepsilon > 0$. Como $s - \varepsilon$ no es cota superior, existe $N$ tal que $a_N > s - \varepsilon$. Para $n > N$, como la sucesión es creciente:
+$$s - \varepsilon < a_N \leq a_n \leq s$$
+Luego $|a_n - s| < \varepsilon$, es decir $\lim_{n\to\infty} a_n = s$.
+
+El caso decreciente y acotada inferiormente es análogo usando $\inf$.
+:::
 :::
 
 ::: {.callout-note title="Teorema — Comportamiento de sucesiones monótonas no acotadas"}
@@ -84,6 +145,10 @@ Si una sucesión $(a_n)$ es monótona y no acotada, entonces:
 
 ::: {.callout-note title="Teorema — Teorema de Bolzano-Weierstrass"}
 Toda sucesión acotada en $\mathbb{R}$ tiene una subsucesión convergente.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Sea $(a_n)$ acotada, con $|a_n| \leq M$. Consideramos $I_1 = [-M, M]$. Dividimos por la mitad: al menos uno de los dos subintervalos contiene infinitos términos de la sucesión; lo llamamos $I_2$. Continuando, obtenemos intervalos encajados $I_1 \supset I_2 \supset \cdots$ con $\ell(I_k) = M/2^{k-1} \to 0$. Por el Teorema de los Intervalos Encajados, existe un único $x \in \bigcap_k I_k$. La subsucesión $a_{n_k}$ de elementos tomados en $I_k$ cumple $|a_{n_k} - x| \leq \ell(I_k) \to 0$, por lo que $a_{n_k} \to x$.
+:::
 :::
 
 ::: {.callout-important title="Definición — Subsucesión"}
@@ -105,6 +170,15 @@ $$\forall \varepsilon > 0, \exists N \in \mathbb{N} : \forall n,m \geq N, |a_n -
 1. Toda sucesión de Cauchy es acotada.
 2. Una sucesión es convergente si y sólo si es de Cauchy.
 3. Si $(a_n)$ es de Cauchy y existe una subsucesión $(a_{n_k})$ tal que $\lim_{k\to\infty} a_{n_k} = a$, entonces $\lim_{n\to\infty} a_n = a$.
+
+::: {.callout-caution title="Demostración — toda sucesión de Cauchy es acotada" collapse="true"}
+Sea $(a_n)$ de Cauchy. Tomando $\varepsilon = 1$, existe $N$ tal que $|a_n - a_m| < 1$ para $n, m > N$. En particular, $|a_n - a_{N+1}| < 1$ para $n > N$, así que $|a_n| < |a_{N+1}| + 1$. Tomando $M = \max\{|a_1|, \ldots, |a_N|, |a_{N+1}| + 1\}$, se tiene $|a_n| \leq M$ para todo $n$.
+:::
+
+::: {.callout-caution title="Demostración — toda sucesión de Cauchy converge" collapse="true"}
+Por la propiedad anterior, $(a_n)$ es acotada. Por el Teorema de Bolzano-Weierstrass, existe una subsucesión $a_{n_k} \to a$. Sea $\varepsilon > 0$. Existen $N_1$ con $|a_{n_k} - a| < \varepsilon/2$ para $k > N_1$, y $N_2$ con $|a_n - a_m| < \varepsilon/2$ para $n, m > N_2$. Sea $N = \max\{N_1, N_2\}$. Para $n > N$, elegimos $k$ con $n_k > N$:
+$$|a_n - a| \leq |a_n - a_{n_k}| + |a_{n_k} - a| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon$$
+:::
 :::
 
 ### Encajes de intervalos
@@ -121,6 +195,12 @@ $$\bigcap_{n=1}^{\infty} I_n = \{x\}$$
 es decir, la intersección contiene exactamente un punto.
 
 *Este teorema es equivalente al axioma del supremo y es la base del Teorema de Bolzano–Weierstrass.*
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Sea $a = \sup\{a_n\}$ y $b = \inf\{b_n\}$. Para cada $n$, $a_n \leq b_n$, y como las sucesiones son monótonas, $a_m \leq a_n \leq b_n \leq b_m$ para $m \leq n$. Luego $a_n \leq b$ para todo $n$, así que $a \leq b$, y $x \in [a_n, b_n]$ para todo $n$, es decir $x \in \bigcap_n I_n$.
+
+Si además $\ell(I_n) \to 0$: dado $\varepsilon > 0$, existe $N$ con $b_N - a_N < \varepsilon$. Para cualquier $x, y \in \bigcap_n I_n$, $|x - y| \leq b_N - a_N < \varepsilon$, así que la intersección es unitaria, $\{x\} = \bigcap_n I_n$.
+:::
 :::
 
 ::: {.callout-note title="Teorema — Teorema de Heine-Borel"}

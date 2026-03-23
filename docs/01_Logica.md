@@ -14,6 +14,7 @@ Una **expresión booleana** $E$ está conformada por:
 - Operadores: $\neg,\ \land,\ \lor,\ \Rightarrow,\ \Leftarrow,\ \Leftrightarrow$
 :::
 
+::: {.callout-important title="Definición — Operadores lógicos"}
 Usando las variables $p$: "mañana nevará" y $q$: "mañana lloverá":
 
 | Símbolo | Nombre | Ejemplo | Significado |
@@ -25,15 +26,22 @@ Usando las variables $p$: "mañana nevará" y $q$: "mañana lloverá":
 | $\Leftarrow$ | consecuente | $p \Leftarrow q$ | Que llueva es consecuencia de que nieve |
 | $\Leftrightarrow$ | equivalencia | $p \Leftrightarrow q$ | Nieva si y solo si llueve |
 
-### Traducción de enunciados
+: {tbl-colwidths="[10,20,20,50]"}
+:::
 
-Cualquier proposición matemática puede expresarse en lógica simbólica. Por ejemplo:
+Cualquier proposición matemática puede expresarse en lógica simbólica.
 
-**"Si $p$ es primo y divide a $ab$, entonces divide a $a$ o a $b$":**
+::: {.callout-note title="Ejemplo — Traducción de enunciados"}
+"Si $p$ es primo y divide a $ab$, entonces divide a $a$ o a $b$":
+
 $$r \land s \Rightarrow t \lor u$$
+:::
 
-**"$f(a)=0$ si y solo si $(x-a)$ divide a $f(x)$":**
+::: {.callout-note title="Ejemplo — Traducción de enunciados"}
+"$f(a)=0$ si y solo si $(x-a)$ divide a $f(x)$":
+
 $$r \land s \Rightarrow (t \Leftrightarrow u)$$
+:::
 
 ## Teoremas de lógica
 
@@ -74,31 +82,30 @@ $$p \land q \Rightarrow p \qquad p \Rightarrow p \lor q \qquad p \land q \Righta
 
 ## Métodos de demostración
 
-### Método directo
-
+::: {.callout-note title="Método — Directo"}
 Para demostrar $P \Rightarrow Q$: suponer $P$ verdadero y deducir $Q$ mediante resultados conocidos.
 
-**Ejemplo:** demostrar que si $x > 3$ e $y < 2$, entonces $x^2 - 2y > 5$.
+**Ejemplo:** si $x > 3$ e $y < 2$, entonces $x^2 - 2y > 5$.
 
 De $x > 3$: $x^2 > 3x > 9$. De $y < 2$: $-2y > -4$. Sumando:
 $$x^2 - 2y > 9 - 4 = 5$$
+:::
 
-### Contrarrecíproco
+::: {.callout-note title="Método — Contrarrecíproco"}
+Para demostrar $P \Rightarrow Q$, basta demostrar $\neg Q \Rightarrow \neg P$, pues son equivalentes por el teorema del contrarrecíproco.
+:::
 
-Para demostrar $P \Rightarrow Q$, basta demostrar $\neg Q \Rightarrow \neg P$, pues ambas son equivalentes.
-
-### Análisis de casos
-
+::: {.callout-note title="Método — Análisis de casos"}
 - Para demostrar $P \lor Q \Rightarrow R$: demostrar $P \Rightarrow R$ y $Q \Rightarrow R$ por separado.
-- Para demostrar $R$: encontrar $P$ tal que $P \Rightarrow R$ y $\neg P \Rightarrow R$.
+- Para demostrar $R$ directamente: encontrar $P$ tal que $P \Rightarrow R$ y $\neg P \Rightarrow R$.
+:::
 
-### Contradicción (reducción al absurdo)
-
+::: {.callout-note title="Método — Contradicción"}
 Para demostrar $P$: suponer $\neg P$ y derivar una contradicción.
 
-Para demostrar $P \Rightarrow Q$: como $\neg(P \Rightarrow Q) \equiv P \land \neg Q$, suponer $P$ y $\neg Q$ simultáneamente y llegar a una contradicción.
-
+Para demostrar $P \Rightarrow Q$: suponer $P$ y $\neg Q$ simultáneamente y llegar a una contradicción, usando que:
 $$\neg(P \Rightarrow Q) \equiv \neg(\neg P \lor Q) \equiv P \land \neg Q$$
+:::
 
 ## Cuantificación y lógica de predicados
 

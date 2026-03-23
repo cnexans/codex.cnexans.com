@@ -37,6 +37,20 @@ $$e = \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n$$
 donde $2 < e < 3$
 :::
 
+::: {.callout-important title="Proposición — $(1+1/n)^n$ es estrictamente creciente"}
+La sucesión $a_n = \left(1 + \dfrac{1}{n}\right)^n$ es estrictamente creciente.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Por la desigualdad de medias aritmética-geométrica aplicada a $n+1$ números donde $n$ de ellos son $\frac{n+1}{n}$ y uno es $1$:
+$$\left(\frac{n+1}{n}\right)^n \cdot 1 \leq \left(\frac{n \cdot \frac{n+1}{n} + 1}{n+1}\right)^{n+1} = \left(\frac{n+2}{n+1}\right)^{n+1}$$
+Multiplicando ambos lados por $\left(\frac{n+1}{n}\right)^n$, se obtiene $a_n < a_{n+1}$.
+
+Alternativamente, usando el Teorema del Binomio de Newton:
+$$a_n = \sum_{k=0}^{n} \binom{n}{k} \frac{1}{n^k} = \sum_{k=0}^{n} \frac{1}{k!} \cdot \frac{n(n-1)\cdots(n-k+1)}{n^k}$$
+Cada término $\frac{n(n-1)\cdots(n-k+1)}{n^k} = \left(1-\frac{1}{n}\right)\cdots\left(1-\frac{k-1}{n}\right)$ es creciente en $n$, y $a_{n+1}$ tiene un término adicional positivo, por lo tanto $a_n < a_{n+1}$.
+:::
+:::
+
 ::: {.callout-important title="Definición — Logaritmo natural"}
 Para $y > 0$:
 $$\log(y) = \sup\{x \in \mathbb{R} : e^x < y\}$$
@@ -48,6 +62,12 @@ Para $a,b > 0$:
 
 1. $\log(ab) = \log(a) + \log(b)$
 2. $\log(a^b) = b \log(a)$
+
+::: {.callout-caution title="Demostración de $\\log(xy) = \\log x + \\log y$" collapse="true"}
+Sean $r = \log x$ y $s = \log y$, es decir $x = e^r$ y $y = e^s$. Entonces:
+$$xy = e^r \cdot e^s = e^{r+s}$$
+Aplicando $\log$ a ambos lados: $\log(xy) = r + s = \log x + \log y$.
+:::
 :::
 
 ## Desigualdades Notables

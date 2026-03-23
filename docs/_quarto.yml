@@ -23,6 +23,7 @@ book:
     - part: "Variable Compleja"
       chapters:
         - 03_01_Variable_Compleja_Axiomas.md
+        - 03_02_Variable_Compleja_Funciones.md
 
 filters:
   - callout-numbers.lua
