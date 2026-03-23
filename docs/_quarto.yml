@@ -12,7 +12,14 @@ book:
   chapters:
     - index.md
     - 02_Logica.md
-    - 03_Analisis_Real.md
+    - part: "Análisis Real"
+      chapters:
+        - 03_Axiomas.md
+        - 04_Sucesiones.md
+        - 05_Limites.md
+        - 06_Herramientas.md
+        - 07_Derivadas.md
+        - 08_Integrales.md
 
 filters:
   - callout-numbers.lua
