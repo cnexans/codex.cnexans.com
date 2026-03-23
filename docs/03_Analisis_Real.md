@@ -465,14 +465,55 @@ Si $f$ es continua en $[a,b]$, entonces $f$ es uniformemente continua en $[a,b]$
 ::: {.callout-note title="Teorema — Teorema del Valor Medio"}
 Sea $f:[a,b] \to \mathbb{R}$ una función continua en $[a,b]$ y derivable en $(a,b)$. Entonces existe $c \in (a,b)$ tal que:
 $$f'(c) = \frac{f(b) - f(a)}{b - a}$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Considere la función auxiliar
+
+$$g(x) = f(x) - \frac{f(b) - f(a)}{b-a}(x-a) - f(a)$$
+
+Esta función surge de la distancia entre $f(x)$ y la recta que pasa por $(a, f(a))$ y $(b, f(b))$.
+
+Se verifica que $g(a) = 0$ y $g(b) = 0$. Además, $g$ es continua en $[a,b]$ y derivable en $(a,b)$ por ser combinación de $f$ y una función lineal.
+
+Por el Teorema de Rolle, existe $c \in (a,b)$ tal que $g'(c) = 0$.
+
+Calculando $g'$:
+$$g'(x) = f'(x) - \frac{f(b) - f(a)}{b-a}$$
+
+De $g'(c) = 0$ se obtiene:
+$$f'(c) = \frac{f(b) - f(a)}{b - a}$$
+:::
 :::
 
 ::: {.callout-note title="Teorema — Teorema Fundamental del Cálculo"}
-Sea $f:[a,b] \to \mathbb{R}$ una función continua. Entonces:
+Sea $f:[a,b] \to \mathbb{R}$ una función integrable en $[a,b]$. Sea $F(x) = \displaystyle\int_a^x f(t)\,dt$ la función integral.
 
-1. La función $F(x) = \int_a^x f(t) \, dt$ es derivable en $[a,b]$ y $F'(x) = f(x)$ para todo $x \in [a,b]$.
-2. Si $G$ es una primitiva de $f$ en $[a,b]$, entonces:
-$$\int_a^b f(x) \, dx = G(b) - G(a)$$
+1. $F$ es uniformemente continua en $[a,b]$.
+2. Si $f$ es continua en $x_0 \in [a,b]$, entonces $F$ es derivable en $x_0$ y $F'(x_0) = f(x_0)$.
+3. Si $G$ es una primitiva de $f$ en $[a,b]$, entonces:
+$$\int_a^b f(x)\,dx = G(b) - G(a)$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+**Parte 1: continuidad uniforme de $F$.**
+
+Sean $x, y \in [a,b]$. Como $f$ es integrable, es acotada: $\exists M > 0$ tal que $|f(t)| \leq M$ $\forall t \in [a,b]$.
+
+$$|F(x) - F(y)| = \left|\int_a^x f(t)\,dt - \int_a^y f(t)\,dt\right| = \left|\int_y^x f(t)\,dt\right| \leq \int_y^x |f(t)|\,dt \leq M|x-y|$$
+
+Dado $\varepsilon > 0$, tome $\delta = \varepsilon/M$. Si $|x-y| < \delta$, entonces $|F(x)-F(y)| \leq M|x-y| < M\delta = \varepsilon$.
+
+**Parte 2: $F'(x_0) = f(x_0)$ cuando $f$ es continua en $x_0$.**
+
+Sea $f$ continua en $x_0$: $\forall \varepsilon > 0$, $\exists \delta > 0$ tal que $|t - x_0| < \delta \Rightarrow |f(t) - f(x_0)| < \varepsilon$.
+
+Para $h > 0$ con $h < \delta$:
+
+$$\left|\frac{F(x_0+h) - F(x_0)}{h} - f(x_0)\right| = \frac{1}{h}\left|\int_{x_0}^{x_0+h}(f(t) - f(x_0))\,dt\right| \leq \frac{1}{h}\int_{x_0}^{x_0+h}|f(t)-f(x_0)|\,dt < \varepsilon$$
+
+Para $h < 0$ la misma estimación aplica integrando de $x_0+h$ a $x_0$.
+
+**Parte 3:** Si $G$ es primitiva de $f$, entonces $G' = F'$ en $(a,b)$, luego $G - F$ es constante. Evaluando en $x = a$ da $G(b) - G(a) = F(b) - F(a) = \int_a^b f(t)\,dt$.
+:::
 :::
 
 ## Exponenciales y Logaritmos
@@ -611,4 +652,437 @@ $$\cos(x + y) = \cos x \cos y - \sin x \sin y$$
 
 ::: {.callout-note title="Teorema — Identidades de reducción de potencias"}
 $$\sin^2 x = \frac{1 - \cos 2x}{2}, \qquad \cos^2 x = \frac{1 + \cos 2x}{2}$$
+:::
+
+## Derivadas
+
+### Definición y propiedades básicas
+
+::: {.callout-important title="Definición — Derivada"}
+Dada una función $f$ definida en $(a,b)$ y $x_0 \in (a,b)$. Se dice que $f$ es **derivable** en $x_0$ si existe el límite
+
+$$f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}$$
+
+En ese caso, $f'(x_0)$ es la **derivada** de $f$ en $x_0$.
+:::
+
+::: {.callout-note title="Teorema — Derivabilidad implica continuidad"}
+Si $f$ es derivable en $x_0$, entonces $f$ es continua en $x_0$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Como $f$ es derivable en $x_0$:
+
+$$f'(x_0) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0}$$
+
+Como $\lim_{x \to x_0}(x - x_0) = 0$, por álgebra de límites:
+
+$$\lim_{x \to x_0}(f(x) - f(x_0)) = \lim_{x \to x_0}\frac{f(x)-f(x_0)}{x-x_0} \cdot \lim_{x \to x_0}(x-x_0) = f'(x_0) \cdot 0 = 0$$
+
+Luego $\lim_{x \to x_0} f(x) = f(x_0)$, es decir, $f$ es continua en $x_0$.
+:::
+:::
+
+### Reglas de derivación
+
+::: {.callout-note title="Teorema — Linealidad de la derivada"}
+Si $f$ y $g$ son derivables en $x_0$ y $\lambda \in \mathbb{R}$, entonces:
+
+1. $(f + g)'(x_0) = f'(x_0) + g'(x_0)$
+2. $(\lambda f)'(x_0) = \lambda f'(x_0)$
+:::
+
+::: {.callout-note title="Teorema — Regla del producto (Leibniz)"}
+Si $f$ y $g$ son derivables en $x_0$, entonces $f \cdot g$ es derivable en $x_0$ y:
+
+$$(f \cdot g)'(x_0) = f'(x_0)\,g(x_0) + f(x_0)\,g'(x_0)$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Por definición de derivada:
+
+$$(f \cdot g)'(x_0) = \lim_{h \to 0} \frac{f(x_0+h)\,g(x_0+h) - f(x_0)\,g(x_0)}{h}$$
+
+Sumamos y restamos $f(x_0)\,g(x_0+h)$ en el numerador:
+
+$$= \lim_{h \to 0} \frac{f(x_0+h)(g(x_0+h)-g(x_0)) + g(x_0+h)(f(x_0+h)-f(x_0))}{h}$$
+
+$$= \lim_{h \to 0} f(x_0+h) \cdot \frac{g(x_0+h)-g(x_0)}{h} + \lim_{h \to 0} g(x_0+h) \cdot \frac{f(x_0+h)-f(x_0)}{h}$$
+
+Como $f$ es derivable, es continua, luego $f(x_0+h) \to f(x_0)$ y $g(x_0+h) \to g(x_0)$ cuando $h \to 0$:
+
+$$(f \cdot g)'(x_0) = f(x_0)\,g'(x_0) + g(x_0)\,f'(x_0)$$
+:::
+:::
+
+::: {.callout-note title="Teorema — Derivada de $1/x$"}
+La función $r(x) = 1/x$ es derivable en todo $x \neq 0$ y $r'(x) = -x^{-2}$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+$$r'(x) = \lim_{h \to 0} \frac{\dfrac{1}{x+h} - \dfrac{1}{x}}{h} = \lim_{h \to 0} \frac{x - (x+h)}{h\,x(x+h)} = \lim_{h \to 0} \frac{-1}{x(x+h)} = -\frac{1}{x^2}$$
+:::
+:::
+
+::: {.callout-note title="Teorema — Regla del cociente"}
+Si $f$ y $g$ son derivables en $x_0$ y $g(x_0) \neq 0$, entonces $f/g$ es derivable en $x_0$ y:
+
+$$\left(\frac{f}{g}\right)'(x_0) = \frac{f'(x_0)\,g(x_0) - f(x_0)\,g'(x_0)}{g(x_0)^2}$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Escribimos $f/g = f \cdot (r \circ g)$ donde $r(x) = 1/x$. Aplicando la regla del producto y la regla de la cadena:
+
+$$\left(\frac{f}{g}\right)'(x_0) = f'(x_0)\cdot\frac{1}{g(x_0)} + f(x_0)\cdot(r \circ g)'(x_0)$$
+
+Por regla de la cadena: $(r \circ g)'(x_0) = r'(g(x_0))\cdot g'(x_0) = -g(x_0)^{-2}\cdot g'(x_0)$. Luego:
+
+$$\left(\frac{f}{g}\right)'(x_0) = \frac{f'(x_0)}{g(x_0)} - \frac{f(x_0)\,g'(x_0)}{g(x_0)^2} = \frac{f'(x_0)\,g(x_0) - f(x_0)\,g'(x_0)}{g(x_0)^2}$$
+:::
+:::
+
+### Regla de la cadena
+
+::: {.callout-note title="Teorema — Regla de la cadena"}
+Sean $g$ derivable en $x_0$ y $f$ derivable en $g(x_0)$. Entonces $f \circ g$ es derivable en $x_0$ y:
+
+$$(f \circ g)'(x_0) = f'(g(x_0))\cdot g'(x_0)$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Defina la función auxiliar:
+
+$$\ell(k) = \begin{cases} \dfrac{f(g(x_0)+k) - f(g(x_0))}{k} - f'(g(x_0)) & \text{si } k \neq 0 \\ 0 & \text{si } k = 0 \end{cases}$$
+
+Como $f$ es derivable en $g(x_0)$, se tiene $\lim_{k\to 0}\ell(k) = 0$, luego $\ell$ es continua en $k=0$.
+
+De la definición de $\ell$, para todo $k$ (incluyendo $k=0$):
+
+$$f(g(x_0)+k) - f(g(x_0)) = \ell(k)\cdot k + f'(g(x_0))\cdot k \qquad (*)$$
+
+Sea $K = g(x_0+h) - g(x_0)$. Sustituyendo $(*)$ con $k = K$:
+
+$$\frac{(f\circ g)(x_0+h) - (f\circ g)(x_0)}{h} = \ell(K)\cdot\frac{g(x_0+h)-g(x_0)}{h} + f'(g(x_0))\cdot\frac{g(x_0+h)-g(x_0)}{h}$$
+
+Tomando límite cuando $h \to 0$: como $g$ es continua en $x_0$, $K \to 0$, luego $\ell(K) \to 0$:
+
+$$(f\circ g)'(x_0) = 0\cdot g'(x_0) + f'(g(x_0))\cdot g'(x_0) = f'(g(x_0))\cdot g'(x_0)$$
+:::
+:::
+
+### Función inversa
+
+::: {.callout-note title="Teorema — Derivada de la función inversa"}
+Si $f$ es estrictamente monótona en $[a,b]$, derivable en $c \in (a,b)$ y $f'(c) \neq 0$, entonces $f^{-1}$ es derivable en $f(c)$ y:
+
+$$(f^{-1})'(f(c)) = \frac{1}{f'(c)}$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Sea $K = f^{-1}(f(c)+\Delta) - c$, de modo que $\Delta = f(c+K)-f(c)$.
+
+Cuando $\Delta \to 0$, como $f$ es continua y estrictamente monótona, se tiene $K \to 0$. Entonces:
+
+$$\lim_{\Delta \to 0} \frac{f^{-1}(f(c)+\Delta) - f^{-1}(f(c))}{\Delta} = \lim_{K \to 0} \frac{K}{f(c+K)-f(c)} = \frac{1}{f'(c)}$$
+:::
+:::
+
+## Teoremas del Cálculo Diferencial
+
+### Extremos locales
+
+::: {.callout-note title="Teorema — Teorema de Fermat"}
+Si $f:(a,b) \to \mathbb{R}$, $x_0 \in (a,b)$ es un máximo o mínimo local de $f$, y $f$ es derivable en $x_0$, entonces $f'(x_0) = 0$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Sin pérdida de generalidad, suponga que $x_0$ es mínimo local de $f$.
+
+**Derivada lateral derecha.** Para $x > x_0$: $x - x_0 > 0$ y $f(x) - f(x_0) \geq 0$, luego:
+$$\frac{f(x)-f(x_0)}{x-x_0} \geq 0 \implies f'(x_0) = \lim_{x \to x_0^+}\frac{f(x)-f(x_0)}{x-x_0} \geq 0$$
+
+**Derivada lateral izquierda.** Para $x < x_0$: $x - x_0 < 0$ y $f(x) - f(x_0) \geq 0$, luego:
+$$\frac{f(x)-f(x_0)}{x-x_0} \leq 0 \implies f'(x_0) = \lim_{x \to x_0^-}\frac{f(x)-f(x_0)}{x-x_0} \leq 0$$
+
+Como $f$ es derivable, ambas derivadas laterales son iguales, y se tiene $0 \leq f'(x_0) \leq 0$, luego $f'(x_0) = 0$.
+:::
+:::
+
+### Teoremas de valor medio
+
+::: {.callout-note title="Teorema — Teorema de Rolle"}
+Si $f$ es continua en $[a,b]$, derivable en $(a,b)$ y $f(a) = f(b)$, entonces existe $c \in (a,b)$ tal que $f'(c) = 0$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Como $f$ es continua en $[a,b]$, por el Teorema de Weierstrass alcanza su máximo en $x_1$ y su mínimo en $x_2$.
+
+**Caso 1:** Alguno de $x_1$, $x_2$ está en el interior $(a,b)$. Entonces por el Teorema de Fermat, $f'(x_1) = 0$ o $f'(x_2) = 0$.
+
+**Caso 2:** $x_1$ y $x_2$ están ambos en los extremos. Como $f(a) = f(b)$, el máximo y mínimo son iguales, luego $f$ es constante y $f' \equiv 0$.
+:::
+:::
+
+::: {.callout-note title="Teorema — Teorema de Cauchy (valor medio generalizado)"}
+Si $f$ y $g$ son continuas en $[a,b]$ y derivables en $(a,b)$, entonces existe $c \in (a,b)$ tal que:
+
+$$(f(b) - f(a))\,g'(c) = (g(b) - g(a))\,f'(c)$$
+
+Si además $g'(x) \neq 0$ para todo $x \in (a,b)$, entonces $g(b) \neq g(a)$ y:
+
+$$\frac{f(b) - f(a)}{g(b) - g(a)} = \frac{f'(c)}{g'(c)}$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Defina la función auxiliar:
+
+$$h(x) = (f(b)-f(a))(g(x)-g(a)) - (g(b)-g(a))(f(x)-f(a))$$
+
+Se verifica que $h(a) = 0$ y $h(b) = 0$. Por el Teorema de Rolle, existe $c \in (a,b)$ tal que $h'(c) = 0$:
+
+$$h'(c) = (f(b)-f(a))\,g'(c) - (g(b)-g(a))\,f'(c) = 0$$
+:::
+:::
+
+### Consecuencias del teorema del valor medio
+
+::: {.callout-note title="Teorema — Derivada nula implica función constante"}
+Si $f$ es continua en $[a,b]$, derivable en $(a,b)$ y $f'(x) = 0$ para todo $x \in (a,b)$, entonces $f$ es constante en $[a,b]$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Sea $x'' \in (a,b]$ arbitrario. Aplique el Teorema del Valor Medio a $f$ en $[a, x'']$: existe $c \in (a, x'')$ tal que:
+
+$$f(x'') - f(a) = f'(c)(x'' - a) = 0$$
+
+Luego $f(x'') = f(a)$ para todo $x'' \in (a,b]$.
+:::
+:::
+
+::: {.callout-note title="Corolario — Funciones con igual derivada difieren en una constante"}
+Si $f$ y $g$ son continuas en $[a,b]$, derivables en $(a,b)$ y $f'(x) = g'(x)$ para todo $x \in (a,b)$, entonces existe $K \in \mathbb{R}$ tal que $f(x) = g(x) + K$ para todo $x \in [a,b]$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Sea $h(x) = f(x) - g(x)$. Entonces $h'(x) = 0$ en $(a,b)$. Por el teorema anterior, $h$ es constante: $h(x) = K$.
+:::
+:::
+
+::: {.callout-note title="Proposición — Derivada y monotonía"}
+Sea $f$ continua en $[a,b]$ y derivable en $(a,b)$:
+
+1. Si $f'(x) > 0$ para todo $x \in (a,b)$, entonces $f$ es estrictamente creciente en $[a,b]$.
+2. Si $f'(x) < 0$ para todo $x \in (a,b)$, entonces $f$ es estrictamente decreciente en $[a,b]$.
+:::
+
+### Regla de L'Hôpital
+
+::: {.callout-note title="Teorema — Regla de L'Hôpital (caso $0/0$)"}
+Sean $f$ y $g$ definidas y derivables en $(a,b)$, $x_0 \in (a,b)$, con $f(x_0) = g(x_0) = 0$ y $g'(x) \neq 0$ para $x \neq x_0$.
+
+Si existe $\displaystyle\lim_{x \to x_0} \frac{f'(x)}{g'(x)} = \ell$, entonces:
+
+$$\lim_{x \to x_0} \frac{f(x)}{g(x)} = \ell$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Dado $\varepsilon > 0$, existe $\delta > 0$ tal que $0 < |x - x_0| < \delta \Rightarrow \left|\dfrac{f'(x)}{g'(x)} - \ell\right| < \varepsilon$.
+
+Para $x$ con $0 < |x - x_0| < \delta$, como $f(x_0) = g(x_0) = 0$, por el Teorema de Cauchy existe $c$ entre $x$ y $x_0$ tal que:
+
+$$\frac{f(x)}{g(x)} = \frac{f(x) - f(x_0)}{g(x) - g(x_0)} = \frac{f'(c)}{g'(c)}$$
+
+Como $c \to x_0$ cuando $x \to x_0$:
+
+$$\left|\frac{f(x)}{g(x)} - \ell\right| = \left|\frac{f'(c)}{g'(c)} - \ell\right| < \varepsilon$$
+:::
+:::
+
+::: {.callout-note title="Teorema — Regla de L'Hôpital (caso $\infty/\infty$)"}
+Sean $f$ y $g$ derivables en $(a,b) \setminus \{x_0\}$ con $\lim_{x \to x_0} f(x) = \lim_{x \to x_0} g(x) = \infty$ y $g'(x) \neq 0$.
+
+Si existe $\displaystyle\lim_{x \to x_0} \frac{f'(x)}{g'(x)} = \ell$, entonces $\displaystyle\lim_{x \to x_0} \frac{f(x)}{g(x)} = \ell$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Dado $\varepsilon > 0$, existe $\delta_1 > 0$ tal que $0 < |x - x_0| < \delta_1 \Rightarrow \left|\dfrac{f'(x)}{g'(x)} - \ell\right| < \dfrac{\varepsilon}{4}$.
+
+Fije $x_1 = x_0 + \delta_1$. Para $x$ con $0 < |x - x_0| < \delta_1$, por el Teorema de Cauchy existe $c$ entre $x$ y $x_1$ tal que:
+
+$$\frac{f(x) - f(x_1)}{g(x) - g(x_1)} = \frac{f'(c)}{g'(c)}$$
+
+Por la desigualdad triangular:
+
+$$\left|\frac{f(x)}{g(x)} - \ell\right| \leq \left|\frac{g(x)-g(x_1)}{g(x)}\right|\cdot\left|\frac{f'(c)}{g'(c)} - \ell\right| + \left|\frac{f(x_1) - g(x_1)\ell}{g(x)}\right|$$
+
+Como $g(x) \to \infty$, existen $\delta_2$, $\delta_3$ tales que ambos sumandos son $< \varepsilon/2$ para $|x-x_0| < \min(\delta_2, \delta_3)$. Tomando $\delta = \min(\delta_1,\delta_2,\delta_3)$ concluimos $\left|\dfrac{f(x)}{g(x)} - \ell\right| < \varepsilon$.
+:::
+:::
+
+## Integrales de Darboux
+
+### Particiones y sumas de Darboux
+
+::: {.callout-important title="Definición — Partición de un intervalo"}
+Sea $[a,b] \subset \mathbb{R}$ con $a < b$. Una **partición** de $[a,b]$ es un conjunto $\Pi = \{x_0, x_1, \ldots, x_n\} \subset [a,b]$ tal que $x_0 = a < x_1 < \cdots < x_n = b$.
+
+Se denota $I_k = [x_{k-1}, x_k]$ para $k = 1, \ldots, n$.
+
+Se dice que $\Pi'$ es **más fina** que $\Pi$ si $\Pi \subseteq \Pi'$.
+:::
+
+::: {.callout-important title="Definición — Sumas de Darboux"}
+Sea $f:[a,b] \to \mathbb{R}$ acotada y $\Pi = \{x_0, \ldots, x_n\}$ una partición de $[a,b]$. Se definen:
+
+$$m_k = \inf\{f(x) : x \in [x_{k-1}, x_k]\}, \qquad M_k = \sup\{f(x) : x \in [x_{k-1}, x_k]\}$$
+
+La **suma inferior** y la **suma superior** de Darboux son:
+
+$$s_\Pi(f) = \sum_{k=1}^{n} m_k\,(x_k - x_{k-1}), \qquad S_\Pi(f) = \sum_{k=1}^{n} M_k\,(x_k - x_{k-1})$$
+
+Se tiene $s_\Pi(f) \leq S_\Pi(f)$.
+:::
+
+::: {.callout-note title="Proposición — Refinamiento y sumas de Darboux"}
+Sea $f:[a,b] \to \mathbb{R}$ acotada y $\Pi$, $\Pi'$ particiones con $\Pi'$ más fina que $\Pi$. Entonces:
+
+$$s_{\Pi'}(f) \geq s_\Pi(f) \qquad \text{y} \qquad S_{\Pi'}(f) \leq S_\Pi(f)$$
+
+Consecuencia: para cualesquiera particiones $\Pi$, $\Pi'$, se tiene $s_\Pi(f) \leq S_{\Pi'}(f)$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+**Caso de un punto adicional.** Suponga $\Pi' = \Pi \cup \{c\}$ con $c \in (x_{K-1}, x_K)$. Sea $\tilde{M} = \sup f|_{[x_{K-1},c]}$ y $\tilde{\tilde{M}} = \sup f|_{[c,x_K]}$. Como ambos son supremos de subconjuntos, $\tilde{M}, \tilde{\tilde{M}} \leq M_K$. Luego:
+
+$$\tilde{M}(c-x_{K-1}) + \tilde{\tilde{M}}(x_K - c) \leq M_K(x_K - x_{K-1})$$
+
+de donde $S_{\Pi'}(f) \leq S_\Pi(f)$. El caso de suma inferior es análogo.
+
+**Caso general.** Si $\Pi'$ tiene $m$ puntos más que $\Pi$, se aplica el argumento anterior $m$ veces.
+
+**Consecuencia.** Sea $\tilde{\Pi} = \Pi \cup \Pi'$. Entonces $s_\Pi \leq s_{\tilde{\Pi}} \leq S_{\tilde{\Pi}} \leq S_{\Pi'}$.
+:::
+:::
+
+### Integral de Darboux e integrabilidad
+
+::: {.callout-important title="Definición — Integral de Darboux e integrabilidad"}
+Sea $f:[a,b] \to \mathbb{R}$ acotada con $a < b$. Se definen:
+
+$$\underline{\int_a^b} f(x)\,dx = \sup_\Pi\, s_\Pi(f) \quad \text{(integral inferior)}, \qquad \overline{\int_a^b} f(x)\,dx = \inf_\Pi\, S_\Pi(f) \quad \text{(integral superior)}$$
+
+Se tiene $\displaystyle\underline{\int_a^b} f \leq \overline{\int_a^b} f$.
+
+Se dice que $f$ es **integrable en $[a,b]$** si $\displaystyle\underline{\int_a^b} f = \overline{\int_a^b} f$, y en ese caso se escribe $\displaystyle\int_a^b f(x)\,dx$ para el valor común.
+
+**Convenciones:** $\displaystyle\int_c^c f = 0$ y $\displaystyle\int_b^a f = -\int_a^b f$.
+:::
+
+::: {.callout-note title="Proposición — Criterio de integrabilidad de Darboux"}
+Sea $f:[a,b] \to \mathbb{R}$ acotada. Son equivalentes:
+
+1. $f$ es integrable en $[a,b]$.
+2. $\forall \varepsilon > 0$, existe una partición $\Pi$ tal que $S_\Pi(f) - s_\Pi(f) < \varepsilon$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+**(1) $\Rightarrow$ (2):** Como $f$ es integrable, por definición de supremo e ínfimo existen $\Pi$, $\Pi'$ tales que:
+
+$$s_\Pi(f) > \int_a^b f - \frac{\varepsilon}{2}, \qquad S_{\Pi'}(f) < \int_a^b f + \frac{\varepsilon}{2}$$
+
+Sea $\tilde{\Pi} = \Pi \cup \Pi'$. Entonces $S_{\tilde{\Pi}} - s_{\tilde{\Pi}} \leq S_{\Pi'} - s_\Pi < \varepsilon$.
+
+**(2) $\Rightarrow$ (1):** Dado $\varepsilon > 0$, tome $\Pi$ con $S_\Pi - s_\Pi < \varepsilon$. Entonces:
+
+$$0 \leq \overline{\int_a^b} f - \underline{\int_a^b} f \leq S_\Pi(f) - s_\Pi(f) < \varepsilon$$
+
+Como $\varepsilon$ es arbitrario, $\overline{\int} f = \underline{\int} f$.
+:::
+:::
+
+::: {.callout-note title="Proposición — Aditividad de la integral"}
+Sean $a < c < b$ y $f:[a,b] \to \mathbb{R}$ acotada. Entonces $f$ es integrable en $[a,b]$ si y solo si es integrable en $[a,c]$ y en $[c,b]$, y en ese caso:
+
+$$\int_a^b f(x)\,dx = \int_a^c f(x)\,dx + \int_c^b f(x)\,dx$$
+:::
+
+### Ejemplos de integrabilidad
+
+::: {.callout-note title="Ejemplo — La función constante es integrable"}
+Sea $f(x) = c$ constante en $[a,b]$. Entonces $f$ es integrable y $\displaystyle\int_a^b f(x)\,dx = c(b-a)$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Para cualquier partición $\Pi$, $m_k = M_k = c$, luego $s_\Pi(f) = S_\Pi(f) = c(b-a)$.
+:::
+:::
+
+::: {.callout-note title="Ejemplo — La función de Dirichlet no es integrable"}
+La función
+
+$$f(x) = \begin{cases} 1 & x \in \mathbb{Q} \\ 0 & x \notin \mathbb{Q} \end{cases}$$
+
+no es integrable en ningún $[a,b]$ con $a < b$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+En todo subintervalo hay racionales e irracionales (densidad). Luego $m_k = 0$ y $M_k = 1$ para toda partición, de donde $\underline{\int} f = 0 \neq b-a = \overline{\int} f$.
+:::
+:::
+
+### Funciones integrables
+
+::: {.callout-note title="Teorema — Función continua es integrable"}
+Sea $f:[a,b] \to \mathbb{R}$ continua. Entonces $f$ es integrable en $[a,b]$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Como $f$ es continua en $[a,b]$, por el Teorema de Heine-Cantor es uniformemente continua: $\forall \varepsilon > 0$, $\exists \delta > 0$ tal que $|x-y| < \delta \Rightarrow |f(x)-f(y)| < \dfrac{\varepsilon}{b-a}$.
+
+Tome la partición regular $\Pi_n$ con $n > (b-a)/\delta$ puntos. En cada $I_k$, los extremos $m_k = f(c_k)$ y $M_k = f(d_k)$ satisfacen $|c_k - d_k| \leq (b-a)/n < \delta$, luego $M_k - m_k < \varepsilon/(b-a)$.
+
+$$S_{\Pi_n}(f) - s_{\Pi_n}(f) = \sum_{k=1}^n (M_k - m_k)\frac{b-a}{n} < \frac{\varepsilon}{b-a}\cdot(b-a) = \varepsilon$$
+:::
+:::
+
+::: {.callout-note title="Teorema — Función acotada con finitas discontinuidades es integrable"}
+Sea $f:[a,b] \to \mathbb{R}$ acotada y continua salvo en un número finito de puntos. Entonces $f$ es integrable en $[a,b]$.
+
+::: {.callout-caution title="Demostración" collapse="true"}
+**Una discontinuidad en $c \in (a,b)$.** Sea $M > 0$ tal que $|f(x)| \leq M$. Dado $\varepsilon > 0$, elige $\delta < \varepsilon/(4M)$ con $c \pm \delta \in (a,b)$.
+
+Como $f$ es continua en $[a,c-\delta]$ y $[c+\delta,b]$, existen particiones $\Pi_1$, $\Pi_2$ con $S_{\Pi_j} - s_{\Pi_j} < \varepsilon/3$.
+
+La partición $\Pi = \Pi_1 \cup \{c-\delta, c+\delta\} \cup \Pi_2$ satisface:
+
+$$S_\Pi - s_\Pi < \frac{\varepsilon}{3} + 2M \cdot 2\delta + \frac{\varepsilon}{3} < \frac{2\varepsilon}{3} + 4M\cdot\frac{\varepsilon}{4M} = \varepsilon$$
+
+**Caso general:** inducción en el número de discontinuidades.
+:::
+:::
+
+### Teorema Fundamental del Cálculo
+
+::: {.callout-important title="Definición — Función integral"}
+Sea $f:[a,b] \to \mathbb{R}$ integrable. La **función integral** de $f$ es:
+
+$$F:[a,b] \to \mathbb{R}, \qquad F(x) = \int_a^x f(t)\,dt$$
+:::
+
+*Véase el Teorema Fundamental del Cálculo en la sección Límites y Continuidad.*
+
+### Métodos de integración
+
+::: {.callout-note title="Teorema — Método de sustitución"}
+Sea $f:[a,b] \to \mathbb{R}$ con primitiva $F$, y $g:[\alpha,\beta] \to [a,b]$ derivable. Entonces:
+
+$$\int_{\alpha}^{\beta} (f \circ g)(x)\,g'(x)\,dx = F(g(\beta)) - F(g(\alpha))$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Por la regla de la cadena: $(F \circ g)'(x) = F'(g(x))\cdot g'(x) = f(g(x))\cdot g'(x)$.
+
+Luego $F \circ g$ es primitiva de $(f\circ g)\cdot g'$, y por el TFC:
+
+$$\int_\alpha^\beta (f\circ g)(x)\,g'(x)\,dx = (F\circ g)(\beta) - (F\circ g)(\alpha)$$
+:::
+:::
+
+::: {.callout-note title="Teorema — Integración por partes"}
+Sean $u, v:[a,b] \to \mathbb{R}$ derivables con $u'v$ y $uv'$ integrables. Entonces:
+
+$$\int_a^b u(x)\,v'(x)\,dx = \Big[u(x)v(x)\Big]_a^b - \int_a^b u'(x)\,v(x)\,dx$$
+
+::: {.callout-caution title="Demostración" collapse="true"}
+Por la regla del producto: $(u\,v)' = u'v + uv'$.
+
+Integrando en $[a,b]$ y usando el TFC:
+
+$$u(x)v(x)\Big|_a^b = \int_a^b u'(x)v(x)\,dx + \int_a^b u(x)v'(x)\,dx$$
+
+Despejando:
+
+$$\int_a^b u(x)\,v'(x)\,dx = \Big[u(x)v(x)\Big]_a^b - \int_a^b u'(x)\,v(x)\,dx$$
+:::
 :::
