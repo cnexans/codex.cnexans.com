@@ -214,7 +214,7 @@ Sea $f$ continua en $[a,b]$ y derivable en $(a,b)$:
 
 ### Regla de L'Hôpital
 
-::: {.callout-note title="Teorema — Regla de L'Hôpital (caso $0/0$)"}
+::: {.callout-note title="Teorema — Regla de L'Hôpital (caso 0/0)"}
 Sean $f$ y $g$ definidas y derivables en $(a,b)$, $x_0 \in (a,b)$, con $f(x_0) = g(x_0) = 0$ y $g'(x) \neq 0$ para $x \neq x_0$.
 
 Si existe $\displaystyle\lim_{x \to x_0} \frac{f'(x)}{g'(x)} = \ell$, entonces:
@@ -234,7 +234,7 @@ $$\left|\frac{f(x)}{g(x)} - \ell\right| = \left|\frac{f'(c)}{g'(c)} - \ell\right
 :::
 :::
 
-::: {.callout-note title="Teorema — Regla de L'Hôpital (caso $\infty/\infty$)"}
+::: {.callout-note title="Teorema — Regla de L'Hôpital (caso ∞/∞)"}
 Sean $f$ y $g$ derivables en $(a,b) \setminus \{x_0\}$ con $\lim_{x \to x_0} f(x) = \lim_{x \to x_0} g(x) = \infty$ y $g'(x) \neq 0$.
 
 Si existe $\displaystyle\lim_{x \to x_0} \frac{f'(x)}{g'(x)} = \ell$, entonces $\displaystyle\lim_{x \to x_0} \frac{f(x)}{g(x)} = \ell$.
