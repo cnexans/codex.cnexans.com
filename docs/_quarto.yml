@@ -38,6 +38,10 @@ format:
     lang: es
     include-in-header: posthog.html
     css: custom.css
+    grid:
+      sidebar-width: 280px
+      body-width: 900px
+      margin-width: 0px
   pdf:
     pdf-engine: xelatex
     toc: true

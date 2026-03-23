@@ -113,16 +113,19 @@ pre {
 /* ── Layout: contenido a ancho completo ──────────── */
 .page-columns {
   max-width: 100% !important;
+  width: 100% !important;
 }
 
-#quarto-content {
-  max-width: 100%;
+#quarto-content,
+#quarto-content > main {
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
-/* Columna de texto principal */
-.page-columns .page-content,
-article.content {
-  max-width: 760px;
+/* Elimina el margen derecho vacío (la columna de margen Quarto) */
+.page-columns.page-full,
+.quarto-container.page-columns {
+  --quarto-margin-width: 0px;
 }
 
 /* ── Tablas ──────────────────────────────────────── */
