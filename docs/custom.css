@@ -79,3 +79,27 @@
 .callout-caution details > summary .callout-toggle {
   color: #9e9e9e;
 }
+
+/* ── Scroll horizontal en mobile ───────────────
+   Evita que ecuaciones y tablas anchas rompan
+   el layout — se desplazan dentro de su bloque. */
+body {
+  overflow-x: hidden;
+}
+
+.mjx-container,
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+.callout {
+  overflow-x: auto;
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
