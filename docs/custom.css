@@ -111,18 +111,39 @@ pre {
 .navbar a:hover { color: #dee9ed !important; }
 
 /* ── Layout: contenido a ancho completo ──────────── */
+
+/* Bootstrap containers del tema cosmo */
+.container, .container-fluid,
+.container-sm, .container-md,
+.container-lg, .container-xl, .container-xxl {
+  max-width: 100% !important;
+}
+
+/* Grid de Quarto: body content ocupa todo el espacio */
 .page-columns {
   max-width: 100% !important;
   width: 100% !important;
 }
 
 #quarto-content,
-#quarto-content > main {
+#quarto-content > main,
+main.content {
   max-width: 100% !important;
   width: 100% !important;
 }
 
-/* Elimina el margen derecho vacío (la columna de margen Quarto) */
+/* Sobreescribir la columna body del grid de Quarto en desktop */
+@media (min-width: 992px) {
+  .page-columns {
+    grid-template-columns:
+      [screen-start page-start body-start-outset body-start] 1.5em
+      [body-content-start] minmax(0, 1fr)
+      [body-content-end] 1.5em
+      [body-end body-end-outset page-end screen-end] !important;
+  }
+}
+
+/* Elimina margen derecho vacío */
 .page-columns.page-full,
 .quarto-container.page-columns {
   --quarto-margin-width: 0px;
