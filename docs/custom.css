@@ -1,6 +1,6 @@
 /* ================================================
    Estilos académicos — inspirado en Crafting Interpreters
-   Fuentes: Crimson Text (prosa), Source Sans Pro (UI),
+   Fuentes: Crimson Text (prosa), Source Sans 3 (UI),
             Source Code Pro (código)
    ================================================ */
 
@@ -28,6 +28,15 @@ p, li, td, th {
   line-height: 1.65;
 }
 
+a {
+  color: #1481b8;
+  transition: color 0.2s ease, border-color 0.4s ease;
+}
+
+a:hover {
+  color: #1481b8;
+}
+
 /* ── Código ──────────────────────────────────────── */
 code, pre, .sourceCode, .cell-code {
   font-family: "Source Code Pro", Menlo, Consolas, Monaco, monospace !important;
@@ -49,30 +58,38 @@ pre {
 
 /* ── Sidebar / Navegación ────────────────────────── */
 #quarto-sidebar,
-.sidebar.sidebar-navigation {
+.sidebar.sidebar-navigation,
+nav.sidebar.sidebar-navigation {
   background-color: #29313d !important;
   font-family: "Source Sans 3", sans-serif !important;
   font-weight: 300;
   font-size: 14px;
+  color: #4b6781;
 }
 
 /* Links de navegación */
 #quarto-sidebar a,
-.sidebar.sidebar-navigation a {
+.sidebar.sidebar-navigation a,
+.sidebar-navigation .sidebar-item a,
+.sidebar-navigation .sidebar-item .sidebar-item-text {
   color: #7aa0b8 !important;
   font-family: "Source Sans 3", sans-serif !important;
   font-weight: 300;
+  border-bottom: none !important;
 }
 
 #quarto-sidebar a:hover,
 .sidebar.sidebar-navigation a:hover {
   color: #dee9ed !important;
   text-decoration: none;
+  border-bottom: none !important;
 }
 
 /* Títulos de parte/sección en la sidebar */
 #quarto-sidebar .sidebar-section .sidebar-section-item,
-.sidebar .sidebar-section > .sidebar-item-text {
+.sidebar .sidebar-section > .sidebar-item-text,
+.sidebar-navigation .sidebar-title,
+.sidebar-navigation .chapter-title {
   color: #7aa0b8 !important;
   font-weight: 400;
   text-transform: uppercase;
@@ -82,7 +99,9 @@ pre {
 
 /* Ítem activo */
 #quarto-sidebar .sidebar-item.active > .sidebar-item-container .sidebar-item-text,
-.sidebar .active > .sidebar-item-text {
+.sidebar .active > .sidebar-item-text,
+.sidebar-navigation .sidebar-item-text.active,
+.sidebar-navigation .active .sidebar-item-text {
   color: #dee9ed !important;
   font-weight: 400;
 }
@@ -91,6 +110,12 @@ pre {
 #quarto-sidebar hr,
 .sidebar hr {
   border-color: #3b4b5e;
+}
+
+/* Sidebar list styling */
+#quarto-sidebar ol,
+#quarto-sidebar ul {
+  border-top: solid 1px #3b4b5e;
 }
 
 /* ── Navbar ──────────────────────────────────────── */
@@ -112,41 +137,84 @@ pre {
 
 /* ── Layout: contenido a ancho completo ──────────── */
 
-/* Bootstrap containers del tema cosmo */
+/*
+ * Quarto uses a CSS-grid layout with named grid lines.
+ * The body class is "nav-sidebar floating" so Quarto applies:
+ *   body.floating .page-columns { grid-template-columns: ... }
+ * with 5fr gutters on each side that center a narrow content column.
+ * We override ALL page-columns variants to fill 100% width.
+ */
+
+/* Remove all max-width constraints from Bootstrap containers */
 .container, .container-fluid,
 .container-sm, .container-md,
 .container-lg, .container-xl, .container-xxl {
   max-width: 100% !important;
+  padding-right: 0 !important;
 }
 
-/* Grid de Quarto: body content ocupa todo el espacio */
+/* Base overrides for all page-columns */
 .page-columns {
   max-width: 100% !important;
   width: 100% !important;
+  --quarto-margin-width: 0px !important;
 }
 
-#quarto-content,
-#quarto-content > main,
-main.content {
+#quarto-content {
   max-width: 100% !important;
   width: 100% !important;
 }
 
-/* Sobreescribir la columna body del grid de Quarto en desktop */
+/* The single full-width grid template we use everywhere.
+   Named lines must be preserved for Quarto's JS to work. */
 @media (min-width: 992px) {
-  .page-columns {
+  /* body.floating is the active class for sidebar-navigation books */
+  body.floating .page-columns,
+  body.floating .page-columns .page-columns,
+  body.docked .page-columns,
+  body.docked .page-columns .page-columns,
+  body:not(.floating):not(.docked) .page-columns,
+  body:not(.floating):not(.docked) .page-columns.toc-left,
+  body:not(.floating):not(.docked) .page-columns.toc-left .page-columns,
+  body.fullcontent:not(.floating):not(.docked) .page-columns,
+  body.slimcontent:not(.floating):not(.docked) .page-columns,
+  body.listing:not(.floating):not(.docked) .page-columns,
+  div.page-columns.page-rows-contents,
+  #quarto-content.page-columns {
+    display: grid;
+    gap: 0;
     grid-template-columns:
-      [screen-start page-start body-start-outset body-start] 1.5em
+      [screen-start] 0px
+      [screen-start-inset] 0px
+      [page-start page-start-inset] 0px
+      [body-start-outset] 0px
+      [body-start] 0px
       [body-content-start] minmax(0, 1fr)
-      [body-content-end] 1.5em
-      [body-end body-end-outset page-end screen-end] !important;
+      [body-content-end] 0px
+      [body-end] 0px
+      [body-end-outset] 0px
+      [page-end-inset page-end] 0px
+      [screen-end-inset] 0px
+      [screen-end] !important;
   }
 }
 
-/* Elimina margen derecho vacío */
-.page-columns.page-full,
-.quarto-container.page-columns {
-  --quarto-margin-width: 0px;
+/* Content area fills available space */
+#quarto-content > main,
+main.content,
+main#quarto-document-content {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+/* Kill any max-width on article/section inside content */
+#quarto-document-content,
+.page-columns > main > section,
+.page-columns > main > article {
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 /* ── Tablas ──────────────────────────────────────── */
@@ -250,4 +318,10 @@ mjx-container {
   overflow-x: auto;
   overflow-y: hidden;
   max-width: 100%;
+}
+
+/* ── TOC on left: style to match sidebar theme ──── */
+nav#TOC {
+  font-family: "Source Sans 3", sans-serif !important;
+  font-size: 14px;
 }

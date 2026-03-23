@@ -38,10 +38,12 @@ format:
     lang: es
     include-in-header: posthog.html
     css: custom.css
+    page-layout: full
     grid:
       sidebar-width: 280px
-      body-width: 900px
+      body-width: 1800px
       margin-width: 0px
+      gutter-width: 0px
   pdf:
     pdf-engine: xelatex
     toc: true
@@ -51,3 +53,11 @@ format:
     colorlinks: true
     urlcolor: cyan
     linkcolor: cyan
+    callout-icon: false
+    callout-appearance: simple
+    include-in-header:
+      - text: |
+          \definecolor{quarto-callout-tip-color}{HTML}{2e7d32}
+          \definecolor{quarto-callout-important-color}{HTML}{e65100}
+          \definecolor{quarto-callout-note-color}{HTML}{1565c0}
+          \definecolor{quarto-callout-caution-color}{HTML}{757575}
