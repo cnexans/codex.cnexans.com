@@ -137,84 +137,13 @@ nav.sidebar.sidebar-navigation {
 
 /* ── Layout: contenido a ancho completo ──────────── */
 
-/*
- * Quarto uses a CSS-grid layout with named grid lines.
- * The body class is "nav-sidebar floating" so Quarto applies:
- *   body.floating .page-columns { grid-template-columns: ... }
- * with 5fr gutters on each side that center a narrow content column.
- * We override ALL page-columns variants to fill 100% width.
- */
-
-/* Remove all max-width constraints from Bootstrap containers */
-.container, .container-fluid,
-.container-sm, .container-md,
-.container-lg, .container-xl, .container-xxl {
-  max-width: 100% !important;
-  padding-right: 0 !important;
-}
-
-/* Base overrides for all page-columns */
-.page-columns {
-  max-width: 100% !important;
-  width: 100% !important;
-  --quarto-margin-width: 0px !important;
-}
-
-#quarto-content {
-  max-width: 100% !important;
-  width: 100% !important;
-}
-
-/* The single full-width grid template we use everywhere.
-   Named lines must be preserved for Quarto's JS to work. */
+/* Quitar la columna de margen derecho para que el contenido
+   se expanda hacia la derecha (el sidebar izquierdo se mantiene
+   gracias a margin-width > 0 en _quarto.yml). */
 @media (min-width: 992px) {
-  /* body.floating is the active class for sidebar-navigation books */
-  body.floating .page-columns,
-  body.floating .page-columns .page-columns,
-  body.docked .page-columns,
-  body.docked .page-columns .page-columns,
-  body:not(.floating):not(.docked) .page-columns,
-  body:not(.floating):not(.docked) .page-columns.toc-left,
-  body:not(.floating):not(.docked) .page-columns.toc-left .page-columns,
-  body.fullcontent:not(.floating):not(.docked) .page-columns,
-  body.slimcontent:not(.floating):not(.docked) .page-columns,
-  body.listing:not(.floating):not(.docked) .page-columns,
-  div.page-columns.page-rows-contents,
-  #quarto-content.page-columns {
-    display: grid;
-    gap: 0;
-    grid-template-columns:
-      [screen-start] 0px
-      [screen-start-inset] 0px
-      [page-start page-start-inset] 0px
-      [body-start-outset] 0px
-      [body-start] 0px
-      [body-content-start] minmax(0, 1fr)
-      [body-content-end] 0px
-      [body-end] 0px
-      [body-end-outset] 0px
-      [page-end-inset page-end] 0px
-      [screen-end-inset] 0px
-      [screen-end] !important;
+  .page-columns {
+    --quarto-margin-width: 0px !important;
   }
-}
-
-/* Content area fills available space */
-#quarto-content > main,
-main.content,
-main#quarto-document-content {
-  max-width: 100% !important;
-  width: 100% !important;
-  padding-left: 2em;
-  padding-right: 2em;
-}
-
-/* Kill any max-width on article/section inside content */
-#quarto-document-content,
-.page-columns > main > section,
-.page-columns > main > article {
-  max-width: 100% !important;
-  width: 100% !important;
 }
 
 /* ── Tablas ──────────────────────────────────────── */
