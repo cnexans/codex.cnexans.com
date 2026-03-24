@@ -40,8 +40,8 @@ format:
     css: custom.css
     grid:
       sidebar-width: 280px
-      body-width: 1800px
-      margin-width: 0px
+      body-width: 900px
+      margin-width: 200px
       gutter-width: 0rem
   pdf:
     pdf-engine: xelatex
