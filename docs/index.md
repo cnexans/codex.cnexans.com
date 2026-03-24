@@ -1,6 +1,7 @@
 ---
 title: "Codex"
 author: "Carlos Nexans"
+sidebar: false
 ---
 
 ::: {.content-visible when-format="html"}

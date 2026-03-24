@@ -57,6 +57,27 @@ pre {
 }
 
 /* ── Sidebar / Navegación ────────────────────────── */
+
+/* Comportamiento estilo Crafting Interpreters:
+   - Portada (index): sin sidebar, contenido ocupa todo
+   - Capítulos: sidebar solo muestra TOC del capítulo (secciones) */
+
+/* Portada: ocultar sidebar vacío */
+body:not(.nav-sidebar) #quarto-sidebar {
+  display: none !important;
+  width: 0 !important;
+}
+
+/* Capítulos: ocultar navegación del libro, dejar solo TOC in-page */
+.sidebar-menu-container {
+  display: none !important;
+}
+
+/* La TOC in-page ocupa todo el sidebar */
+nav#TOC {
+  padding-top: 1em;
+}
+
 #quarto-sidebar,
 .sidebar.sidebar-navigation,
 nav.sidebar.sidebar-navigation {
@@ -253,6 +274,35 @@ mjx-container {
 nav#TOC {
   font-family: "Source Sans 3", sans-serif !important;
   font-size: 14px;
+}
+
+nav#TOC .toc-title,
+nav#TOC h2 {
+  color: #7aa0b8 !important;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 12px;
+  border-bottom: 1px solid #3b4b5e;
+  padding-bottom: 0.5em;
+}
+
+nav#TOC a {
+  color: #7aa0b8 !important;
+}
+
+nav#TOC a:hover {
+  color: #dee9ed !important;
+}
+
+nav#TOC .active a {
+  color: #dee9ed !important;
+  font-weight: 400;
+}
+
+/* Borde lateral de la TOC activa */
+nav#TOC ul {
+  border-left: 1px solid #3b4b5e;
 }
 
 /* ── Tabla de contenidos (index page) ──────────── */
