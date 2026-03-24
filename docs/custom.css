@@ -67,6 +67,17 @@ body:not(.nav-sidebar) #quarto-sidebar {
   width: 0 !important;
 }
 
+/* Tablet (992-1024): forzar layout mobile aunque Quarto muestre sidebar */
+@media (min-width: 992px) and (max-width: 1024px) {
+  #quarto-sidebar {
+    display: none !important;
+    width: 0 !important;
+  }
+  #quarto-content {
+    margin-left: 0 !important;
+  }
+}
+
 /* Capítulos: ocultar navegación del libro, dejar solo TOC in-page */
 .sidebar-menu-container {
   display: none !important;
@@ -160,7 +171,7 @@ nav.sidebar.sidebar-navigation {
 /* Quitar la columna de margen derecho para que el contenido
    se expanda hacia la derecha (el sidebar izquierdo se mantiene
    gracias a margin-width > 0 en _quarto.yml). */
-@media (min-width: 992px) {
+@media (min-width: 1024px) {
   .page-columns {
     --quarto-margin-width: 0px !important;
   }
@@ -292,7 +303,7 @@ nav.page-navigation .pagination-link {
 }
 nav.page-navigation .pagination-link:hover { color: #1481b8; }
 
-@media (max-width: 991.98px) {
+@media (max-width: 1023.98px) {
   nav.page-navigation {
     background: #29313d;
     padding: 12px 16px;
