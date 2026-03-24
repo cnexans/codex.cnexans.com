@@ -166,6 +166,12 @@ nav.sidebar.sidebar-navigation {
   }
 }
 
+/* Padding interno del contenido (gutter-width es 0 para pegar sidebar al borde) */
+main.content {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
 /* ── Tablas ──────────────────────────────────────── */
 table {
   font-family: "Source Sans 3", sans-serif;
