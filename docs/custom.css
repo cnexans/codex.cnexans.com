@@ -72,9 +72,12 @@ body:not(.nav-sidebar) #quarto-content {
   margin-left: 0 !important;
 }
 
-/* CAPÍTULOS: ocultar navegación del libro, dejar solo TOC in-page */
-.sidebar-menu-container {
-  display: none !important;
+/* DESKTOP: ocultar navegación del libro, dejar solo TOC in-page.
+   En mobile el sidebar overlay muestra la navegación de capítulos. */
+@media (min-width: 992px) {
+  .sidebar-menu-container {
+    display: none !important;
+  }
 }
 
 /* TOC in-page ocupa todo el sidebar */
