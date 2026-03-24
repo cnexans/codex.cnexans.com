@@ -328,38 +328,59 @@ nav#TOC {
 
 /* ── Tabla de contenidos (index page) ──────────── */
 
+/* Multi-column grid */
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2em 3em;
+  margin-top: 1.5em;
+}
+
+@media (max-width: 992px) {
+  .toc-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .toc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Part headings */
-#quarto-document-content h3.unlisted {
+.toc-column h3.unlisted {
   font-family: "Source Sans 3", sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #5985a6;
-  margin-top: 1.8em;
+  margin-top: 0;
   margin-bottom: 0.6em;
   padding-bottom: 0.3em;
   border-bottom: 1px solid #dee9ed;
 }
 
 /* Chapter list */
-#quarto-document-content h3.unlisted + ol,
-#quarto-document-content h3.unlisted + p + ol {
+.toc-column ol {
   list-style: none;
   padding-left: 0;
+  margin: 0;
 }
 
-#quarto-document-content h3.unlisted ~ ol li {
-  padding: 0.35em 0;
-  font-size: 1.05rem;
+.toc-column ol li {
+  padding: 0.4em 0;
+  line-height: 1.4;
 }
 
-#quarto-document-content h3.unlisted ~ ol li a {
+.toc-column ol li a {
   font-weight: 600;
+  font-size: 1.05rem;
   color: #222;
 }
 
-#quarto-document-content h3.unlisted ~ ol li a:hover {
+.toc-column ol li a:hover {
   color: #1481b8;
 }

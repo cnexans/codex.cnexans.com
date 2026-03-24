@@ -38,7 +38,6 @@ format:
     lang: es
     include-in-header: posthog.html
     css: custom.css
-    page-layout: full
     grid:
       sidebar-width: 280px
       body-width: 1800px
