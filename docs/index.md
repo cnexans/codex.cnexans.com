@@ -18,10 +18,6 @@ Mis apuntes compilados y pasados en limpio.
 1. [Cómo demostrar](01_Logica.md)\
    Lógica simbólica, teoremas, métodos de demostración
 
-:::
-
-::: {.toc-column}
-
 ### II · Análisis Real {.unlisted .unnumbered}
 
 2. [Construcción Axiomática](02_01_Analisis_Axiomas.md)\
