@@ -53,7 +53,7 @@ blockquote, ul, ol, dl, figure, .callout { margin-bottom: 24px; }
 hr { margin: 48px 0; border: none; border-top: 1px solid #dee9ed; }
 
 /* ── Content max-width ─────────────────────────────── */
-main.content, #quarto-document-content { max-width: 660px; }
+/* max-width removido: el grid de Quarto (body-width: 900px) controla el ancho */
 
 /* ── Sidebar / Navegación ────────────────────────── */
 
@@ -67,8 +67,26 @@ body:not(.nav-sidebar) #quarto-sidebar {
   width: 0 !important;
 }
 
-/* Tablet (992-1024): forzar layout mobile aunque Quarto muestre sidebar */
-@media (min-width: 992px) and (max-width: 1024px) {
+/* Desktop: forzar sidebar visible (margin-width: 0 activa fullcontent
+   que colapsa el sidebar; lo forzamos de vuelta) */
+@media (min-width: 1025px) {
+  #quarto-sidebar,
+  #quarto-sidebar.collapse,
+  #quarto-sidebar.collapse.collapse-horizontal,
+  body.fullcontent #quarto-sidebar {
+    display: flex !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    overflow-y: auto !important;
+  }
+  /* Empujar contenido a la derecha del sidebar */
+  body.fullcontent #quarto-content {
+    margin-left: 280px !important;
+  }
+}
+
+/* Tablet y mobile (<=1024): sidebar colapsado */
+@media (max-width: 1024px) {
   #quarto-sidebar {
     display: none !important;
     width: 0 !important;
@@ -168,13 +186,10 @@ nav.sidebar.sidebar-navigation {
 
 /* ── Layout: contenido a ancho completo ──────────── */
 
-/* Quitar la columna de margen derecho para que el contenido
-   se expanda hacia la derecha (el sidebar izquierdo se mantiene
-   gracias a margin-width > 0 en _quarto.yml). */
-@media (min-width: 1024px) {
-  .page-columns {
-    --quarto-margin-width: 0px !important;
-  }
+/* page-navigation: expandir a ancho completo del grid */
+nav.page-navigation {
+  grid-column: page-start / screen-end !important;
+  max-width: none !important;
 }
 
 /* Padding interno del contenido (gutter-width es 0 para pegar sidebar al borde) */
