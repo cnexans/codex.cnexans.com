@@ -325,3 +325,41 @@ nav#TOC {
   font-family: "Source Sans 3", sans-serif !important;
   font-size: 14px;
 }
+
+/* ── Tabla de contenidos (index page) ──────────── */
+
+/* Part headings */
+#quarto-document-content h3.unlisted {
+  font-family: "Source Sans 3", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #5985a6;
+  margin-top: 1.8em;
+  margin-bottom: 0.6em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #dee9ed;
+}
+
+/* Chapter list */
+#quarto-document-content h3.unlisted + ol,
+#quarto-document-content h3.unlisted + p + ol {
+  list-style: none;
+  padding-left: 0;
+}
+
+#quarto-document-content h3.unlisted ~ ol li {
+  padding: 0.35em 0;
+  font-size: 1.05rem;
+}
+
+#quarto-document-content h3.unlisted ~ ol li a {
+  font-weight: 600;
+  color: #222;
+}
+
+#quarto-document-content h3.unlisted ~ ol li a:hover {
+  color: #1481b8;
+}
