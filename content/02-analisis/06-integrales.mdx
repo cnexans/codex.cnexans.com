@@ -5,9 +5,7 @@ title: "Integrales de Darboux"
 import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
 
 
-## Integrales de Darboux
-
-### Particiones y sumas de Darboux
+## Particiones y sumas de Darboux
 
 <Definition title="Partición de un intervalo">
 Sea $[a,b] \subset \mathbb{R}$ con $a < b$. Una **partición** de $[a,b]$ es un conjunto $\Pi = \{x_0, x_1, \ldots, x_n\} \subset [a,b]$ tal que $x_0 = a < x_1 < \cdots < x_n = b$.
@@ -49,7 +47,7 @@ de donde $S_{\Pi'}(f) \leq S_\Pi(f)$. El caso de suma inferior es análogo.
 </Proof>
 </Definition>
 
-### Integral de Darboux e integrabilidad
+## Integral de Darboux e integrabilidad
 
 <Definition title="Integral de Darboux e integrabilidad">
 Sea $f:[a,b] \to \mathbb{R}$ acotada con $a < b$. Se definen:
@@ -90,7 +88,7 @@ Sean $a < c < b$ y $f:[a,b] \to \mathbb{R}$ acotada. Entonces $f$ es integrable 
 $$\int_a^b f(x)\,dx = \int_a^c f(x)\,dx + \int_c^b f(x)\,dx$$
 </Definition>
 
-### Ejemplos de integrabilidad
+## Ejemplos de integrabilidad
 
 <Theorem title="La función constante es integrable" label="Ejemplo">
 Sea $f(x) = c$ constante en $[a,b]$. Entonces $f$ es integrable y $\displaystyle\int_a^b f(x)\,dx = c(b-a)$.
@@ -112,7 +110,7 @@ En todo subintervalo hay racionales e irracionales (densidad). Luego $m_k = 0$ y
 </Proof>
 </Theorem>
 
-### Funciones integrables
+## Funciones integrables
 
 <Theorem title="Función continua es integrable">
 Sea $f:[a,b] \to \mathbb{R}$ continua. Entonces $f$ es integrable en $[a,b]$.
@@ -142,7 +140,7 @@ $$S_\Pi - s_\Pi < \frac{\varepsilon}{3} + 2M \cdot 2\delta + \frac{\varepsilon}{
 </Proof>
 </Theorem>
 
-### Teorema Fundamental del Cálculo
+## Teorema Fundamental del Cálculo
 
 <Definition title="Función integral">
 Sea $f:[a,b] \to \mathbb{R}$ integrable. La **función integral** de $f$ es:
@@ -175,7 +173,7 @@ $$\left|\frac{F(x_0+h) - F(x_0)}{h} - f(x_0)\right| = \frac{1}{|h|}\left|\int_{x
 </Proof>
 </Theorem>
 
-### Métodos de integración
+## Métodos de integración
 
 <Theorem title="Método de sustitución">
 Sea $f:[a,b] \to \mathbb{R}$ con primitiva $F$, y $g:[\alpha,\beta] \to [a,b]$ derivable. Entonces:

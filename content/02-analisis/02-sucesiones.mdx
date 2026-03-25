@@ -5,6 +5,8 @@ title: "Sucesiones"
 import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
 
 
+## Definición y convergencia
+
 <Definition title="Sucesión">
 Una sucesión $(a_n)$ es una función $a:\mathbb{N}_0 \to \mathbb{R}$.
 </Definition>
@@ -58,6 +60,8 @@ Una sucesión $(a_n)$ es acotada si $\exists M > 0$ tal que $|a_n| < M$ para tod
 Si una sucesión $(a_n)$ converge, entonces es acotada.
 </Theorem>
 
+## Comparación y álgebra de límites
+
 <Theorem title="Lemas de comparación para sucesiones">
 Sea $(a_n)$ una sucesión con $\lim_{n\to\infty} a_n = l$.
 
@@ -97,6 +101,8 @@ $$\left|\frac{a_n}{b_n}\right| = \frac{|a_n|}{b_n} \leq \frac{M}{b_n} < \varepsi
 </Proof>
 </Definition>
 
+## Límites especiales
+
 <Theorem title="Límites especiales de sucesiones">
 1. $\lim_{n\to\infty} \sqrt[n]{a_n} = 1$ si $(a_n)$ es de términos positivos con $\lim a_n = l > 0$.
 2. $\lim_{n\to\infty} r^n = 0$ para todo $|r| < 1$.
@@ -121,6 +127,8 @@ Escribamos $n^{1/n} = 1 + h_n$ con $h_n \geq 0$. Entonces $n = (1+h_n)^n \geq \b
 donde $c$ es el cociente de los coeficientes principales.
 </Theorem>
 
+## Monotonía y convergencia
+
 <Definition title="Sucesión monótona">
 Una sucesión es monótona si es creciente ($a_n \le a_{n+1}$) o decreciente ($a_n \ge a_{n+1}$).
 </Definition>
@@ -144,6 +152,8 @@ Si una sucesión $(a_n)$ es monótona y no acotada, entonces:
 - Si es decreciente: $\displaystyle\lim_{n\to\infty} a_n = -\infty$.
 </Theorem>
 
+## Subsucesiones y compacidad
+
 <Theorem title="Teorema de Bolzano-Weierstrass">
 Toda sucesión acotada en $\mathbb{R}$ tiene una subsucesión convergente.
 
@@ -161,6 +171,8 @@ Una sucesión $(a_n)$ converge a $l$ si y sólo si toda subsucesión $(a_{n_k})$
 
 *Este resultado permite demostrar divergencia encontrando dos subsucesiones con límites distintos.*
 </Theorem>
+
+## Criterio de Cauchy
 
 <Theorem title="Criterio de Cauchy">
 Una sucesión $(a_n)$ es convergente si y solo si es de Cauchy, es decir:
