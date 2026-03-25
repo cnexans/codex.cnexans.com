@@ -17,3 +17,4 @@ tmp/
 # Misc
 .playwright-mcp/
 *.png
+__pycache__/
