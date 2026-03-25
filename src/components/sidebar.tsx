@@ -90,7 +90,7 @@ export function Sidebar({ currentPart, currentChapter, chapterTitle, partTitle, 
         }`}
       >
         {/* Top: Codex + Part name */}
-        <div className="px-5 pt-6 pb-2">
+        <div className="pl-16 pr-5 pt-6 pb-2 lg:pl-5">
           <Link href="/" className="text-sm font-semibold tracking-wide text-[#dee9ed] no-underline hover:text-white">
             {bookTitle}
           </Link>
