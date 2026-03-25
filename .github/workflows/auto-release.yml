@@ -1,0 +1,82 @@
+name: Auto Release
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'content/**/*.mdx'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for MDX changes
+        id: check
+        run: |
+          # Get the previous commit
+          PREV=$(git rev-parse HEAD~1)
+          # Check if any .mdx files changed
+          if git diff --name-only "$PREV" HEAD | grep -q '\.mdx$'; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Compute next version
+        if: steps.check.outputs.changed == 'true'
+        id: version
+        run: |
+          # Get latest tag matching vX.Y.Z
+          LATEST=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+          if [ -z "$LATEST" ]; then
+            LATEST="v0.0.0"
+          fi
+          # Bump minor version
+          MAJOR=$(echo "$LATEST" | cut -d. -f1)
+          MINOR=$(echo "$LATEST" | cut -d. -f2)
+          NEXT_MINOR=$((MINOR + 1))
+          NEXT="${MAJOR}.${NEXT_MINOR}.0"
+          echo "tag=$NEXT" >> "$GITHUB_OUTPUT"
+          echo "prev=$LATEST" >> "$GITHUB_OUTPUT"
+          echo "Next version: $NEXT"
+
+      - name: Generate changelog
+        if: steps.check.outputs.changed == 'true'
+        id: changelog
+        run: |
+          PREV="${{ steps.version.outputs.prev }}"
+          {
+            echo 'body<<CHANGELOG_EOF'
+            echo '## Cambios'
+            echo ''
+            git log "${PREV}..HEAD" --pretty=format:'- %s' -- '*.mdx' 'filters/' 'src/components/callout.tsx'
+            echo ''
+            echo 'CHANGELOG_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Install PDF dependencies
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-latex-extra pandoc librsvg2-bin
+
+      - name: Build PDF
+        if: steps.check.outputs.changed == 'true'
+        run: make pdf
+
+      - name: Create release
+        if: steps.check.outputs.changed == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          body: ${{ steps.changelog.outputs.body }}
+          files: release/pdf/*.pdf
+          generate_release_notes: false

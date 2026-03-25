@@ -73,49 +73,53 @@ function Div(div)
   local numbered_title = number_title(callout_type, title)
   local is_proof = callout_type == 'callout-caution'
 
-  -- Build tcolorbox LaTeX — no separate title background, just inline text
-  local tcolorbox_opts = string.format(
-    'enhanced, breakable, '
-    .. 'colback=%s, colframe=%s, '
-    .. 'boxrule=0pt, leftrule=4pt, '
-    .. 'arc=0pt, outer arc=0pt, '
-    .. 'left=8pt, right=8pt, top=8pt, bottom=8pt, '
-    .. 'before skip=12pt, after skip=12pt',
-    col.bg, col.border
-  )
-
   local result = pandoc.List({})
-  result:insert(pandoc.RawBlock('latex',
-    string.format('\\begin{tcolorbox}[%s]', tcolorbox_opts)))
 
-  -- Title as inline text (no separate header box)
-  if numbered_title then
-    local safe_title = numbered_title:gsub('%%', '\\%%')
-    -- Extract \footnotemark if present (can't be inside \MakeUppercase)
-    local has_footnotemark = safe_title:find('\\footnotemark')
-    local clean_title = safe_title:gsub('\\footnotemark{}', '')
-    local fmark = has_footnotemark and '\\footnotemark{}' or ''
-    if is_proof then
+  if is_proof then
+    -- Proofs: no tcolorbox, inherit parent background
+    result:insert(pandoc.RawBlock('latex', '\\medskip'))
+    if numbered_title then
+      local safe_title = numbered_title:gsub('%%', '\\%%')
+      local has_footnotemark = safe_title:find('\\footnotemark')
+      local clean_title = safe_title:gsub('\\footnotemark{}', '')
+      local fmark = has_footnotemark and '\\footnotemark{}' or ''
       result:insert(pandoc.RawBlock('latex',
         string.format('{\\small\\itshape\\sffamily %s%s}\\par\\medskip', clean_title, fmark)))
-    else
+    end
+    for _, block in ipairs(div.content) do
+      result:insert(block)
+    end
+    result:insert(pandoc.RawBlock('latex',
+      '\\begin{flushright}{\\small\\itshape\\color{quarto-callout-caution-color} QED}\\end{flushright}'))
+  else
+    -- Regular callouts: tcolorbox with colored border and background
+    local tcolorbox_opts = string.format(
+      'enhanced, breakable, '
+      .. 'colback=%s, colframe=%s, '
+      .. 'boxrule=0pt, leftrule=4pt, '
+      .. 'arc=0pt, outer arc=0pt, '
+      .. 'left=8pt, right=8pt, top=8pt, bottom=8pt, '
+      .. 'before skip=12pt, after skip=12pt',
+      col.bg, col.border
+    )
+    result:insert(pandoc.RawBlock('latex',
+      string.format('\\begin{tcolorbox}[%s]', tcolorbox_opts)))
+
+    if numbered_title then
+      local safe_title = numbered_title:gsub('%%', '\\%%')
+      local has_footnotemark = safe_title:find('\\footnotemark')
+      local clean_title = safe_title:gsub('\\footnotemark{}', '')
+      local fmark = has_footnotemark and '\\footnotemark{}' or ''
       result:insert(pandoc.RawBlock('latex',
         string.format('{\\small\\bfseries\\sffamily\\MakeUppercase{%s}%s}\\par\\medskip', clean_title, fmark)))
     end
-  end
 
-  -- Insert content blocks
-  for _, block in ipairs(div.content) do
-    result:insert(block)
-  end
+    for _, block in ipairs(div.content) do
+      result:insert(block)
+    end
 
-  -- QED for proofs
-  if is_proof then
-    result:insert(pandoc.RawBlock('latex',
-      '\\begin{flushright}{\\small\\itshape\\color{quarto-callout-caution-color} QED}\\end{flushright}'))
+    result:insert(pandoc.RawBlock('latex', '\\end{tcolorbox}'))
   end
-
-  result:insert(pandoc.RawBlock('latex', '\\end{tcolorbox}'))
 
   return result
 end

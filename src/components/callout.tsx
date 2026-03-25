@@ -92,8 +92,11 @@ function CalloutInner({ title, label, collapsible, children, variant }: CalloutP
 
   if (collapsible) {
     return (
-      <details className={wrapperClasses}>
-        <summary className="cursor-pointer list-none">{header}</summary>
+      <details className={`group ${wrapperClasses}`}>
+        <summary className="cursor-pointer list-none flex items-center gap-1.5">
+          <span className="text-gray-400 text-[10px] transition-transform duration-200 group-open:rotate-90">▶</span>
+          {header}
+        </summary>
         <div className="mt-2">{body}</div>
       </details>
     );
@@ -140,7 +143,7 @@ export function Theorem({ title, label, children }: SimpleCalloutProps) {
   );
 }
 
-export function Proof({ title, label, collapsible, children }: SimpleCalloutProps) {
+export function Proof({ title, label, collapsible = true, children }: SimpleCalloutProps) {
   return (
     <CalloutInner variant="proof" title={title} label={label} collapsible={collapsible}>
       {children}
