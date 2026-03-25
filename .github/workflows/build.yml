@@ -19,37 +19,39 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Install system dependencies
-        run: sudo apt-get install -y librsvg2-bin
+      - name: Install npm dependencies
+        run: npm ci
 
-      - name: Install TinyTeX
-        run: quarto install tinytex
+      - name: Build site
+        run: npm run build
 
-      - name: Render HTML
-        run: cd docs && quarto render --to html
+      - name: Install PDF dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-fonts-recommended texlive-latex-extra pandoc librsvg2-bin
 
-      - name: Render PDF
-        run: cd docs && quarto render --to pdf
+      - name: Build PDF
+        run: make pdf
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
           name: libro-pdf
-          path: release/quarto/*.pdf
+          path: release/pdf/*.pdf
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Add CNAME for custom domain
-        run: cp docs/CNAME release/quarto/CNAME
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: release/quarto
+          path: out
 
   deploy:
     needs: build

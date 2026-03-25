@@ -11,8 +11,8 @@ import matplotlib.patches as patches
 from pathlib import Path
 
 # Directorios de salida
-IMG_ANALISIS  = Path("docs/img/analisis")
-IMG_COMPLEJOS = Path("docs/img/complejos")
+IMG_ANALISIS  = Path("public/img/analisis")
+IMG_COMPLEJOS = Path("public/img/complejos")
 
 # Estilo global: sin marcos, tipografía limpia
 plt.rcParams.update({

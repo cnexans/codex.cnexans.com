@@ -2,17 +2,18 @@
 title: "Sucesiones"
 ---
 
-## Sucesiones
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
 
-::: {.callout-important title="Definición — Sucesión"}
+
+<Definition title="Sucesión">
 Una sucesión $(a_n)$ es una función $a:\mathbb{N}_0 \to \mathbb{R}$.
-:::
+</Definition>
 
-::: {.callout-important title="Definición — Límite de sucesión"}
+<Definition title="Límite de sucesión">
 $\displaystyle \lim_{n \to \infty} a_n = l$ si $\forall \varepsilon > 0, \exists n_0 \in \mathbb{N}$ tal que $n \ge n_0 \Rightarrow |a_n - l| < \varepsilon$.
-:::
+</Definition>
 
-::: {.callout-caution title="Ejemplo — $\\lim_{n\\to\\infty} \\dfrac{n^2+2n+1}{n^2-3n-2} = 1$" collapse="true"}
+<Theorem title="$\\lim_{n\\to\\infty} \\dfrac{n^2+2n+1}{n^2-3n-2} = 1$" label="Ejemplo" collapsible>
 Sea $a_n = \dfrac{n^2+2n+1}{n^2-3n-2}$. Queremos mostrar que $|a_n - 1| < \varepsilon$ para $n$ suficientemente grande.
 
 $$|a_n - 1| = \left|\frac{n^2+2n+1 - (n^2-3n-2)}{n^2-3n-2}\right| = \left|\frac{5n+3}{n^2-3n-2}\right|$$
@@ -21,55 +22,55 @@ Para $n$ grande, $n^2 - 3n - 2 > n^2/2$ (pues $3n + 2 < n^2/2$ para $n \geq 7$),
 $$|a_n - 1| \leq \frac{5n+3}{n^2/2} = \frac{2(5n+3)}{n^2} \leq \frac{16}{n}$$
 
 Dado $\varepsilon > 0$, tomando $N = \max\left(7, \lceil 16/\varepsilon \rceil\right)$, para $n > N$ se tiene $|a_n - 1| \leq 16/n < \varepsilon$.
-:::
+</Theorem>
 
-::: {.callout-important title="Proposición — Equivalencia de la definición de límite"}
+<Definition title="Equivalencia de la definición de límite" label="Proposición">
 Sea $(a_n)$ una sucesión y $l \in \mathbb{R}$. Son equivalentes:
 
 a) $\lim_{n \to \infty} a_n = l$
 
 b) $\lim_{n \to \infty} |a_n - l| = 0$
 
-::: {.callout-caution title="Demostración" collapse="true"}
+<Proof collapsible>
 $(a) \Rightarrow (b)$: Sea $\varepsilon > 0$. Dado que $\lim a_n = l$, existe $N$ tal que para $n > N$, $|a_n - l| < \varepsilon$. Luego $\bigl||a_n - l| - 0\bigr| = |a_n - l| < \varepsilon$, así que $\lim |a_n - l| = 0$.
 
 $(b) \Rightarrow (a)$: Sea $\varepsilon > 0$. Existe $N$ tal que para $n > N$, $\bigl||a_n - l| - 0\bigr| = |a_n - l| < \varepsilon$, por lo tanto $\lim a_n = l$.
-:::
-:::
+</Proof>
+</Definition>
 
-::: {.callout-important title="Definición — Límites infinitos de sucesión"}
+<Definition title="Límites infinitos de sucesión">
 Sea $(a_n)$ una sucesión.
 
 $$\lim_{n \to \infty} a_n = +\infty \iff \forall M > 0,\ \exists n_0 \in \mathbb{N} : n \ge n_0 \Rightarrow a_n > M$$
 
 $$\lim_{n \to \infty} a_n = -\infty \iff \forall M > 0,\ \exists n_0 \in \mathbb{N} : n \ge n_0 \Rightarrow a_n < -M$$
-:::
+</Definition>
 
-::: {.callout-note title="Teorema — Unicidad del límite"}
+<Theorem title="Unicidad del límite">
 Si una sucesión tiene límite, este es único.
-:::
+</Theorem>
 
-::: {.callout-important title="Definición — Sucesión acotada"}
+<Definition title="Sucesión acotada">
 Una sucesión $(a_n)$ es acotada si $\exists M > 0$ tal que $|a_n| < M$ para todo $n \in \mathbb{N}$.
-:::
+</Definition>
 
-::: {.callout-note title="Teorema — Condición necesaria de convergencia"}
+<Theorem title="Condición necesaria de convergencia">
 Si una sucesión $(a_n)$ converge, entonces es acotada.
-:::
+</Theorem>
 
-::: {.callout-note title="Teorema — Lemas de comparación para sucesiones"}
+<Theorem title="Lemas de comparación para sucesiones">
 Sea $(a_n)$ una sucesión con $\lim_{n\to\infty} a_n = l$.
 
 1. Si $l > b$, entonces $\exists n_0 \in \mathbb{N}$ tal que $n \ge n_0 \Rightarrow a_n > b$.
 2. Si $l < b$, entonces $\exists n_0 \in \mathbb{N}$ tal que $n \ge n_0 \Rightarrow a_n < b$.
 3. Si $a_n \le b$ para todo $n$, entonces $l \le b$.
-:::
+</Theorem>
 
-::: {.callout-note title="Teorema — Teorema del Sandwich para sucesiones"}
+<Theorem title="Teorema del Sandwich para sucesiones">
 Si $(a_n)$, $(b_n)$, $(c_n)$ son sucesiones tales que $\displaystyle \lim_{n \to \infty} a_n = \lim_{n \to \infty} c_n = l$ y $a_n \le b_n \le c_n$, entonces $\displaystyle \lim_{n \to \infty} b_n = l$.
-:::
+</Theorem>
 
-::: {.callout-note title="Teorema — Álgebra de límites de sucesiones"}
+<Theorem title="Álgebra de límites de sucesiones">
 Sean $(a_n)$, $(b_n)$ sucesiones convergentes con límites $l_1, l_2$:
 
 1. $\lim(a_n + b_n) = l_1 + l_2$
@@ -77,133 +78,136 @@ Sean $(a_n)$, $(b_n)$ sucesiones convergentes con límites $l_1, l_2$:
 3. $\lim(k a_n) = k l_1$
 4. $\lim\left(\frac{a_n}{b_n}\right) = \frac{l_1}{l_2}$, si $l_2 \neq 0$
 5. $\lim |a_n| = |l_1|$
-:::
+</Theorem>
 
-::: {.callout-important title="Proposición — Aritmética con límites infinitos"}
+<Definition title="Aritmética con límites infinitos" label="Proposición">
 Sean $(a_n)$ sucesión acotada y $(b_n)$ con $\lim_{n\to\infty} b_n = +\infty$. Entonces:
 
 a) $\lim_{n\to\infty}(a_n + b_n) = +\infty$
 
 b) $\lim_{n\to\infty} \dfrac{a_n}{b_n} = 0$
 
-::: {.callout-caution title="Demostración" collapse="true"}
+<Proof collapsible>
 **(a)** Como $a_n$ es acotada, existe $M > 0$ con $|a_n| \leq M$ para todo $n$. Sea $R > 0$. Dado que $b_n \to +\infty$, existe $N$ con $b_n > R + M$ para $n > N$. Entonces:
 $$a_n + b_n > -M + (R + M) = R$$
 Por lo tanto $\lim(a_n + b_n) = +\infty$.
 
 **(b)** Sea $\varepsilon > 0$. Como $a_n$ es acotada, $|a_n| \leq M$. Dado que $b_n \to +\infty$, existe $N$ con $b_n > M/\varepsilon$ para $n > N$. Entonces:
 $$\left|\frac{a_n}{b_n}\right| = \frac{|a_n|}{b_n} \leq \frac{M}{b_n} < \varepsilon$$
-:::
-:::
+</Proof>
+</Definition>
 
-::: {.callout-note title="Teorema — Límites especiales de sucesiones"}
+<Theorem title="Límites especiales de sucesiones">
 1. $\lim_{n\to\infty} \sqrt[n]{a_n} = 1$ si $(a_n)$ es de términos positivos con $\lim a_n = l > 0$.
 2. $\lim_{n\to\infty} r^n = 0$ para todo $|r| < 1$.
-:::
+</Theorem>
 
-::: {.callout-important title="Lema — $\\lim_{n\\to\\infty} n^{1/n} = 1$"}
+<Theorem title="$\\lim_{n\\to\\infty} n^{1/n} = 1$" label="Lema">
 $$\lim_{n \to \infty} n^{1/n} = 1$$
 
 Más generalmente, para $r > 0$ fijo:
 $$\lim_{n\to\infty} r^n = \begin{cases} +\infty & \text{si } r > 1 \\ 1 & \text{si } r = 1 \\ 0 & \text{si } 0 \leq r < 1 \end{cases}$$
 
-::: {.callout-caution title="Demostración" collapse="true"}
+<Proof collapsible>
 Escribamos $n^{1/n} = 1 + h_n$ con $h_n \geq 0$. Entonces $n = (1+h_n)^n \geq \binom{n}{2} h_n^2 = \frac{n(n-1)}{2} h_n^2$, así que $h_n^2 \leq \frac{2}{n-1}$, es decir $0 \leq h_n \leq \sqrt{\frac{2}{n-1}} \to 0$. Por el Teorema del Sandwich, $h_n \to 0$ y por tanto $n^{1/n} \to 1$.
-:::
-:::
+</Proof>
+</Theorem>
 
-::: {.callout-note title="Teorema — Límites con potencias y polinomios"}
+<Theorem title="Límites con potencias y polinomios">
 1. $\displaystyle\lim_{n \to \infty} r^n = \begin{cases} 0 & \text{si } |r| < 1 \\ +\infty & \text{si } r > 1 \\ \text{no existe} & \text{si } r = -1 \end{cases}$
 
 2. $\displaystyle\lim_{n \to \infty} \frac{P(n)}{G(n)} = \begin{cases} \infty & \text{si } \deg P > \deg G \\ 0 & \text{si } \deg P < \deg G \\ c & \text{si } \deg P = \deg G \end{cases}$
 
 donde $c$ es el cociente de los coeficientes principales.
-:::
+</Theorem>
 
-::: {.callout-important title="Definición — Sucesión monótona"}
+<Definition title="Sucesión monótona">
 Una sucesión es monótona si es creciente ($a_n \le a_{n+1}$) o decreciente ($a_n \ge a_{n+1}$).
-:::
+</Definition>
 
-::: {.callout-note title="Teorema — Convergencia de sucesiones monótonas"}
+<Theorem title="Convergencia de sucesiones monótonas">
 Si una sucesión es monótona y acotada, entonces converge.
 
-::: {.callout-caution title="Demostración" collapse="true"}
+<Proof collapsible>
 Consideremos el caso creciente y acotada superiormente. Sea $s = \sup\{a_n : n \in \mathbb{N}\}$, que existe por el Axioma del Supremo. Sea $\varepsilon > 0$. Como $s - \varepsilon$ no es cota superior, existe $N$ tal que $a_N > s - \varepsilon$. Para $n > N$, como la sucesión es creciente:
 $$s - \varepsilon < a_N \leq a_n \leq s$$
 Luego $|a_n - s| < \varepsilon$, es decir $\lim_{n\to\infty} a_n = s$.
 
 El caso decreciente y acotada inferiormente es análogo usando $\inf$.
-:::
-:::
+</Proof>
+</Theorem>
 
-::: {.callout-note title="Teorema — Comportamiento de sucesiones monótonas no acotadas"}
+<Theorem title="Comportamiento de sucesiones monótonas no acotadas">
 Si una sucesión $(a_n)$ es monótona y no acotada, entonces:
 
 - Si es creciente: $\displaystyle\lim_{n\to\infty} a_n = +\infty$.
 - Si es decreciente: $\displaystyle\lim_{n\to\infty} a_n = -\infty$.
-:::
+</Theorem>
 
-::: {.callout-note title="Teorema — Teorema de Bolzano-Weierstrass"}
+<Theorem title="Teorema de Bolzano-Weierstrass">
 Toda sucesión acotada en $\mathbb{R}$ tiene una subsucesión convergente.
 
-::: {.callout-caution title="Demostración" collapse="true"}
+<Proof collapsible>
 Sea $(a_n)$ acotada, con $|a_n| \leq M$. Consideramos $I_1 = [-M, M]$. Dividimos por la mitad: al menos uno de los dos subintervalos contiene infinitos términos de la sucesión; lo llamamos $I_2$. Continuando, obtenemos intervalos encajados $I_1 \supset I_2 \supset \cdots$ con $\ell(I_k) = M/2^{k-1} \to 0$. Por el Teorema de los Intervalos Encajados, existe un único $x \in \bigcap_k I_k$. La subsucesión $a_{n_k}$ de elementos tomados en $I_k$ cumple $|a_{n_k} - x| \leq \ell(I_k) \to 0$, por lo que $a_{n_k} \to x$.
-:::
-:::
+</Proof>
+</Theorem>
 
-::: {.callout-important title="Definición — Subsucesión"}
+<Definition title="Subsucesión">
 Sea $(a_n)$ una sucesión. Una **subsucesión** de $(a_n)$ es una sucesión de la forma $(a_{n_k})_{k \in \mathbb{N}}$, donde $(n_k)$ es una sucesión estrictamente creciente de números naturales: $n_1 < n_2 < n_3 < \cdots$
-:::
+</Definition>
 
-::: {.callout-note title="Teorema — Convergencia y subsucesiones"}
+<Theorem title="Convergencia y subsucesiones">
 Una sucesión $(a_n)$ converge a $l$ si y sólo si toda subsucesión $(a_{n_k})$ converge a $l$.
 
 *Este resultado permite demostrar divergencia encontrando dos subsucesiones con límites distintos.*
-:::
+</Theorem>
 
-::: {.callout-note title="Teorema — Criterio de Cauchy"}
+<Theorem title="Criterio de Cauchy">
 Una sucesión $(a_n)$ es convergente si y solo si es de Cauchy, es decir:
 $$\forall \varepsilon > 0, \exists N \in \mathbb{N} : \forall n,m \geq N, |a_n - a_m| < \varepsilon$$
-:::
+</Theorem>
 
-::: {.callout-note title="Teorema — Propiedades de las sucesiones de Cauchy"}
+<Theorem title="Propiedades de las sucesiones de Cauchy">
 1. Toda sucesión de Cauchy es acotada.
 2. Una sucesión es convergente si y sólo si es de Cauchy.
 3. Si $(a_n)$ es de Cauchy y existe una subsucesión $(a_{n_k})$ tal que $\lim_{k\to\infty} a_{n_k} = a$, entonces $\lim_{n\to\infty} a_n = a$.
 
-::: {.callout-caution title="Demostración — toda sucesión de Cauchy es acotada" collapse="true"}
+<Proof title="toda sucesión de Cauchy es acotada" collapsible>
 Sea $(a_n)$ de Cauchy. Tomando $\varepsilon = 1$, existe $N$ tal que $|a_n - a_m| < 1$ para $n, m > N$. En particular, $|a_n - a_{N+1}| < 1$ para $n > N$, así que $|a_n| < |a_{N+1}| + 1$. Tomando $M = \max\{|a_1|, \ldots, |a_N|, |a_{N+1}| + 1\}$, se tiene $|a_n| \leq M$ para todo $n$.
-:::
+</Proof>
 
-::: {.callout-caution title="Demostración — toda sucesión de Cauchy converge" collapse="true"}
+<Proof title="toda sucesión de Cauchy converge" collapsible>
 Por la propiedad anterior, $(a_n)$ es acotada. Por el Teorema de Bolzano-Weierstrass, existe una subsucesión $a_{n_k} \to a$. Sea $\varepsilon > 0$. Existen $N_1$ con $|a_{n_k} - a| < \varepsilon/2$ para $k > N_1$, y $N_2$ con $|a_n - a_m| < \varepsilon/2$ para $n, m > N_2$. Sea $N = \max\{N_1, N_2\}$. Para $n > N$, elegimos $k$ con $n_k > N$:
 $$|a_n - a| \leq |a_n - a_{n_k}| + |a_{n_k} - a| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon$$
-:::
-:::
+</Proof>
+</Theorem>
 
-### Encajes de intervalos
+## Encajes de intervalos
 
-::: {.callout-important title="Definición — Encaje de intervalos"}
+<Definition title="Encaje de intervalos">
 Una sucesión de intervalos cerrados $I_n = [a_n, b_n]$ con $a_n \le b_n$ es un **encaje de intervalos** si $I_{n+1} \subset I_n$ para todo $n$.
 
 La **longitud** del intervalo es $\ell(I_n) = b_n - a_n$.
-:::
+</Definition>
 
-::: {.callout-note title="Teorema — Encaje de intervalos"}
+<Theorem title="Encaje de intervalos">
+
+<Aside>
+Este teorema es equivalente al axioma del supremo y es la base del Teorema de Bolzano–Weierstrass.
+</Aside>
+
 Sea $(I_n)$ un encaje de intervalos cerrados. Si $\displaystyle\lim_{n\to\infty} \ell(I_n) = 0$, entonces:
 $$\bigcap_{n=1}^{\infty} I_n = \{x\}$$
 es decir, la intersección contiene exactamente un punto.
 
-*Este teorema es equivalente al axioma del supremo y es la base del Teorema de Bolzano–Weierstrass.*
-
-::: {.callout-caution title="Demostración" collapse="true"}
+<Proof collapsible>
 Sea $a = \sup\{a_n\}$ y $b = \inf\{b_n\}$. Para cada $n$, $a_n \leq b_n$, y como las sucesiones son monótonas, $a_m \leq a_n \leq b_n \leq b_m$ para $m \leq n$. Luego $a_n \leq b$ para todo $n$, así que $a \leq b$, y $x \in [a_n, b_n]$ para todo $n$, es decir $x \in \bigcap_n I_n$.
 
 Si además $\ell(I_n) \to 0$: dado $\varepsilon > 0$, existe $N$ con $b_N - a_N < \varepsilon$. Para cualquier $x, y \in \bigcap_n I_n$, $|x - y| \leq b_N - a_N < \varepsilon$, así que la intersección es unitaria, $\{x\} = \bigcap_n I_n$.
-:::
-:::
+</Proof>
+</Theorem>
 
-::: {.callout-note title="Teorema — Teorema de Heine-Borel"}
+<Theorem title="Teorema de Heine-Borel">
 Un subconjunto de $\mathbb{R}$ es compacto si y solo si es cerrado y acotado.
-:::
+</Theorem>
 

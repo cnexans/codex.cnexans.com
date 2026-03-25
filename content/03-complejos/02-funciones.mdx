@@ -2,37 +2,40 @@
 title: "Funciones"
 ---
 
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+
 ## Funciones de variable compleja
 
-::: {.callout-important title="Definición — Función de variable compleja"}
+<Definition title="Función de variable compleja">
 Sea $S \subset \mathbb{C}$ un conjunto no vacío. Una **función de variable compleja** es una función $f: S \to \mathbb{C}$ que asigna a cada $z \in S$ un único valor complejo $f(z)$.
-:::
+</Definition>
 
-::: {.callout-important title="Definición — Función real de variable compleja"}
+<Definition title="Función real de variable compleja">
 Una **función real de variable compleja** es una función $f: S \subset \mathbb{C} \to \mathbb{R}$, es decir, cuyo recorrido está contenido en $\mathbb{R}$.
-:::
+</Definition>
 
-::: {.callout-important title="Definición — Función compleja de variable compleja"}
+<Definition title="Función compleja de variable compleja">
 Una **función compleja de variable compleja** es una función $f: S \subset \mathbb{C} \to \mathbb{C}$. Toda función de este tipo puede descomponerse en dos funciones reales $u, v: S \subset \mathbb{R}^2 \to \mathbb{R}$:
 
 $$f(z) = f(x, y) = u(x, y) + i\,v(x, y)$$
 
 Se dice que $u$ es la **parte real** de $f$ y $v$ la **parte imaginaria**.
-:::
+</Definition>
 
-::: {.callout-note title="Ejemplo — Función real de variable compleja"}
+<Theorem title="Función real de variable compleja" label="Ejemplo">
 El módulo $f: \mathbb{C} \to \mathbb{R}_{\geq 0}$, $f(z) = |z| = \sqrt{x^2 + y^2}$.
 
 El recorrido es $\mathbb{R}_{\geq 0} \subset \mathbb{R}$, por lo que es una función real de variable compleja.
-:::
+</Theorem>
 
-::: {.callout-note title="Ejemplo — Función compleja de variable real"}
+<Theorem title="Función compleja de variable real" label="Ejemplo">
 La curva exponencial $f: [0, 2\pi) \to \mathbb{C}$, $f(t) = \cos t + i \sin t$.
 
 El dominio es $[0, 2\pi) \subset \mathbb{R}$, pero el recorrido es complejo.
-:::
+</Theorem>
 
-::: {.callout-note title="Ejemplo — Función compleja de variable compleja"}
+<Theorem title="Función compleja de variable compleja" label="Ejemplo">
 Las siguientes funciones $f: S \subset \mathbb{C} \to \mathbb{C}$ son complejas de variable compleja:
 
 **(1)** Conjugado: $f(z) = \bar{z}$
@@ -47,4 +50,4 @@ $$z = x + iy \Rightarrow u(x,y) = x,\quad v(x,y) = -y$$
 
 **(5)** Racional: dados $p$, $q$ polinómicos,
 $$r: \{z \in \mathbb{C} : q(z) \neq 0\} \to \mathbb{C},\quad r(z) = \frac{p(z)}{q(z)}$$
-:::
+</Theorem>

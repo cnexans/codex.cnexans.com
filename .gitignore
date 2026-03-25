@@ -1,8 +1,19 @@
-node_modules/*
+node_modules/
 .DS_Store
 .venv/
 
 # Generated output (built by CI and make)
 release/
-.quarto/
-tmp
+build/
+.next/
+out/
+
+# Old Quarto sources (migrated to content/)
+docs/
+
+# Temporary working files
+tmp/
+
+# Misc
+.playwright-mcp/
+*.png

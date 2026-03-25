@@ -1,47 +1,34 @@
-DOCS_DIR := docs
-PDF_DIR := release/pdf
-QUARTO_DIR := release/quarto
+PDF_DIR  := release/pdf
+PDF_BUILD := build/pdf
 
-.PHONY: all html pdf-separate pdf-book preview watch render images clean
+.PHONY: dev build pdf images clean
 
-# Default: build everything
-all: html pdf-separate pdf-book
+# Next.js dev server
+dev:
+	npm run dev
 
-# Genera las imágenes SVG (requiere .venv con matplotlib/numpy)
+# Next.js static build
+build:
+	npm run build
+
+# PDF: convert MDX → Pandoc markdown → PDF via XeLaTeX
+pdf: $(PDF_BUILD)/codex.md
+	@mkdir -p $(PDF_DIR)
+	pandoc $(PDF_BUILD)/codex.md \
+		--pdf-engine=xelatex \
+		--lua-filter=filters/callout-numbers.lua \
+		--include-in-header=filters/header.tex \
+		-V geometry:margin=1in \
+		-V fontsize=11pt \
+		-o $(PDF_DIR)/codex.pdf
+	@echo "PDF: $(PDF_DIR)/codex.pdf"
+
+$(PDF_BUILD)/codex.md: content/**/*.mdx scripts/mdx-to-pandoc.py
+	python3 scripts/mdx-to-pandoc.py
+
+# Generate SVG images (requires .venv with matplotlib/numpy)
 images:
 	.venv/bin/python3 scripts/gen_images.py
 
-# Quarto: render HTML book
-html:
-	cd $(DOCS_DIR) && quarto render --to html
-
-# Quarto: render combined PDF book
-pdf-book:
-	cd $(DOCS_DIR) && quarto render --to pdf
-
-# Quarto: render each chapter as a separate PDF
-# Temporarily hides _quarto.yml so quarto treats each file as standalone
-pdf-separate:
-	@mkdir -p $(PDF_DIR)
-	@mv $(DOCS_DIR)/_quarto.yml $(DOCS_DIR)/_quarto.yml.bak
-	@for f in $$(find $(DOCS_DIR) -name '*.md' ! -name 'index.md' ! -name '_*' | sort); do \
-		name=$$(basename "$$f" .md); \
-		echo "Rendering $$name.pdf..."; \
-		(cd $(DOCS_DIR) && quarto render "$$(basename $$f)" --to pdf --output "$$name.pdf" 2>&1); \
-		mv -f "$(DOCS_DIR)/$$name.pdf" "$(PDF_DIR)/$$name.pdf" 2>/dev/null || true; \
-	done
-	@mv $(DOCS_DIR)/_quarto.yml.bak $(DOCS_DIR)/_quarto.yml
-	@echo "PDFs in $(PDF_DIR)/"
-
-# Quarto: live preview in browser (HTML with hot reload)
-preview: watch
-watch:
-	cd $(DOCS_DIR) && quarto preview
-
-# Quarto: render all formats
-render:
-	cd $(DOCS_DIR) && quarto render
-
 clean:
-	rm -rf $(QUARTO_DIR) $(PDF_DIR)
-	rm -rf $(DOCS_DIR)/.quarto
+	rm -rf build/ release/ .next/ out/
