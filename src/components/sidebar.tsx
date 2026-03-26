@@ -63,20 +63,25 @@ export function Sidebar({ currentPart, currentChapter, chapterTitle, partTitle, 
 
   return (
     <>
-      {/* Mobile hamburger */}
-      <button
-        onClick={() => setOpen((v) => !v)}
-        aria-label="Toggle sidebar"
-        className="fixed top-4 left-4 z-50 flex h-10 w-10 items-center justify-center rounded bg-[#29313d] text-white lg:hidden"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          {open ? (
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-      </button>
+      {/* Mobile header bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 flex h-12 items-center gap-3 bg-[#29313d] px-4 lg:hidden">
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Toggle sidebar"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded text-white"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            {open ? (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+        <span className="truncate text-sm font-semibold text-[#dee9ed] font-['Source_Sans_3',sans-serif]">
+          {partTitle}
+        </span>
+      </div>
 
       {/* Backdrop */}
       {open && (
@@ -85,12 +90,12 @@ export function Sidebar({ currentPart, currentChapter, chapterTitle, partTitle, 
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-40 flex h-full w-[280px] flex-col overflow-y-auto bg-[#29313d] font-['Source_Sans_3',sans-serif] transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed top-12 lg:top-0 left-0 z-40 flex h-[calc(100%-3rem)] lg:h-full w-[280px] flex-col overflow-y-auto bg-[#29313d] font-['Source_Sans_3',sans-serif] transition-transform duration-200 lg:translate-x-0 ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Top: Codex + Part name */}
-        <div className="pl-16 pr-5 pt-6 pb-2 lg:pl-5">
+        <div className="px-5 pt-6 pb-2">
           <Link href="/" className="text-sm font-semibold tracking-wide text-[#dee9ed] no-underline hover:text-white">
             {bookTitle}
           </Link>
