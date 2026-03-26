@@ -41,7 +41,7 @@ export default async function ChapterLayout({
       <div className="hidden w-[280px] shrink-0 lg:block" />
 
       {/* Main content — overflow visible for margin notes */}
-      <main className="min-w-0 flex-1 px-6 py-12 lg:px-16 lg:pr-[220px] overflow-visible">
+      <main className="min-w-0 flex-1 px-6 pt-16 pb-12 lg:pt-12 lg:px-16 lg:pr-[220px] overflow-visible">
         {children}
       </main>
     </div>
