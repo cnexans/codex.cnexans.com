@@ -24,9 +24,11 @@ export default function HomePage() {
       <div className="columns-1 gap-10 md:columns-2">
         {bookConfig.parts.map((part, i) => (
           <section key={part.slug} className={`break-inside-avoid ${i > 0 ? 'mt-6' : ''}`}>
-            <h2 className="mt-0 mb-3 border-b border-[#dee9ed] pb-2 font-['Source_Sans_3',sans-serif] text-sm font-bold uppercase tracking-[0.10em]">
-              {part.roman}. <span className="text-[#5985a6]">{part.title}</span>
-            </h2>
+            <Link href={`/${part.slug}`} className="block no-underline">
+              <h2 className="mt-0 mb-3 border-b border-[#dee9ed] pb-2 font-['Source_Sans_3',sans-serif] text-sm font-bold uppercase tracking-[0.10em] transition-colors hover:border-[#5985a6]">
+                {part.roman}. <span className="text-[#5985a6]">{part.title}</span>
+              </h2>
+            </Link>
 
             <ul className="list-none space-y-2 pl-0">
               {part.chapters.map((ch) => (
