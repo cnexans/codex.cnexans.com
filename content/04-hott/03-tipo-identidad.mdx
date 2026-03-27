@@ -1,0 +1,119 @@
+---
+title: "Propiedades del Tipo Identidad"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+El tipo identidad $a =_A b$ no solo captura la noción de igualdad, sino que tiene una estructura rica: admite inversos, composición, y respeta todas las construcciones de tipos. Esto le da un carácter **grupoidal** a los tipos, lo cual conecta la teoría de tipos con la teoría de homotopía.
+
+## Operaciones básicas sobre igualdades
+
+<Theorem title="Las funciones respetan la igualdad ($\text{ap}$)">
+Para toda función $f : A \to B$ y toda igualdad $p : x =_A y$, existe un término:
+
+$$\text{ap}(f, p) : f(x) =_B f(y)$$
+
+Se define por inducción de caminos: si $p$ es $r_x$, entonces $\text{ap}(f, r_x) :\equiv r_{f(x)}$.
+
+En UniMath, esta función se llama `maponpaths`.
+</Theorem>
+
+<Theorem title="Transporte">
+Para todo tipo dependiente $x : B \vdash E(x) \;\text{type}$, cualesquiera términos $b, b' : B$ y cualquier igualdad $p : b =_B b'$, existe una función:
+
+$$\text{tr}_p : E(b) \to E(b')$$
+
+Se define por inducción de caminos: $\text{tr}_{r_b} :\equiv \text{id}_{E(b)}$.
+
+<Proof>
+Por inducción de caminos sobre $p$. Si $p$ es $r_b : b =_B b$, necesitamos una función $E(b) \to E(b)$, y tomamos la identidad.
+</Proof>
+</Theorem>
+
+El transporte garantiza que todo respeta la igualdad proposicional. Si pensamos en $E$ como un predicado sobre $B$, y $b =_B b'$, entonces $E(b)$ implica $E(b')$. Esto es parte de una relación más profunda entre teoría de tipos y teoría de homotopía: la proyección $\pi : \sum_{b:B} E(b) \to B$ se comporta como una **fibración** en una categoría modelo de Quillen.
+
+## Comportamiento grupoidal de los tipos
+
+Ahora podemos pensar en los tipos como **colecciones de puntos** (términos) conectados por **homotopías/caminos** (igualdades).
+
+<Theorem title="Simetría (inverso de igualdades)">
+Para todo $a, b : A$ y $p : a =_A b$, existe $p^{-1} : b =_A a$.
+
+<Proof>
+Por inducción de caminos. Si $p$ es $r_a$, tomamos $r_a : a =_A a$.
+</Proof>
+</Theorem>
+
+<Theorem title="Transitividad (composición de igualdades)">
+Si $p : a =_A b$ y $q : b =_A c$, entonces $p \cdot q : a =_A c$.
+
+<Proof>
+Por inducción de caminos sobre $p$ y $q$. Si ambos son reflexividad, tomamos $r_a$.
+</Proof>
+</Theorem>
+
+<Theorem title="Reflexividad">
+Para todo $a : A$, tenemos $r_a : a =_A a$.
+</Theorem>
+
+Además, podemos:
+- Tener **múltiples igualdades** del mismo tipo (ej. $p, p' : a =_A b$).
+- Tomar el **inverso** de una igualdad.
+- **Componer** igualdades.
+- Tener **igualdades entre igualdades** ($\alpha : p =_{a =_A b} p'$).
+- Las funciones $A \to B$ respetan la igualdad: si $a =_A a'$ entonces $f(a) =_B f(a')$.
+
+Esto es exactamente cómo se comportan los **espacios** en topología/homotopía.
+
+## La interpretación espacial
+
+<Theorem title="Voevodsky">
+Existe una interpretación de la teoría de tipos dependientes en $\mathbf{Spaces}$ (la categoría de complejos de Kan) en la cual:
+
+| Teoría de Tipos | Espacios |
+|:---|:---|
+| Tipos | Espacios |
+| Términos | Puntos |
+| Igualdades | Caminos |
+</Theorem>
+
+## Caracterización de la igualdad en tipos estándar
+
+<Theorem title="Igualdad en $\text{bool}$">
+Se puede demostrar que $\text{false} \neq \text{true}$, $\text{true} = \text{true}$ y $\text{false} = \text{false}$.
+</Theorem>
+
+<Theorem title="Igualdad en $\mathbb{N}$">
+Análogamente: $Sn = Sm \Leftrightarrow n = m$ y $0 \neq Sn$.
+</Theorem>
+
+<Theorem title="Igualdad en $\Sigma$-tipos">
+Para $s, t : \sum_{a:A} B(a)$, tenemos:
+
+$$(s = t) \simeq \sum_{p : \pi_1 s = \pi_1 t} \text{tr}_p\, \pi_2 s = \pi_2 t$$
+</Theorem>
+
+### Axiomas no demostrables
+
+<Definition title="Extensionalidad funcional (funext)">
+Para $f, g : \prod_{a:A} B(a)$, quisiéramos que:
+
+$$(f = g) \simeq \prod_{x:A} f(x) = g(x)$$
+
+Esto **no es demostrable** en la teoría de tipos básica. Se llama **extensionalidad funcional** y es validado por las interpretaciones en lógica, conjuntos y espacios.
+</Definition>
+
+<Definition title="Unicidad de pruebas de identidad (UIP)">
+Para $p, q : a =_A b$, quisiéramos que $(p = q) \simeq \mathbb{1}$. Esto tampoco es demostrable. Se llama **UIP** y es validado por las interpretaciones en lógica y conjuntos, pero **no** en espacios.
+</Definition>
+
+<Definition title="Univalencia (UA)">
+Para tipos $S, T : \mathcal{U}$, quisiéramos que $(S = T) \simeq (S \simeq T)$. Tampoco es demostrable. Se llama el **axioma de univalencia** y es validado por la interpretación en espacios.
+</Definition>
+
+Relaciones entre estos axiomas:
+- $\text{UA} \Rightarrow \text{funext}$.
+- $\text{UIP} \land \text{funext} \not\Rightarrow \bot$ (son consistentes juntos).
+- $\text{UA} + \text{UIP} \Rightarrow \bot$ (son inconsistentes juntos).
+
+**Elegimos UA.**

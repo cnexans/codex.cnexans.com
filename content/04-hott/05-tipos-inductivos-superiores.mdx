@@ -1,0 +1,174 @@
+---
+title: "Tipos Inductivos Superiores"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+La teoría homotópica de tipos (HoTT) se define como:
+
+$$\text{HoTT} = \text{MLTT} + \text{UA} + \text{tipos inductivos superiores}$$
+
+donde MLTT es la teoría de tipos de Martin-Löf (con los formadores de tipos vistos hasta ahora), UA es el axioma de univalencia, y los **tipos inductivos superiores** (HITs) son una extensión de los tipos inductivos que permite constructores no solo para términos, sino también para igualdades y igualdades entre igualdades.
+
+## De tipos inductivos a tipos inductivos superiores
+
+Recordemos que los tipos inductivos ordinarios son generados por sus constructores (términos canónicos). Ahora, dado que consideramos los tipos como teniendo:
+- Términos
+- Igualdades
+- Igualdades entre igualdades
+- ...
+
+podemos considerar tipos inductivos **superiores**, cuyos constructores pueden ser términos, igualdades, igualdades entre igualdades, etc.
+
+<Theorem title="$S^0 \cong \text{bool}$" label="Ejemplo">
+$S^0 :\equiv \text{bool}$ tiene dos constructores de términos:
+- $\text{true} : \text{bool}$
+- $\text{false} : \text{bool}$
+</Theorem>
+
+## El intervalo
+
+<Definition title="Intervalo $D^1$">
+El intervalo $D^1$ es el tipo inductivo superior con tres constructores:
+- $\text{true} : D^1$ (punto)
+- $\text{false} : D^1$ (punto)
+- $p : \text{true} =_{D^1} \text{false}$ (camino)
+
+**Reglas:**
+
+**Eliminación:** Dado $d : D^1$, un tipo $E(d)$, términos $t : E(\text{true})$, $f : E(\text{false})$ y un camino $\pi : p_* t = f : E(\text{false})$, existe:
+
+$$\text{ind}_{D^1, t, f, \pi}(d) : E(d)$$
+
+**Computación:**
+- $\text{ind}_{D^1, t, f, \pi}(\text{true}) \doteq t : E(\text{true})$
+- $\text{ind}_{D^1, t, f, \pi}(\text{false}) \doteq f : E(\text{false})$
+- $\text{ind}_{D^1, t, f, \pi}(p) \doteq \pi : p_* t = f : E(\text{false})$
+</Definition>
+
+## El círculo
+
+<Definition title="Círculo $S^1$">
+El círculo $S^1$ es el tipo inductivo superior con dos constructores:
+- $\text{base} : S^1$ (un punto)
+- $\text{loop} : \text{base} = \text{base}$ (un camino del punto base a sí mismo)
+</Definition>
+
+<Theorem title="$\pi_1(S^1) = \mathbb{Z}$">
+El grupo fundamental del círculo es $\mathbb{Z}$.
+</Theorem>
+
+## Truncaciones
+
+A veces queremos que un tipo sea un conjunto, o una proposición. Las **truncaciones** son HITs que "colapsan" la estructura superior de un tipo.
+
+### Truncación proposicional
+
+<Definition title="Truncación proposicional $\| T \|_1$">
+Dado un tipo $T$, su **truncación proposicional** $\| T \|_1$ es el HIT con constructores:
+- $|-|_1 : T \to \| T \|_1$
+- $\prod_{x,y:\| T \|_1} |x|_1 = |y|_1$
+
+La segunda condición fuerza que $\| T \|_1$ sea una proposición.
+</Definition>
+
+<Theorem title="$\| T \|_1$ es una proposición" label="Ejemplo">
+Para cualquier tipo $T$, $\| T \|_1$ es una proposición (h-level 1).
+</Theorem>
+
+**Lógica proposicional con HITs:**
+
+<Theorem title="Proposiciones cerradas bajo $\land$, $\to$, $\forall$">
+Si $P, Q : \text{Prop}$, entonces $P \times Q : \text{Prop}$ (análogo a $P \land Q$).
+
+Si $P : \text{Prop}$ y $E : P \to \text{Prop}$, entonces $\sum_{p:P} E(p)$ y $\prod_{p:P} E(p)$ están en $\text{Prop}$.
+</Theorem>
+
+Sin embargo, $P + Q$ **no** es una proposición en general (tiene dos constructores distinguibles). Para obtener la disyunción proposicional usamos la truncación:
+
+<Definition title="Disyunción proposicional">
+Para $P, Q : \text{Prop}$:
+
+$$P \lor Q :\equiv \| P + Q \|_1$$
+</Definition>
+
+<Theorem title="Factorización por truncación" label="Ejemplo">
+Para cualquier tipo $T$ y proposición $P$, las funciones $(T \to P) \simeq (\| T \|_1 \to P)$.
+</Theorem>
+
+### Truncación como conjunto
+
+<Definition title="Truncación como conjunto $\| T \|_2$">
+Dado un tipo $T$, su **truncación como conjunto** $\| T \|_2$ es el HIT con constructores:
+- $|-|_2 : T \to \| T \|_2$
+- $\prod_{x,y:\| T \|_2} \prod_{p,q : x = y} |p|_2 = |q|_2$
+</Definition>
+
+<Theorem title="$\| T \|_2$ es un conjunto" label="Ejemplo">
+Para cualquier tipo $T$, $\| T \|_2$ es un conjunto (h-level 2).
+</Theorem>
+
+<Definition title="Grupo fundamental $\pi_1$">
+$$\pi_1 : \mathcal{U} \to \text{Set}$$
+$$\pi_1(T) :\equiv \lambda T.\, \| S^1 \to T \|_2$$
+
+$\pi_1(S^1) = \mathbb{Z}$.
+</Definition>
+
+## Interfaces y la completación de Rezk
+
+El resultado de Coquand-Danielsson dice que, para tipos con estructura algebraica, la univalencia implica que la igualdad coincide con el isomorfismo:
+
+$$(A =_\text{alg} B) \simeq (A \cong B)$$
+
+Por lo tanto, no se puede decir nada que distinga estructuras isomorfas.
+
+### Independencia de representación
+
+<Definition title="Interfaces (Ahrens, North, Shulman, Tsementzis)">
+Supongamos que especificamos un lenguaje/interfaz limitada para hablar sobre una estructura algebraica.
+
+Por ejemplo, para una estructura $\mathcal{U}$: $p\mathcal{U} :\equiv \sum_{T:\mathcal{U}} T \to \text{Prop}$.
+
+Dados $(T, p) : p\mathcal{U}$, pensamos en $p$ como el lenguaje o interfaz que usamos para razonar sobre $T$. Solo podemos distinguir $s, t : T$ si podemos distinguir $p(s)$ y $p(t)$.
+
+Decimos que $s, t$ son **indiscernibles** si:
+
+$$(s \asymp t) :\equiv (p(s) = p(t))$$
+
+Podemos tomar el **cociente** $T/\asymp$, que es un HIT con constructores:
+- $i : T \to T/\asymp$
+- $j : \prod_{s,t:T} s \asymp t \to i(s) = i(t)$
+</Definition>
+
+### Ejemplo: Colas (Angiuli, Cavallo, Mörtberg, Zeuner)
+
+<Theorem title="Independencia de representación para colas" label="Ejemplo">
+Consideremos la interfaz de colas:
+
+$$\text{Queues}(A) :\equiv \sum_{Q:\mathcal{U}} Q \times (A \to Q \to Q) \times (Q \to \mathrm{Maybe}(Q \times A))$$
+
+Es decir, un record con: un tipo $Q$, una constante $\text{empty} : Q$, una función $\text{enqueue} : A \to Q \to Q$ y una función $\text{dequeue} : Q \to \mathrm{Maybe}(Q \times A)$.
+
+La implementación simple usa $\text{List}(A)$:
+
+$$(\text{List}(A), \text{empty}, \text{enqueue}, \text{dequeue}) : \text{Queues}(A)$$
+
+Pero hay implementaciones más eficientes, como **BatchedList**:
+
+$$\text{BatchedList}(A) :\equiv \text{List}(A) \times \text{List}(A)$$
+
+con $\text{enqueue}$ en $O(1)$ (agrega al final de la segunda lista).
+
+Existe una surección $s : \text{BatchedList}(A) \to \text{List}(A)$ que respeta las operaciones de la interfaz. Podemos tomar el cociente:
+
+$$(b \sim c) :\equiv (s(b) = s(c))$$
+
+Entonces, al nivel del computador ($\doteq$), nada cambia — seguimos usando la representación eficiente. Al nivel humano ($=$), tenemos $\text{BatchedList}(A)/\sim \;= \text{List}(A)$.
+
+Así, las pruebas de correctitud sobre programas que usan $\text{List}(A)$ se pueden aplicar a $\text{BatchedList}(A)$.
+</Theorem>
+
+**Nota importante:** Cuando tomamos cocientes de tipos así, estamos **agregando** cosas a los tipos (caminos nuevos). Esto contrasta con los cocientes en la teoría de conjuntos, que resultan en **menos** cosas (clases de equivalencia). Los cocientes en la teoría de tipos son mucho más fáciles de manejar formalmente. Esta idea ha sido importada exitosamente a lenguajes funcionales como Haskell.
+
+Podemos entonces definir $\mathbb{Q}$ como un cociente de $\mathbb{N} \times \mathbb{N}$, $\mathbb{R}$ como un cociente de sucesiones de $\mathbb{Q}$, etc. Los lenguajes de programación también son cocientes (complicados) de tipos inductivos, por lo que mucha investigación actual se enfoca en entender y justificar estos cocientes para poder razonar formalmente sobre lenguajes de programación.

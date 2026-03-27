@@ -1,0 +1,94 @@
+---
+title: "Introducción y Notación"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+## Tipos, no conjuntos
+
+En la teoría de tipos no trabajamos con conjuntos y pertenencia ($\in$). En su lugar, cada objeto tiene un tipo desde su nacimiento: escribimos $a : A$ para decir que $a$ es de tipo $A$. Los tipos no son conjuntos, sino más bien **espacios**: un tipo $A$ tiene términos (puntos), igualdades entre términos (caminos), igualdades entre igualdades (homotopías), y así sucesivamente. Esta estructura topológica es central en HoTT.
+
+## Proposiciones como tipos
+
+La **correspondencia de Curry-Howard** identifica proposiciones con tipos y pruebas con términos. Probar una proposición $P$ es construir un término $p : P$. Así, la conjunción $P \land Q$ se corresponde con el producto $P \times Q$ (una prueba es un par de pruebas), la implicación $P \to Q$ se corresponde con el tipo función (una prueba es una función que transforma pruebas de $P$ en pruebas de $Q$), y el cuantificador universal $\forall_{x:A} P(x)$ se corresponde con el tipo $\Pi$ de funciones dependientes.
+
+## Dos nociones de igualdad
+
+Una diferencia fundamental con la matemática habitual es la existencia de **dos nociones de igualdad**. La igualdad **judicativa** (o definicional), escrita $a \doteq b$, es computacional: $2 + 2 \doteq 4$ se verifica por la definición de la suma. La igualdad **proposicional**, escrita $a =_A b$, es un tipo que puede o no estar habitado, y requiere una prueba explícita; por ejemplo, $a + b =_\mathbb{N} b + a$ necesita una demostración por inducción. En la interpretación espacial, un término $p : a =_A b$ es un **camino** de $a$ a $b$. Dos caminos pueden ser iguales (una homotopía), y esto genera la estructura grupoidal e infinito-dimensional que estudia HoTT.
+
+## Guía de notación
+
+### Juicios y tipos básicos
+
+| Notación | Significado |
+|:---|:---|
+| $a : A$ | $a$ es de tipo $A$ (análogo a $a \in A$, pero el tipo es intrínseco al término) |
+| $\Gamma \vdash a : A$ | en el contexto $\Gamma$, $a$ tiene tipo $A$ |
+| $\doteq$ | igualdad judicativa (definicional, se verifica por computación) |
+| $=_A$ | igualdad proposicional en el tipo $A$ (tipo identidad, debe probarse) |
+| $\mathcal{U}$ | universo de tipos |
+| $\mathbb{N}$ | números naturales |
+| $\mathbb{B}$, $\mathrm{bool}$ | booleanos |
+| $\mathbb{1}$ | tipo unitario (un solo elemento) |
+| $\emptyset$ | tipo vacío (sin elementos) |
+
+### Constructores de tipos
+
+| Notación | Nombre | Descripción |
+|:---|:---|:---|
+| $A \to B$ | tipo función | funciones de $A$ en $B$ |
+| $\prod_{x:A} B(x)$ | tipo Pi | funciones dependientes: a cada $x : A$ asignan un término en $B(x)$ |
+| $A \times B$ | producto | pares $(a, b)$ con $a : A$ y $b : B$ |
+| $\sum_{x:A} B(x)$ | tipo Sigma | pares dependientes $(x, y)$ con $x : A$ e $y : B(x)$ |
+| $A + B$ | coproducto | unión disjunta, con dos constructores: $\mathrm{inl}(a)$ para $a : A$ e $\mathrm{inr}(b)$ para $b : B$ |
+
+### Constructores y eliminadores
+
+Cada tipo viene con **constructores** (formas de crear términos) y un **principio de eliminación/inducción** (forma de usar términos). La notación $\mathrm{ind}_T$ denota el principio de inducción del tipo $T$: dado un motivo (una familia de tipos sobre $T$) y casos para cada constructor, produce un término del tipo deseado.
+
+| Notación | Rol | Descripción |
+|:---|:---|:---|
+| $\mathrm{inl}(a)$ | constructor | inyecta $a : A$ en el lado izquierdo de $A + B$ |
+| $\mathrm{inr}(b)$ | constructor | inyecta $b : B$ en el lado derecho de $A + B$ |
+| $\mathrm{pr}_1$, $\mathrm{pr}_2$ | eliminador | proyecciones: extraen el primer o segundo componente de un par |
+| $\mathrm{ind}_T$ | eliminador | principio de inducción para el tipo $T$ |
+
+### Operaciones sobre igualdad
+
+| Notación | Nombre | Descripción |
+|:---|:---|:---|
+| $r_a$ (o $\mathrm{refl}$) | reflexividad | prueba canónica de $a =_A a$ |
+| $p^{-1}$ | inverso | si $p : a =_A b$, entonces $p^{-1} : b =_A a$ |
+| $p \cdot q$ | composición | si $p : a = b$ y $q : b = c$, entonces $p \cdot q : a = c$ |
+| $\mathrm{ap}(f, p)$ | aplicación | si $f : A \to B$ y $p : a =_A b$, entonces $\mathrm{ap}(f, p) : f(a) =_B f(b)$ |
+| $\mathrm{tr}_p$ | transporte | si $p : b =_B b'$ y $e : E(b)$, entonces $\mathrm{tr}_p(e) : E(b')$ |
+
+### Definiciones y relaciones
+
+| Notación | Significado |
+|:---|:---|
+| $a :\equiv b$ | $a$ se define como $b$ |
+| $a \sim b$ | $a$ y $b$ están relacionados (relación de equivalencia, depende del contexto) |
+| $a \asymp b$ | $a$ y $b$ son indiscernibles respecto a una interfaz |
+| $A \cong B$ | $A$ y $B$ son isomorfos (biyección que preserva estructura) |
+| $A \simeq B$ | $A$ y $B$ son equivalentes (existe una función con fibras contractibles) |
+
+### Niveles de homotopía y truncaciones
+
+| Notación | Significado |
+|:---|:---|
+| $\mathrm{isContr}(A)$ | $A$ es contractible (h-level 0): tiene exactamente un punto, salvo igualdad |
+| $\mathrm{isProp}(A)$ | $A$ es una proposición (h-level 1): cualesquiera dos elementos son iguales |
+| $\mathrm{isSet}(A)$ | $A$ es un conjunto (h-level 2): cualesquiera dos igualdades entre los mismos puntos son iguales |
+| $\| T \|_1$ | truncación proposicional de $T$ (colapsa $T$ a una proposición) |
+| $\| T \|_2$ | truncación como conjunto de $T$ (colapsa $T$ a un conjunto) |
+| $P \lor Q$ | disyunción proposicional: $\| P + Q \|_1$ |
+
+### Tipos inductivos superiores
+
+| Notación | Significado |
+|:---|:---|
+| $S^0$ | esfera 0-dimensional ($\cong \mathrm{bool}$, dos puntos) |
+| $S^1$ | círculo: un punto $\mathrm{base}$ y un camino $\mathrm{loop} : \mathrm{base} = \mathrm{base}$ |
+| $D^1$ | intervalo: dos puntos con un camino entre ellos |
+| $T / \asymp$ | cociente de $T$ por indiscernibilidad |

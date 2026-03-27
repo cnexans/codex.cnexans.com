@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 interface Heading {
   id: string;
-  text: string;
+  html: string;
   level: number;
 }
 
@@ -37,7 +37,7 @@ export function Sidebar({ currentPart, currentChapter, chapterTitle, partTitle, 
     setHeadings(
       els.filter((el) => el.id).map((el) => ({
         id: el.id,
-        text: el.textContent ?? '',
+        html: el.innerHTML,
         level: el.tagName === 'H2' ? 2 : 3,
       })),
     );
@@ -64,7 +64,7 @@ export function Sidebar({ currentPart, currentChapter, chapterTitle, partTitle, 
   return (
     <>
       {/* Mobile header bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex h-12 items-center gap-3 bg-[#29313d] px-4 lg:hidden">
+      <div className="fixed top-0 left-0 right-0 z-50 flex h-12 items-center gap-3 bg-[#29313d] px-4 font-['Source_Sans_3',sans-serif] lg:hidden">
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle sidebar"
@@ -78,9 +78,9 @@ export function Sidebar({ currentPart, currentChapter, chapterTitle, partTitle, 
             )}
           </svg>
         </button>
-        <span className="truncate text-sm font-semibold text-[#dee9ed] font-['Source_Sans_3',sans-serif]">
+        <Link href={`/${currentPart}/`} className="truncate text-sm font-semibold text-[#dee9ed] no-underline hover:text-white">
           {partTitle}
-        </span>
+        </Link>
       </div>
 
       {/* Backdrop */}
@@ -94,18 +94,16 @@ export function Sidebar({ currentPart, currentChapter, chapterTitle, partTitle, 
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Top: Codex + Part name */}
-        <div className="px-5 pt-6 pb-2">
-          <Link href="/" className="text-sm font-semibold tracking-wide text-[#dee9ed] no-underline hover:text-white">
-            {bookTitle}
+        {/* Part title — visible in sidebar on desktop */}
+        <div className="px-5 pt-6 pb-1">
+          <Link href={`/${currentPart}/`} className="text-lg font-semibold text-[#dee9ed] no-underline hover:text-white transition-colors">
+            {partTitle}
           </Link>
-          <span className="mx-2 text-[#3b4b5e]">·</span>
-          <span className="text-sm text-[#7aa0b8]">{partTitle}</span>
         </div>
 
-        {/* Chapter title */}
+        {/* Chapter title — smaller, secondary */}
         <div className="mx-5 pb-4 border-b border-[#3b4b5e]">
-          <h3 className="mt-0 mb-0 text-base font-semibold text-white font-['Source_Sans_3',sans-serif]" style={{ fontStyle: 'normal' }}>
+          <h3 className="mt-0 mb-0 text-sm font-medium text-[#7aa0b8] font-['Source_Sans_3',sans-serif]" style={{ fontStyle: 'normal' }}>
             {chapterTitle}
           </h3>
         </div>
@@ -119,13 +117,13 @@ export function Sidebar({ currentPart, currentChapter, chapterTitle, partTitle, 
                   <a
                     href={`#${h.id}`}
                     onClick={() => setOpen(false)}
-                    className={`font-['Source_Sans_3',sans-serif] block rounded px-2 py-0.5 text-sm no-underline transition-colors ${
+                    className={`font-['Source_Sans_3',sans-serif] block rounded px-2 py-0.5 text-sm no-underline transition-colors [&_.katex]:text-inherit ${
                       activeId === h.id
                         ? 'font-semibold text-white'
                         : 'text-[#7aa0b8] hover:text-[#dee9ed]'
                     }`}
                   >
-                    {h.text}
+                    <span dangerouslySetInnerHTML={{ __html: h.html }} />
                   </a>
                 </li>
               ))}

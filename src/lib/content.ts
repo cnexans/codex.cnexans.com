@@ -11,6 +11,8 @@ export interface Part {
   slug: string;
   title: string;
   roman: string;
+  /** Raw MDX body from _index.mdx (everything after frontmatter). */
+  description: string;
   chapters: Chapter[];
 }
 
@@ -66,18 +68,25 @@ function discoverBookConfig(): BookConfig {
   for (const partDir of partDirs) {
     const fullPartDir = path.join(contentDir, partDir);
     const mdxFiles = fs.readdirSync(fullPartDir)
-      .filter((f) => f.endsWith('.mdx'))
+      .filter((f) => f.endsWith('.mdx') && f !== '_index.mdx')
       .sort();
 
     if (mdxFiles.length === 0) continue;
 
     const chapters: Chapter[] = [];
 
-    // Read part title from _meta.yaml
-    const metaPath = path.join(fullPartDir, '_meta.yaml');
-    const metaContent = fs.existsSync(metaPath) ? fs.readFileSync(metaPath, 'utf-8') : '';
-    const metaTitle = metaContent.match(/^title:\s*"?(.*?)"?\s*$/m);
-    const partTitle = metaTitle ? metaTitle[1] : partDir;
+    // Read part title and description from _index.mdx
+    const indexPath = path.join(fullPartDir, '_index.mdx');
+    let partTitle = partDir;
+    let partDescription = '';
+    if (fs.existsSync(indexPath)) {
+      const indexContent = fs.readFileSync(indexPath, 'utf-8');
+      const fm = parseFrontmatter(indexContent);
+      if (fm.title) partTitle = fm.title;
+      // Extract body (everything after the frontmatter block)
+      const bodyMatch = indexContent.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?([\s\S]*)$/);
+      partDescription = bodyMatch ? bodyMatch[1].trim() : '';
+    }
 
     for (const file of mdxFiles) {
       const content = fs.readFileSync(path.join(fullPartDir, file), 'utf-8');
@@ -94,6 +103,7 @@ function discoverBookConfig(): BookConfig {
       slug: partDir,
       title: partTitle,
       roman: toRoman(parts.length + 1),
+      description: partDescription,
       chapters,
     });
   }

@@ -182,21 +182,26 @@ def discover_parts() -> list[dict]:
     )
 
     for part_dir in part_dirs:
-        mdx_files = sorted(part_dir.glob("*.mdx"))
+        mdx_files = sorted(
+            f for f in part_dir.glob("*.mdx") if f.name != "_index.mdx"
+        )
         if not mdx_files:
             continue
 
         chapters = []
 
-        # Read part title from _meta.yaml
-        meta_path = part_dir / "_meta.yaml"
+        # Read part title and description from _index.mdx
+        index_path = part_dir / "_index.mdx"
         part_title = part_dir.name
-        if meta_path.exists():
-            for line in meta_path.read_text().splitlines():
-                m = re.match(r'^title:\s*"?(.*?)"?\s*$', line)
-                if m:
-                    part_title = m.group(1)
-                    break
+        part_description = ""
+        if index_path.exists():
+            index_content = index_path.read_text()
+            fm = parse_frontmatter(index_content)
+            if fm.get("title"):
+                part_title = fm["title"]
+            body = strip_frontmatter(index_content).strip()
+            if body:
+                part_description = body
 
         for mdx_path in mdx_files:
             content = mdx_path.read_text()
@@ -211,6 +216,7 @@ def discover_parts() -> list[dict]:
         parts.append({
             "slug": part_dir.name,
             "title": part_title,
+            "description": part_description,
             "roman": to_roman(len(parts) + 1),
             "chapters": chapters,
         })
@@ -251,7 +257,10 @@ top-level-division: chapter
 
     for part_info in parts:
         # Part header (renders as \part{} in LaTeX report class)
-        all_content.append(f"\\part{{{part_info['title']}}}\n")
+        part_block = f"\\part{{{part_info['title']}}}\n"
+        if part_info.get("description"):
+            part_block += f"\n{part_info['description']}\n"
+        all_content.append(part_block)
 
         for ch in part_info["chapters"]:
             content = process_file(ch["path"], ch["title"])

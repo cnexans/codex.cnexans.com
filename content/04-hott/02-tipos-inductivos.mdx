@@ -1,0 +1,162 @@
+---
+title: "Tipos Inductivos"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+Los tipos inductivos son tipos **libremente generados** por sus términos canónicos (constructores). Para definir una función (dependiente) a partir de un tipo inductivo, basta definirla en sus elementos canónicos.
+
+## Ideas generales
+
+Los **formadores de tipos** son las reglas que definen $\Pi$, $\to$, $\land/\times$, los tipos inductivos, etc. Cuando estudiamos teoría de tipos, elegimos cuáles formadores incluir. Cuando se habla de HoTT, generalmente se refiere a una teoría de tipos con formadores particulares (los de este curso) más un axioma (univalencia).
+
+Comparado con ZF: en la teoría de conjuntos, productos, funciones, etc. deben ser **codificados** dentro de ZF. En la teoría de tipos, **postulamos** que productos, funciones, etc. existen directamente. Así, la matemática cotidiana está más cerca de los fundamentos en teoría de tipos.
+
+## Los booleanos
+
+<Definition title="$\text{bool}$">
+En Agda/Rocq:
+```
+data Bool : Type where
+  true false : Bool
+```
+
+$\text{bool}$ es generado por dos términos canónicos: $\text{true}$ y $\text{false}$.
+
+**Formación:**
+
+$$\frac{}{\vdash \text{bool} \;\text{type}}$$
+
+**Introducción:**
+
+$$\frac{}{\vdash \text{true} : \text{bool}} \qquad \frac{}{\vdash \text{false} : \text{bool}}$$
+
+**Eliminación:** Si $\Gamma, x : \text{bool} \vdash D \;\text{type}$, $\Gamma \vdash a : D[\text{true}/x]$ y $\Gamma \vdash b : D[\text{false}/x]$, entonces:
+
+$$\Gamma, x : \text{bool} \vdash \text{ind-bool}_{a,b} : D$$
+
+**Computación:**
+
+$$\text{ind-bool}_{a,b}[\text{true}/x] \doteq a : D[\text{true}/x]$$
+$$\text{ind-bool}_{a,b}[\text{false}/x] \doteq b : D[\text{false}/x]$$
+</Definition>
+
+<Theorem title="$\text{not} : \text{bool} \to \text{bool}$" label="Ejemplo">
+Definimos la negación como $\text{not} := \lambda x.\, \text{ind-bool}_{\text{false}, \text{true}} : \text{bool} \to \text{bool}$.
+
+En la derivación, usamos la regla de formación debilitada de $\text{bool}$ (en un contexto $x : \text{bool}$), y los hechos de que $\text{false} : \text{bool} \doteq \text{bool}[\text{true}/x]$ y $\text{true} : \text{bool} \doteq \text{bool}[\text{false}/x]$.
+</Theorem>
+
+## Coproductos
+
+<Definition title="Coproducto $P + Q$">
+**Formación:** Si $\Gamma \vdash P \;\text{type}$ y $\Gamma \vdash Q \;\text{type}$, entonces $\Gamma \vdash P + Q \;\text{type}$.
+
+**Introducción:** Si $\Gamma \vdash p : P$, entonces $\Gamma \vdash \text{inl}(p) : P + Q$. Si $\Gamma \vdash q : Q$, entonces $\Gamma \vdash \text{inr}(q) : P + Q$.
+
+**Eliminación:** Si $\Gamma, x : P + Q \vdash D \;\text{type}$, $\Gamma, p : P \vdash a : D[\text{inl}(p)/x]$ y $\Gamma, q : Q \vdash b : D[\text{inr}(q)/x]$, entonces:
+
+$$\Gamma, x : P + Q \vdash \text{ind-}+_{a,b} : D$$
+
+**Computación:**
+
+$$\text{ind-}+_{a,b}[\text{inl}(p)/x] \doteq a : D[\text{inl}(p)/x]$$
+$$\text{ind-}+_{a,b}[\text{inr}(q)/x] \doteq b : D[\text{inr}(q)/x]$$
+</Definition>
+
+**Interpretación lógica:** Podemos probar (producir un término de) $P + Q$ si podemos probar $P$ o probar $Q$. Para probar algo a partir de $P + Q$ hacemos una prueba **por casos**. Así, $+$ se comporta como la disyunción (o).
+
+<Theorem title="$A \times B + A \times C \to A \times (B + C)$" label="Ejemplo">
+Para cualesquiera tipos $A, B, C$, existe una función $A \times B + A \times C \to A \times (B + C)$.
+
+Dado $x_1 : A \times B$, construimos $(\text{pr}_1\, x_1, \text{inl}(\text{pr}_2\, x_1)) : A \times (B + C)$.
+
+Dado $x_2 : A \times C$, construimos $(\text{pr}_1\, x_2, \text{inr}(\text{pr}_2\, x_2)) : A \times (B + C)$.
+
+Luego por eliminación del coproducto obtenemos la función deseada.
+</Theorem>
+
+## Pares dependientes ($\Sigma$-tipos)
+
+<Definition title="$\Sigma$-tipos">
+**Formación:** Si $\Gamma, x : P \vdash Q \;\text{type}$, entonces $\Gamma \vdash \sum_{x:P} Q \;\text{type}$.
+
+**Introducción:** Si $\Gamma \vdash p : P$ y $\Gamma \vdash q : Q[p/x]$, entonces $\Gamma \vdash \text{pair}(p, q) : \sum_{x:P} Q$.
+
+**Eliminación:** Si $\Gamma, y : \sum_{x:P} Q \vdash D \;\text{type}$ y $\Gamma, x : P, z : Q \vdash a : D[\text{pair}(x,z)/y]$, entonces:
+
+$$\Gamma, y : \sum_{x:P} Q \vdash \text{ind}_\Sigma(a, y) : D$$
+
+**Computación:** $\text{ind}_\Sigma(a, \text{pair}(x, z)) \doteq a : D[\text{pair}(x,z)/y]$.
+</Definition>
+
+**Interpretación lógica:** Para probar $\sum_{x:P} Q$ (pensando en $P$ como un conjunto y $Q$ como un predicado sobre $P$), necesitamos producir un término $p : P$ y probar $Q[p/x]$. Así, se comporta como el cuantificador existencial $\exists_{x:P} Q(x)$.
+
+**Interpretación conjuntista:** Los términos canónicos son pares $(p, q)$. Se comporta como la unión disjunta $\bigsqcup_{x:P} Q(x)$.
+
+<Theorem title="Función de proyección" label="Ejemplo">
+Para cualquier tipo dependiente $x : P \vdash Q$, existe una función de proyección $\pi : \sum_{x:P} Q \to P$ definida por $\pi(\text{pair}(x, z)) = x$.
+</Theorem>
+
+<Theorem title="$\sum_{n:\mathbb{N}} \text{Vect}(n)$" label="Ejemplo">
+Si $\text{Vect}(n)$ denota el tipo de vectores de longitud $n$, entonces $\sum_{n:\mathbb{N}} \text{Vect}(n)$ es el tipo de **todos** los vectores (de cualquier longitud). La proyección $\sum_{n:\mathbb{N}} \text{Vect}(n) \to \mathbb{N}$ retorna la longitud del vector.
+</Theorem>
+
+## Los números naturales
+
+<Definition title="$\mathbb{N}$">
+**Formación:** $\vdash \mathbb{N} \;\text{type}$.
+
+**Introducción:** $\vdash 0 : \mathbb{N}$, y si $\Gamma \vdash n : \mathbb{N}$, entonces $\Gamma \vdash S\, n : \mathbb{N}$.
+
+**Eliminación (inducción):** Si $\Gamma, x : \mathbb{N} \vdash D \;\text{type}$, $\Gamma \vdash a : D[0/x]$ y $\Gamma, x : \mathbb{N}, y : D \vdash b : D[Sx/x]$, entonces:
+
+$$\Gamma, x : \mathbb{N} \vdash \text{ind}_\mathbb{N}(a, b, x) : D$$
+
+**Computación:**
+
+$$\text{ind}_\mathbb{N}(a, b, 0) \doteq a : D[0/x]$$
+$$\text{ind}_\mathbb{N}(a, b, Sx) \doteq b : D[Sx/x]$$
+</Definition>
+
+<Theorem title="$\text{add} : \mathbb{N} \to \mathbb{N} \to \mathbb{N}$" label="Ejemplo">
+Definimos la suma por recursión en el segundo argumento:
+
+$$\text{add}(x, 0) \doteq x$$
+$$\text{add}(x, Sy) \doteq S(\text{add}(x, y))$$
+
+Es decir, $\text{add} := \lambda x.\, \lambda y.\, \text{ind}_\mathbb{N}(x, \lambda z.\, S z, y)$.
+
+Análogamente, $\text{mult} := \lambda x.\, \lambda y.\, \text{ind}_\mathbb{N}(0, \lambda z.\, \text{add}(x, z), y)$.
+</Theorem>
+
+## El tipo identidad
+
+### Igualdad judgmental vs proposicional
+
+Tenemos una noción de igualdad **judgmental** ($\doteq$) que surge de las reglas de computación. Por ejemplo:
+
+$$\text{add}(x, 0) \doteq x \qquad \text{add}(x, Sy) \doteq S\,\text{add}(x, y)$$
+
+Pero no todas las igualdades que queremos son judgmentales. Por ejemplo, $\text{add}(0, x) \doteq x$ no se obtiene directamente — necesitamos inducción. La igualdad **proposicional** internaliza la igualdad como un tipo.
+
+<Definition title="Tipo identidad $=$">
+**Formación:** Si $\Gamma \vdash A \;\text{type}$, $\Gamma \vdash a : A$ y $\Gamma \vdash b : A$, entonces $\Gamma \vdash a =_A b \;\text{type}$.
+
+**Introducción (reflexividad):** Si $\Gamma \vdash a : A$, entonces $\Gamma \vdash r_a : a =_A a$.
+
+**Eliminación (inducción de caminos):** Si $x : A, y : A, z : x =_A y \vdash D(x, y, z) \;\text{type}$ y $x : A \vdash d : D(x, x, r_x)$, entonces:
+
+$$x : A, y : A, z : x =_A y \vdash \text{ind}_=(d, x, y, z) : D(x, y, z)$$
+
+**Computación:** $x : A \vdash \text{ind}_=(d, x, x, r_x) \doteq d : D(x, x, r_x)$.
+</Definition>
+
+La reflexividad ($r$) convierte igualdades judgmentales en proposicionales: si $a \doteq b : A$, entonces $(a =_A b) \doteq (a =_A a)$, y $r_a : a =_A b$.
+
+### Los constructores de tipos internalizan estructura
+
+Los constructores de tipos frecuentemente internalizan nociones externas:
+- $\text{bool}$, $\mathbb{N}$, $\emptyset$, $\mathbb{1}$ internalizan nociones externas como la elección, la recursión, la falsedad y la verdad trivial.
+- El **tipo universo** $\mathcal{U}$ internaliza el juicio "$A \;\text{type}$".
+- El **tipo identidad** internaliza la igualdad judgmental $a \doteq b : A$.

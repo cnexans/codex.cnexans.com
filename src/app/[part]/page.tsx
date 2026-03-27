@@ -26,6 +26,15 @@ export default async function PartPage({ params }: PageProps) {
   const partMeta = bookConfig.parts.find((p) => p.slug === part);
   if (!partMeta) notFound();
 
+  // Dynamic MDX import for the part index page
+  let IndexContent: React.ComponentType | null = null;
+  try {
+    const mod = await import(`@/../content/${part}/_index.mdx`);
+    IndexContent = mod.default;
+  } catch {
+    // No _index.mdx or import failed — that's fine
+  }
+
   return (
     <main className="mx-auto max-w-2xl px-6 py-16">
       <header className="mb-10">
@@ -42,6 +51,12 @@ export default async function PartPage({ params }: PageProps) {
           Parte {partMeta.roman}
         </p>
       </header>
+
+      {IndexContent && (
+        <div className="prose prose-slate mb-10 max-w-none font-['Source_Sans_3',sans-serif] text-[#29313d]">
+          <IndexContent />
+        </div>
+      )}
 
       <ul className="list-none space-y-3 pl-0">
         {partMeta.chapters.map((ch, i) => (

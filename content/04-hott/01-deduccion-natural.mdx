@@ -1,0 +1,147 @@
+---
+title: "Deducción Natural y Lambda Cálculo"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+En la deducción natural, probamos enunciados sobre proposiciones usando árboles de prueba construidos a partir de reglas. Estas reglas se dividen en dos tipos: las reglas de **introducción** nos dicen cómo probar algo, y las reglas de **eliminación** nos dicen cómo usar algo.
+
+## Lógica proposicional
+
+### Reglas para la conjunción
+
+<Definition title="Conjunción $\land$">
+Dadas proposiciones $P$ y $Q$, la conjunción $P \land Q$ se gobierna por las siguientes reglas:
+
+**Introducción ($\land$-intro):** Si tenemos $P$ y $Q$, entonces tenemos $P \land Q$.
+
+$$\frac{P \quad Q}{P \land Q}$$
+
+**Eliminación izquierda ($\land$-elim-l):** Si tenemos $P \land Q$, entonces tenemos $P$.
+
+$$\frac{P \land Q}{P}$$
+
+**Eliminación derecha ($\land$-elim-r):** Si tenemos $P \land Q$, entonces tenemos $Q$.
+
+$$\frac{P \land Q}{Q}$$
+</Definition>
+
+### Reglas para la implicación
+
+<Definition title="Implicación $\to$">
+**Introducción ($\to$-intro):** Si, asumiendo $P$, podemos probar $Q$, entonces tenemos $P \to Q$. La hipótesis $P$ queda descargada.
+
+$$\frac{\overline{P}^i \quad \vdots \quad Q}{P \to Q} \; i$$
+
+**Eliminación ($\to$-elim, modus ponens):** Si tenemos $P$ y $P \to Q$, entonces tenemos $Q$.
+
+$$\frac{P \quad P \to Q}{Q}$$
+</Definition>
+
+<Theorem title="$Q$ se sigue de $P \land (P \to Q)$" label="Ejemplo">
+Para cualesquiera proposiciones $P, Q$: de $P \land (P \to Q)$ se deduce $Q$.
+
+$$\frac{\dfrac{P \land (P \to Q)}{P}\;\land\text{-elim-l} \quad \dfrac{P \land (P \to Q)}{P \to Q}\;\land\text{-elim-r}}{Q} \;\to\text{-elim}$$
+</Theorem>
+
+<Theorem title="$(P \land Q) \to P$" label="Ejemplo">
+$$\frac{\overline{P \land Q}^i \quad \land\text{-elim-l}}{P} \;\; \to\text{-intro}^i$$
+
+Luego $\vdash (P \land Q) \to P$.
+</Theorem>
+
+## Lambda cálculo simplemente tipado
+
+Si hacemos la deducción natural **proof-relevant** (es decir, que registremos la forma de la prueba), obtenemos el lambda cálculo simplemente tipado (STLC).
+
+<Definition title="Proof-relevance">
+En la deducción natural escribimos "$P$" para decir "$P$ vale". En el STLC, escribimos "$p : P$" para decir que "$p$ es una prueba/testigo de $P$", o equivalentemente, "$p$ habita $P$".
+
+Llamamos a $p$ una **prueba**, **testigo**, **término** o **elemento** de $P$, y a $P$ una **proposición** o **tipo**.
+</Definition>
+
+### Reglas tipadas para $\land$
+
+<Definition title="Reglas para $\land$ en STLC">
+**Formación:**
+
+$$\frac{\Gamma \vdash P \;\text{type} \quad \Gamma \vdash Q \;\text{type}}{\Gamma \vdash P \land Q \;\text{type}}$$
+
+**Introducción:** Si $\Gamma \vdash p : P$ y $\Gamma \vdash q : Q$, entonces $\Gamma \vdash (p, q) : P \land Q$.
+
+**Eliminación:** Si $\Gamma \vdash a : P \land Q$, entonces $\Gamma \vdash \text{pr}_1\, a : P$ y $\Gamma \vdash \text{pr}_2\, a : Q$.
+
+**Computación ($\beta$):** $\Gamma \vdash \text{pr}_1(p, q) \doteq p : P$ y $\Gamma \vdash \text{pr}_2(p, q) \doteq q : Q$.
+
+**Unicidad ($\eta$):** $\Gamma \vdash (\text{pr}_1\, a, \text{pr}_2\, a) \doteq a : P \land Q$.
+</Definition>
+
+### Reglas tipadas para $\to$
+
+<Definition title="Reglas para $\to$ en STLC">
+**Formación:**
+
+$$\frac{\Gamma \vdash P \;\text{type} \quad \Gamma \vdash Q \;\text{type}}{\Gamma \vdash P \to Q \;\text{type}}$$
+
+**Introducción:** Si $\Gamma, x : P \vdash q : Q$, entonces $\Gamma \vdash \lambda x.\, q : P \to Q$.
+
+**Eliminación:** Si $\Gamma \vdash p : P$ y $\Gamma \vdash f : P \to Q$, entonces $\Gamma \vdash f\, p : Q$.
+
+**Computación ($\beta$):** $\Gamma \vdash (\lambda x.\, q)\, p \doteq q[p/x] : Q$ (sustitución).
+
+**Unicidad ($\eta$):** $\Gamma \vdash \lambda x.\, f\, x \doteq f : P \to Q$.
+</Definition>
+
+Si pensamos en los tipos como conjuntos y los términos como elementos, $P \land Q$ se comporta como el producto $P \times Q$ de conjuntos.
+
+<Theorem title="Lambek (1985)">
+Existe una interpretación del STLC en $\mathbf{Set}$, la categoría de conjuntos. De hecho, hay una equivalencia entre el STLC y las categorías cartesianas cerradas (CCC).
+</Theorem>
+
+### Interpretaciones del tipo función
+
+Bajo la interpretación de Howard (lógica), $\to$ corresponde a la **implicación**. Bajo la interpretación de Lambek (conjuntos), $\to$ corresponde a **funciones**. También podemos interpretar los tipos como **especificaciones de programas**: un tipo $P \to P$ especifica un programa que toma una entrada de tipo $P$ y retorna una salida de tipo $P$.
+
+<Theorem title="Howard (1969) — Correspondencia de Curry-Howard">
+Los árboles de prueba de la deducción natural están en correspondencia biyectiva con los términos del STLC.
+</Theorem>
+
+## Teoría de tipos dependientes
+
+<Definition title="Tipos dependientes">
+En la deducción natural no hay términos. En el STLC, los términos pueden depender de otros términos (ej. $a : P \land Q \vdash \text{pr}_1\, a : P$). En la **teoría de tipos dependientes**, no solo los términos, sino también los **tipos** pueden depender de términos.
+
+Por ejemplo:
+- $n : \mathbb{N} \vdash \text{Vect}(n) \;\text{type}$ (vectores de longitud $n$)
+- $n : \mathbb{N} \vdash \text{isEven}(n) \;\text{type}$ (testigo de que $n$ es par)
+</Definition>
+
+Si interpretamos los tipos dependientes como:
+- **Proposiciones**: los tipos dependientes son **predicados**.
+- **Conjuntos**: los tipos dependientes son **familias indexadas** de conjuntos.
+- **Programas**: los tipos dependientes son **especificaciones parametrizadas**.
+
+### Funciones dependientes y $\Pi$-tipos
+
+<Definition title="Funciones dependientes">
+Una función dependiente $O : \prod_{n:\mathbb{N}} \text{Vect}(n)$ asigna a cada $n : \mathbb{N}$ un vector de longitud $n$. A veces se escribe $O : (n : \mathbb{N}) \to \text{Vect}(n)$.
+
+La regla de eliminación nos da $O(n) : \text{Vect}(n)$ para cualquier $n : \mathbb{N}$.
+</Definition>
+
+<Definition title="Reglas para $\Pi$-tipos">
+**Formación:** Si $\Gamma, x : P \vdash Q \;\text{type}$, entonces $\Gamma \vdash \prod_{x:P} Q \;\text{type}$.
+
+**Introducción:** Si $\Gamma, x : P \vdash q : Q$, entonces $\Gamma \vdash \lambda x.\, q : \prod_{x:P} Q$.
+
+**Eliminación:** Si $\Gamma \vdash f : \prod_{x:P} Q$ y $\Gamma \vdash p : P$, entonces $\Gamma \vdash f\, p : Q[p/x]$.
+
+**Computación ($\beta$):** $\Gamma \vdash (\lambda x.\, q)\, p \doteq q[p/x] : Q[p/x]$.
+
+**Unicidad ($\eta$):** $\Gamma \vdash \lambda x.\, f\, x \doteq f : \prod_{x:P} Q$.
+</Definition>
+
+Observaciones sobre los $\Pi$-tipos:
+- $\to$ es un caso especial de $\Pi$: cuando $Q$ no depende de $x$, $\prod_{x:P} Q$ es simplemente $P \to Q$.
+- $\land$ es un caso especial de $\Pi$: si tenemos $\mathbb{B}$ (el tipo con 2 elementos), entonces $\prod_{b:\mathbb{B}} \text{Vect}_b$ es lo mismo que $\text{Vect}_0 \land \text{Vect}_1$.
+- En la interpretación lógica, $\Pi$ corresponde al cuantificador universal $\forall$.

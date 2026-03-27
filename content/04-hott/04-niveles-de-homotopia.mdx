@@ -1,0 +1,172 @@
+---
+title: "Niveles de Homotopía y Equivalencias"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+No todos los tipos son iguales en complejidad: algunos son triviales (contractibles), otros tienen a lo sumo un elemento (proposiciones), otros se comportan como conjuntos discretos, y otros tienen estructura de caminos arbitrariamente compleja. Los **niveles de homotopía** (h-levels) clasifican esta complejidad.
+
+## Equivalencias
+
+A veces queremos que los tipos se comporten como proposiciones (sin estructura). Otras veces nos interesa su estructura. Necesitamos una buena noción de "ser equivalencia" que sea ella misma una proposición.
+
+<Definition title="Equivalencia">
+Una función $f : A \to B$ es una **equivalencia** si:
+
+$$\text{isEquiv}(f) :\equiv \prod_{b:B} \text{isContr}\left(\sum_{a:A} f(a) = b\right)$$
+
+Es decir, cada fibra $\sum_{a:A} f(a) = b$ es contractible.
+
+Escribimos $A \simeq B :\equiv \sum_{f:A \to B} \text{isEquiv}(f)$.
+</Definition>
+
+<Theorem title="" label="Ejemplo">
+Todo tipo contractible es equivalente a $\mathbb{1}$.
+</Theorem>
+
+<Theorem title="Reflexividad de equivalencias">
+Para todo tipo $A$, $A \simeq A$. Luego podemos definir una función:
+
+$$\text{idtoequiv} : (A = B) \to (A \simeq B)$$
+</Theorem>
+
+## El axioma de univalencia
+
+<Axiom title="Axioma de Univalencia">
+$$\text{ua} : \text{isEquiv}(\text{idtoequiv})$$
+
+Es decir, la función canónica $(A = B) \to (A \simeq B)$ es ella misma una equivalencia. Luego:
+
+$$(A = B) \simeq (A \simeq B)$$
+</Axiom>
+
+## Niveles de homotopía
+
+<Definition title="h-level">
+Un tipo $T$ tiene **h-level $0$** (es **contractible**) si:
+
+$$\text{hlevel}\; 0\; T :\equiv \sum_{t:T} \prod_{s:T} s = t$$
+
+Un tipo $T$ tiene **h-level $S(n)$** si:
+
+$$\text{hlevel}\;(Sn)\; T :\equiv \prod_{s,t:T} \text{hlevel}\; n\; (s = t)$$
+
+Esto define una función $\text{hlevel} : \mathbb{N} \to \text{Type} \to \text{Type}$.
+</Definition>
+
+### h-level 0: Contractibles
+
+<Definition title="Tipos contractibles">
+Un tipo $T$ es **contractible** si tiene un centro de contracción: un punto $t : T$ tal que todo otro punto es igual a $t$.
+</Definition>
+
+<Theorem title="" label="Ejemplo">
+$\mathbb{1}$ es contractible.
+</Theorem>
+
+### h-level 1: Proposiciones
+
+<Definition title="Proposiciones ($\text{isProp}$)">
+Un tipo $T$ es una **proposición** si cualesquiera dos elementos son iguales:
+
+$$\text{isProp}(T) :\equiv \prod_{x,y:T} x = y$$
+
+Equivalentemente, $T$ tiene h-level 1.
+</Definition>
+
+<Theorem title="" label="Ejemplo">
+$\emptyset$ y $\mathbb{1}$ son proposiciones.
+</Theorem>
+
+<Theorem title="Proposición habitada es contractible">
+Si una proposición está habitada, entonces es contractible.
+</Theorem>
+
+Intuitivamente, una proposición es $\emptyset$ o $\mathbb{1}$. Así, las proposiciones se comportan como las proposiciones lógicas clásicas, donde $\Sigma$ se comporta como $\exists$, etc.
+
+<Theorem title="Contractible implica proposición">
+Todo tipo contractible es una proposición.
+</Theorem>
+
+### h-level 2: Conjuntos
+
+<Definition title="Conjuntos ($\text{isSet}$)">
+Un tipo $T$ es un **conjunto** si todos sus tipos de igualdad son proposiciones:
+
+$$\text{isSet}(T) :\equiv \prod_{s,t:T} \text{isProp}(s = t)$$
+
+Equivalentemente, $T$ tiene h-level 2.
+</Definition>
+
+<Theorem title="" label="Ejemplo">
+$\text{bool}$ y $\mathbb{N}$ son conjuntos (de hecho, sus tipos de igualdad son proposiciones).
+</Theorem>
+
+### h-level 3: Groupoids
+
+<Definition title="Groupoids">
+Un tipo de h-level 3 es un **groupoid**: sus tipos de igualdad son conjuntos.
+</Definition>
+
+<Theorem title="$\text{Type}$ tiene h-level al menos 3">
+El tipo universo $\mathcal{U}$ tiene h-level al menos 3 (es un groupoid).
+</Theorem>
+
+<Theorem title="Cumulative h-levels">
+Si un tipo $T$ tiene h-level $n$, entonces tiene h-level $n+1$.
+</Theorem>
+
+## Univalencia para la lógica y los conjuntos
+
+<Definition title="Subtipos">
+Dado un tipo $T$ y un predicado $P : T \to \text{Prop}$, el **subtipo** de $T$ dado por $P$ es:
+
+$$\sum_{t:T} P(t)$$
+
+La proyección $\pi_1 : \sum_{t:T} P(t) \to T$ nos da la "inclusión".
+</Definition>
+
+<Theorem title="" label="Ejemplo">
+$\text{isContr}$, $\text{isProp}$ y $\text{isSet}$ son todos predicados (sus valores son proposiciones). Luego son predicados $\mathcal{U} \to \text{Prop}$.
+</Theorem>
+
+<Definition title="$\text{Prop}$ y $\text{Set}$">
+$$\text{Prop} :\equiv \sum_{P:\text{Type}} \text{isProp}(P)$$
+$$\text{Set} :\equiv \sum_{S:\text{Type}} \text{isSet}(S)$$
+</Definition>
+
+<Theorem title="Univalencia para proposiciones">
+El axioma de univalencia implica:
+
+$$(P =_\text{Prop} Q) \simeq (P \leftrightarrow Q)$$
+
+donde $P \leftrightarrow Q$ es una proposición. Luego $\text{Prop}$ es un **conjunto**.
+</Theorem>
+
+<Theorem title="Univalencia para conjuntos">
+El axioma de univalencia implica:
+
+$$(P =_\text{Set} Q) \simeq (P \cong Q)$$
+
+donde $P \cong Q$ es un conjunto. Luego $\text{Set}$ es un **groupoid**.
+</Theorem>
+
+## Univalencia para estructuras algebraicas
+
+<Definition title="Grupos en HoTT">
+$$\text{Grp} :\equiv \sum_{G:\text{Set}} \sum_{e:G} \sum_{m:G \to G \to G} \sum_{i:G \to G} \left(\prod_{x:G} m(e,x) = x \times m(x,e) = x\right) \times \left(\prod_{x,y,z:G} m(m(x,y),z) = m(x,m(y,z))\right) \times \left(\prod_{x:G} m(i(x),x) = e \times m(x,i(x)) = e\right)$$
+</Definition>
+
+<Theorem title="Univalencia para grupos">
+El axioma de univalencia implica:
+
+$$(G =_\text{Grp} H) \simeq (G \cong H)$$
+
+donde $\cong$ denota isomorfismo de grupos. Luego $\text{Grp}$ es un groupoid.
+</Theorem>
+
+<Theorem title="Principio de univalencia para estructuras algebraicas">
+El mismo principio vale para **cualquier estructura algebraica sobre un conjunto**: la igualdad en el tipo de tales estructuras coincide con el isomorfismo.
+</Theorem>
+
+**Moraleja:** la univalencia nos permite hacer matemáticas **up to** la noción apropiada de equivalencia en cada tipo. Esto se conoce como el **principio de identidad de estructura** (Aczel, Coquand) o la **identidad de los indiscernibles** (Leibniz).
