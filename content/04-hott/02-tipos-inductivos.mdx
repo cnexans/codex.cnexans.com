@@ -111,12 +111,12 @@ Si $\text{Vect}(n)$ denota el tipo de vectores de longitud $n$, entonces $\sum_{
 
 **Eliminación (inducción):** Si $\Gamma, x : \mathbb{N} \vdash D \;\text{type}$, $\Gamma \vdash a : D[0/x]$ y $\Gamma, x : \mathbb{N}, y : D \vdash b : D[Sx/x]$, entonces:
 
-$$\Gamma, x : \mathbb{N} \vdash \text{ind}_\mathbb{N}(a, b, x) : D$$
+$$\Gamma, x : \mathbb{N} \vdash \text{ind}_{\mathbb{N}}(a, b, x) : D$$
 
 **Computación:**
 
-$$\text{ind}_\mathbb{N}(a, b, 0) \doteq a : D[0/x]$$
-$$\text{ind}_\mathbb{N}(a, b, Sx) \doteq b : D[Sx/x]$$
+$$\text{ind}_{\mathbb{N}}(a, b, 0) \doteq a : D[0/x]$$
+$$\text{ind}_{\mathbb{N}}(a, b, Sx) \doteq b : D[Sx/x]$$
 </Definition>
 
 <Theorem title="$\text{add} : \mathbb{N} \to \mathbb{N} \to \mathbb{N}$" label="Ejemplo">
@@ -125,9 +125,9 @@ Definimos la suma por recursión en el segundo argumento:
 $$\text{add}(x, 0) \doteq x$$
 $$\text{add}(x, Sy) \doteq S(\text{add}(x, y))$$
 
-Es decir, $\text{add} := \lambda x.\, \lambda y.\, \text{ind}_\mathbb{N}(x, \lambda z.\, S z, y)$.
+Es decir, $\text{add} := \lambda x.\, \lambda y.\, \text{ind}_{\mathbb{N}}(x, \lambda z.\, S z, y)$.
 
-Análogamente, $\text{mult} := \lambda x.\, \lambda y.\, \text{ind}_\mathbb{N}(0, \lambda z.\, \text{add}(x, z), y)$.
+Análogamente, $\text{mult} := \lambda x.\, \lambda y.\, \text{ind}_{\mathbb{N}}(0, \lambda z.\, \text{add}(x, z), y)$.
 </Theorem>
 
 ## El tipo identidad
