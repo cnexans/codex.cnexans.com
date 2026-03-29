@@ -72,85 +72,115 @@ Seleccion de ejercicios de los trabajos practicos de Fundamentos de Analisis.
 1. Utilizando la definicion de limite demostrar las siguientes afirmaciones:
     - (a) $\displaystyle\lim_{x \to 3} (-2x + 4) = -2$.
     - (b) $\displaystyle\lim_{x \to 3} 2x^2 = 18$.
+    - (c) $\displaystyle\lim_{x \to 4} \sqrt{x} = 2$.
+    - (d) $\displaystyle\lim_{x \to 2} \frac{x+1}{x+3} = \frac{3}{5}$.
 
-2. Sea $l \in \mathbb{R}$ y sean $f, g : (a,b) \to \mathbb{R}$ tales que $\displaystyle\lim_{x \to x_0} g(x) = l$ y existe $\delta_0 > 0$ tal que $f(x) = g(x)$ para todo $x \in \mathbb{R}$ tal que $0 < |x - x_0| < \delta_1$. Demostrar que $\displaystyle\lim_{x \to x_0} f(x) = l$.
+2. Sea $l \in \mathbb{R}$ y sean $f, g : (a,b) \to \mathbb{R}$ tales que $\displaystyle\lim_{x \to x_0} g(x) = l$ y existe $\delta_0 > 0$ tal que $f(x) = g(x)$ para todo $x \in \mathbb{R}$ tal que $0 < |x - x_0| < \delta_0$. Demostrar que $\displaystyle\lim_{x \to x_0} f(x) = l$.
 
-3. Sean $f, g : ((a,b) - \{x_0\}) \to \mathbb{R}$ para un $x_0 \in (a,b)$ tales que $\displaystyle\lim_{x \to x_0} f(x) = l_1$ y $\displaystyle\lim_{x \to x_0} g(x) = l_2$. Demostrar que:
+3. Demostrar que si $\displaystyle\lim_{x \to x_0} f(x) = l$ entonces para todo $c \in \mathbb{R}$, $\displaystyle\lim_{x \to x_0} cf(x) = c \cdot l$.
+
+4. Sean $f, g : ((a,b) - \{x_0\}) \to \mathbb{R}$ para un $x_0 \in (a,b)$ tales que $\displaystyle\lim_{x \to x_0} f(x) = l_1$ y $\displaystyle\lim_{x \to x_0} g(x) = l_2$. Demostrar que:
     - (a) $\displaystyle\lim_{x \to x_0} (f(x) + g(x)) = l_1 + l_2$.
     - (b) $\displaystyle\lim_{x \to x_0} f(x) \cdot g(x) = l_1 \cdot l_2$.
     - (c) Si $l_2 \neq 0$ y $g(x) \neq 0$ para todo $x \in ((a,b) - \{x_0\})$ entonces $\displaystyle\lim_{x \to x_0} f(x)/g(x) = l_1/l_2$.
 
-4. Demostrar que $\displaystyle\lim_{x \to x_0} f(x) = l$ si y solo si para toda sucesion $(x_n)$ tal que $\displaystyle\lim_{n \to \infty} x_n = x_0$, para todo $n \in \mathbb{N}$, $x_n > x_0$ y $x_n$ pertenece al dominio de $f$, entonces $\displaystyle\lim_{n \to \infty} f(x_n) = l$.
+5. Demostrar que $\displaystyle\lim_{x \to x_0} f(x) = l$ implica $\displaystyle\lim_{x \to x_0} |f(x)| = |l|$.
 
-5. Probar usando la definicion que las siguientes funciones son continuas:
+6. Probar usando la definicion que las siguientes funciones son continuas:
     - (a) $f(x) = |3x + 1|$.
     - (b) $f(x) = 1/x$ para $x > 0$.
     - (c) $f(x) = x^2$.
 
-6. Demostrar que la ecuacion $x^3 - 3x + 1 = 0$ tiene una raiz real en el intervalo $(1, 2)$.
+7. Sea la funcion $f : \mathbb{R} \to \mathbb{R}$ tal que $f(x) = 1$ si $x \in \mathbb{Q}$ y $f(x) = 0$ si $x \in \mathbb{R} - \mathbb{Q}$. Demostrar que $f$ no es continua en ningun punto.
 
-7. Demostrar que existe un numero real que es solucion de la ecuacion $\cos x - x = 0$.
+8. Demostrar que la ecuacion $x^3 - 3x + 1 = 0$ tiene una raiz real en el intervalo $(1, 2)$.
 
-8. Sean $x \in \mathbb{R}$ y $\epsilon > 0$. Llamamos **bola abierta** de centro $x$ y radio $\epsilon$ al subconjunto de $\mathbb{R}$:
+9. Demostrar que existe un numero real que es solucion de la ecuacion $\cos x - x = 0$.
+
+10. Sean $x \in \mathbb{R}$ y $\epsilon > 0$. Llamamos **bola abierta** de centro $x$ y radio $\epsilon$ al subconjunto de $\mathbb{R}$:
 $$B_\epsilon(x) = \{y \in \mathbb{R} : |y - x| < \epsilon\}.$$
 Demostrar que $B_\epsilon(x) = (x - \epsilon, x + \epsilon)$. Como se podria definir una bola abierta en un espacio metrico $(X, d)$ cualquiera?
 
-9. Un conjunto $A \subset \mathbb{R}$ se dice **abierto** si y solo si para todo $a \in A$ existe una bola abierta $B_\epsilon(a) \subset A$. Demostrar que una bola abierta es un conjunto abierto (**sugerencia:** tomar un punto cualquiera $y \in B_\epsilon(x)$ y considerar la bola abierta de centro $y$ y radio $\epsilon - |x - y| > 0$). Luego, demostrar que un intervalo abierto $(a, b) \subset \mathbb{R}$ es un conjunto abierto.
+11. Un conjunto $A \subset \mathbb{R}$ se dice **abierto** si y solo si para todo $a \in A$ existe una bola abierta $B_\epsilon(a) \subset A$. Demostrar que una bola abierta es un conjunto abierto (**sugerencia:** tomar un punto cualquiera $y \in B_\epsilon(x)$ y considerar la bola abierta de centro $y$ y radio $\epsilon - |x - y| > 0$). Luego, demostrar que un intervalo abierto $(a, b) \subset \mathbb{R}$ es un conjunto abierto.
 
 ## Derivadas
 
-1. Calcular, usando la definicion de derivada (limite del cociente incremental), la derivada de las siguientes funciones en un punto $x_0$ generico de su dominio:
-    - (a) $f(x) = x^3$.
-    - (b) $f(x) = \sqrt{x}$ para $x > 0$.
-    - (c) $f(x) = \sin(x)$ (*sugerencia:* usar la identidad $\sin(\alpha + \beta) = \sin\alpha\cos\beta + \cos\alpha\sin\beta$ y el limite $\lim_{h \to 0} \frac{\sin h}{h} = 1$).
+1. Demostrar que una funcion constante es derivable con derivada nula en todo punto.
 
-2. Sea $f(x) = |x|$. Demostrar que $f$ no es derivable en $x_0 = 0$ (*sugerencia:* calcular los limites laterales del cociente incremental y verificar que no coinciden).
+2. Sea $f : (a,b) \to \mathbb{R}$ y sean $x_0 \in (a,b)$, $\alpha \in \mathbb{R}$. Demostrar que las siguientes afirmaciones son equivalentes:
+$$\lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = \alpha$$
+$$\lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h} = \alpha$$
 
-3. Sea $f : \mathbb{R} \to \mathbb{R}$ definida por:
-$$f(x) = \begin{cases} x^2 & \text{si } x \geq 0 \\ -x^2 & \text{si } x < 0 \end{cases}$$
-Demostrar que $f$ es derivable en $x_0 = 0$ y calcular $f'(0)$.
+3. Calcular por definicion las siguientes derivadas:
+    - (a) Para $f(x) = 2x + 3$, $f'(1)$.
+    - (b) Para $f(x) = 3x^2 - 1$, $f'(2)$.
+    - (c) Para $f(x) = \sqrt{x}$, $f'(4)$.
+    - (d) Para $f(x) = 1/x$, $f'(2)$.
 
-4. Sean $f$ y $g$ derivables en $x_0$. Demostrar, usando la definicion de derivada, que $(f + g)'(x_0) = f'(x_0) + g'(x_0)$.
+4. Se definen las derivadas laterales de una funcion $f$ en $x_0$ como los limites laterales de $\frac{f(x) - f(x_0)}{x - x_0}$ cuando $x \to x_0$. Analizar la existencia de las derivadas laterales y de la derivada cuando $x_0 = 0$ en los siguientes casos:
+    - (a) La funcion $f(x) = x^2 \sin(1/x)$ si $x \neq 0$ y $f(0) = 0$.
+    - (b) La funcion $g(x) = [x]$ (la parte entera de $x$).
 
-5. Utilizando la regla de la cadena, calcular la derivada de las siguientes funciones:
-    - (a) $h(x) = \sin(x^2 + 1)$.
-    - (b) $h(x) = e^{-x^2}$.
-    - (c) $h(x) = \ln(\cos x)$ para $x \in (-\pi/2, \pi/2)$.
+5. Demostrar por definicion que si $f$ es derivable en $x_0$ y $c \in \mathbb{R}$ entonces la funcion $x \mapsto cf(x)$ es derivable en $x_0$ y $(cf)'(x_0) = cf'(x_0)$.
 
-6. Sea $f:[0,2] \to \mathbb{R}$ continua en $[0,2]$, derivable en $(0,2)$, con $f(0) = 0$ y $f(2) = 2$. Demostrar que existe $c \in (0,2)$ tal que $f'(c) = 1$ (*sugerencia:* aplicar el Teorema del Valor Medio).
+6. Sean $f, g$ definidas en el intervalo abierto $(a,b)$ y sea $x_0 \in (a,b)$. Si $g$ es derivable en $x_0$ y existe $\delta > 0$ tal que si $|x - x_0| < \delta$ entonces $f(x) = g(x)$, entonces $f$ es derivable en $x_0$ y $f'(x_0) = g'(x_0)$.
 
-7. Sea $f:[a,b] \to \mathbb{R}$ continua en $[a,b]$, derivable en $(a,b)$, con $f(a) = f(b) = 0$ y $f(c) > 0$ para algun $c \in (a,b)$. Demostrar que existe $d \in (a,b)$ tal que $f'(d) < 0$ (*sugerencia:* usar el Teorema de Weierstrass para hallar el maximo y luego el Teorema de Fermat).
+7. Sea la funcion $f : \mathbb{R} \to \mathbb{R}$ tal que $f(x) = 1$ si $x \in \mathbb{Q}$ y $f(x) = 0$ si $x \in \mathbb{R} - \mathbb{Q}$. Demostrar que:
+    - (a) La funcion $f$ no es continua en ningun punto.
+    - (b) La funcion $g(x) = x \cdot f(x)$ es continua en $x_0 = 0$ pero no es derivable alli.
 
-8. Calcular los siguientes limites utilizando la Regla de L'Hopital:
-    - (a) $\displaystyle\lim_{x \to 0} \frac{\sin x - x}{x^3}$.
-    - (b) $\displaystyle\lim_{x \to 0} \frac{e^x - 1 - x}{x^2}$.
-    - (c) $\displaystyle\lim_{x \to \infty} \frac{\ln x}{x}$.
+8. Sea $f : \mathbb{R}_{>0} \to \mathbb{R}$ tal que $f(x) = \sqrt{x}$. Demostrar por definicion que $f'(x) = \frac{1}{2\sqrt{x}}$. Demostrar que no existe la derivada lateral por la derecha en $x_0 = 0$.
 
-9. Sea $f:(a,b) \to \mathbb{R}$ derivable. Supongamos que $f$ tiene un maximo local en $c \in (a,b)$ y que $f''(c)$ existe. Demostrar que $f''(c) \leq 0$ (*sugerencia:* por el Teorema de Fermat, $f'(c) = 0$; analizar el signo del cociente incremental de $f'$ en $c$).
+9. Hallar las ecuaciones de las rectas tangente y normal a las siguientes funciones en $x_0$:
+    - (a) Para $f(x) = 2x + 3$ en $x_0 = 1$.
+    - (b) Para $f(x) = 3x^2 - 1$ en $x_0 = 2$.
+    - (c) Para $f(x) = \sqrt{x}$ en $x_0 = 4$.
+    - (d) Para $f(x) = 1/x$ en $x_0 = 2$.
 
-10. Sea $f:[a,b] \to [a,b]$ continua en $[a,b]$ y derivable en $(a,b)$ con $|f'(x)| < 1$ para todo $x \in (a,b)$. Demostrar que $f$ tiene a lo sumo un punto fijo (*sugerencia:* si $f(p) = p$ y $f(q) = q$ con $p \neq q$, aplicar el Teorema del Valor Medio a $f(p) - f(q)$).
+10. Sea $n \in \mathbb{N}$. Demostrar que si $f(x) = x^n$ entonces $f'(x) = nx^{n-1}$ (**sugerencia:** utilizar la formula del binomio de Newton).
+
+11. Sean $f, g$ derivables en $x_0$. Demostrar las siguientes reglas de derivacion:
+    - (a) La funcion $f + g$ es derivable en $x_0$ y $(f + g)'(x_0) = f'(x_0) + g'(x_0)$.
+    - (b) La funcion $f \cdot g$ es derivable en $x_0$ y $(f \cdot g)'(x_0) = f'(x_0)g(x_0) + f(x_0)g'(x_0)$.
+    - (c) Si $g(x) \neq 0$ para todo $x$ en un entorno de $x_0$ entonces $f/g$ es derivable en $x_0$ y $(f/g)'(x_0) = \frac{f'(x_0)g(x_0) - f(x_0)g'(x_0)}{(g(x_0))^2}$.
+
+12. Demostrar que una funcion polinomica $f(x) = \sum_{k=0}^{n} a_k x^k$ es derivable y $f'(x) = \sum_{k=1}^{n} a_k k x^{k-1}$.
+
+13. Demostrar que una funcion racional es derivable en todo punto de su dominio. Luego hallar la derivada de $f(x) = \frac{4x - 3}{2x + 4}$.
+
+14. Demostrar que:
+    - (a) Si $f$ es impar y derivable entonces su derivada es una funcion par.
+    - (b) Si $f$ es par y derivable entonces su derivada es una funcion impar.
+
+15. Se definen las funciones seno y coseno hiperbolicos como $\sinh x = \frac{e^x - e^{-x}}{2}$, $\cosh x = \frac{e^x + e^{-x}}{2}$. Demostrar que $\cosh^2 x - \sinh^2 x = 1$.
+
+16. Probar que la funcion $f(x) = \sqrt[3]{(x-3)^2}$ satisface la igualdad $f(1) = f(5)$ pero no existe $c \in (1,5)$ tal que $f'(c) = 0$. Explicar por que no se cumple el teorema de Rolle.
+
+17. Demostrar los siguientes resultados:
+    - (a) Si $f : (a,b) \to \mathbb{R}$ es derivable en todo punto y $f'(x) \geq 0$ para todo $x \in (a,b)$, entonces $f$ es creciente.
+    - (b) Si $f$ es creciente y derivable, entonces $f'(x) \geq 0$ para todo $x$ en el dominio de $f$.
+    - (c) Si $f : (a,b) \to \mathbb{R}$ es derivable en todo punto y $f'(x) \leq 0$ para todo $x \in (a,b)$, entonces $f$ es decreciente.
+
+18. Demostrar que si $f(x) = \ln|x|$ entonces $f'(x) = 1/x$ para todo $x \neq 0$.
 
 ## Integrales
 
-1. Sea $f:[0,1] \to \mathbb{R}$ definida por $f(x) = x^2$ y sea $\Pi = \{0, 1/4, 1/2, 3/4, 1\}$ una particion de $[0,1]$. Calcular la suma inferior $s_\Pi(f)$ y la suma superior $S_\Pi(f)$.
+1. Sean $A, B \subset \mathbb{R}$ no vacios y tales que $a \leq b$ para todo $a \in A$ y para todo $b \in B$. Demostrar que $\sup A \leq \inf B$.
 
-2. Sea $f:[0,1] \to \mathbb{R}$ definida por $f(x) = x$. Considerar la particion regular $\Pi_n = \{0, 1/n, 2/n, \ldots, 1\}$. Calcular $s_{\Pi_n}(f)$ y $S_{\Pi_n}(f)$, y luego tomar limite cuando $n \to \infty$ para concluir que $f$ es integrable y que $\displaystyle\int_0^1 x\,dx = 1/2$ (*sugerencia:* usar la formula $\sum_{k=1}^{n} k = n(n+1)/2$).
+2. Sean $a, b \in \mathbb{R}$ tal que $a < b$. Sea $f : [a,b] \to \mathbb{R}$ una funcion acotada. Demostrar que los conjuntos $\{s_\pi(f) : \pi \text{ es particion de } [a,b]\}$ y $\{S_\pi(f) : \pi \text{ es particion de } [a,b]\}$ son no vacios.
 
-3. Sea $f:[a,b] \to \mathbb{R}$ monotona creciente y acotada. Demostrar que $f$ es integrable en $[a,b]$ (*sugerencia:* considerar la particion regular $\Pi_n$ y acotar $S_{\Pi_n}(f) - s_{\Pi_n}(f)$ usando que $m_k = f(x_{k-1})$ y $M_k = f(x_k)$, obteniendo una suma telescopica).
+3. Sea $f : [a,b] \to \mathbb{R}$ una funcion acotada. Supongamos que existe $(\pi_n)$ una sucesion de particiones de $[a,b]$ tal que $\displaystyle\lim_{n \to \infty} s_{\pi_n}(f) = \lim_{n \to \infty} S_{\pi_n}(f)$. Demostrar que $f$ es integrable en $[a,b]$.
 
-4. Sean $f, g:[a,b] \to \mathbb{R}$ integrables y sea $\lambda \in \mathbb{R}$. Demostrar que $f + g$ y $\lambda f$ son integrables y que:
-    - (a) $\displaystyle\int_a^b (f + g)(x)\,dx = \int_a^b f(x)\,dx + \int_a^b g(x)\,dx$.
-    - (b) $\displaystyle\int_a^b (\lambda f)(x)\,dx = \lambda \int_a^b f(x)\,dx$.
+4. Demostrar las siguientes afirmaciones usando la definicion de integral:
+    - (a) $\displaystyle\int_a^b f(x)\,dx = \frac{b^2 - a^2}{2}$ donde $f(x) = x$ (con $a < b$).
+    - (b) $\displaystyle\int_0^1 x^2\,dx = 1/3$ (**sugerencia:** proceder de forma similar al caso $\int_0^1 x\,dx$ y utilizar que $\sum_{j=1}^{n} j^2 = \frac{n(n+1)(2n+1)}{6}$).
 
-5. Sean $f, g:[a,b] \to \mathbb{R}$ integrables con $f(x) \leq g(x)$ para todo $x \in [a,b]$. Demostrar que $\displaystyle\int_a^b f(x)\,dx \leq \int_a^b g(x)\,dx$.
+5. Sea $f : [a,b] \to \mathbb{R}$ una funcion acotada y tal que $f(x) \geq 0$ para todo $x \in [a,b]$. Demostrar que $\displaystyle\int_a^{\tilde{b}} f(x)\,dx \geq 0$. Demostrar tambien que, si $f$ es integrable, entonces $\displaystyle\int_a^b f(x)\,dx \geq 0$.
 
-6. Calcular las siguientes integrales utilizando el Teorema Fundamental del Calculo:
-    - (a) $\displaystyle\int_0^1 3x^2\,dx$.
-    - (b) $\displaystyle\int_1^e \frac{1}{x}\,dx$.
-    - (c) $\displaystyle\int_0^{\pi} \sin x\,dx$.
+6. Sea $f : [0,1] \to \mathbb{R}$ tal que $f(x) = 1$ si $x \neq 1$ y $f(0) = 1$. Probar que $f$ es integrable en $[0,1]$ y $\displaystyle\int_0^1 f(x)\,dx = 1$.
 
-7. Sea $F(x) = \displaystyle\int_0^x e^{-t^2}\,dt$. Demostrar que $F$ es derivable en todo $\mathbb{R}$ y calcular $F'(x)$ (*sugerencia:* aplicar directamente la parte 2 del Teorema Fundamental del Calculo).
+7. Sea $f$ integrable en $[a,b]$. Sean $c, d \in \mathbb{R}$ tales que $a \leq c < d \leq b$. Demostrar que $f$ es integrable en $[c,d]$.
 
-8. Calcular, utilizando integracion por partes:
-    - (a) $\displaystyle\int_0^1 x\,e^x\,dx$.
-    - (b) $\displaystyle\int_1^e \ln x\,dx$.
+8. Sean $f, g$ integrables en $[a,b]$ y tales que $f(x) \leq g(x)$ para todo $x \in [a,b]$. Entonces $\displaystyle\int_a^b f(x)\,dx \leq \int_a^b g(x)\,dx$.
+
+9. Sea $f$ integrable en $[a,b]$. Demostrar que $\left|\displaystyle\int_a^b f(x)\,dx\right| \leq \int_a^b |f(x)|\,dx$.

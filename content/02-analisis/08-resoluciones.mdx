@@ -2,7 +2,7 @@
 title: "Resoluciones"
 ---
 
-import { Theorem } from '@/components/callout'
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
 
 Resoluciones de ejercicios seleccionados de los trabajos practicos.
 
@@ -13,13 +13,21 @@ Sean $f, g$ funciones polinomicas de grados $h$ y $k$ respectivamente, con $h < 
 
 Escribimos $f(n) = \sum_{i=0}^{h} a_i n^i$ y $g(n) = \sum_{i=0}^{k} b_i n^i$. Dividiendo numerador y denominador por $n^h$:
 
-$$\lim_{n \to \infty} \frac{f(n)}{g(n)} = \lim_{n \to \infty} \frac{\sum_{i=0}^{h} a_i n^i / n^h}{\sum_{i=0}^{k} b_i n^i / n^h}$$
+$$\lim_{n \to \infty} \frac{f(n)}{g(n)} = \lim_{n \to \infty} \frac{\sum_{i=0}^{h} a_i n^{i}/n^h}{\sum_{i=0}^{k} b_i n^{i}/n^h}$$
 
-En el numerador, $\displaystyle\lim_{n \to \infty} \sum_{i=0}^{h} a_i n^{i-h} = a_h$, pues los terminos con $i < h$ tienen exponente negativo y tienden a $0$.
+Para el numerador, notamos que $\lim_{n \to \infty} n^i = +\infty$ si $i > 0$, $\lim_{n \to \infty} n^0 = 1$, y $\lim_{n \to \infty} n^i = 0$ si $i < 0$ (en este ultimo caso, escribiendo $j = -i$, se tiene $n^i = n^{-j} = 1/n^j$ y tomando $n_0 > \sqrt[j]{1/\varepsilon}$ se obtiene $n^j < \varepsilon$). Luego:
 
-En el denominador, los terminos con $i > h$ tienen exponente positivo, por lo que $\displaystyle\lim_{n \to \infty} \sum_{i=0}^{k} b_i n^{i-h} = +\infty$.
+$$\lim_{n \to \infty} \sum_{i=0}^{h} a_i n^{i-h} = a_h$$
 
-Por lo tanto, $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = \frac{a_h}{+\infty} = 0$.
+pues los terminos con $i < h$ tienen exponente negativo y tienden a $0$.
+
+El denominador, en cambio, tiende al infinito:
+
+$$\lim_{n \to \infty} \sum_{i=0}^{k} b_i n^{i}/n^h = \lim_{n \to \infty} \sum_{i=0}^{h} b_i n^{i-h} + \sum_{i=h+1}^{k} b_i n^{i}/n^h$$
+
+Como $\lim_{n \to \infty} \sum_{i=0}^{h} b_i n^{i-h} = b_h$ y como $\lim_{n \to \infty} b_i n^{i-h} = +\infty$ para $i - h > 0$, se tiene que $\sum_{i=h+1}^{k} b_i n^{i}/n^h \to \infty$.
+
+Por lo tanto, $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = \lim_{n \to \infty} \frac{f(n)/n^h}{g(n)/n^h}$ donde $f(n)/n^h \to a_h$ y $g(n)/n^h \to \infty$, luego $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = 0$.
 </Theorem>
 
 <Theorem label="Ejemplo" qed title="Limite de cociente de polinomios (caso $h > k$)">
@@ -29,11 +37,9 @@ Dividiendo numerador y denominador por $n^k$:
 
 $$\lim_{n \to \infty} \left|\frac{f(n)}{g(n)}\right| = \lim_{n \to \infty} \left|\frac{f(n)/n^k}{g(n)/n^k}\right|$$
 
-El numerador tiene terminos con exponente $i - k > 0$ para $i > k$, por lo que $\displaystyle\lim_{n \to \infty} f(n)/n^k = +\infty$.
+Utilizando el desarrollo anterior, se obtiene que $f(n)/n^k \to \infty$ (pues hay terminos con exponente $i - k > 0$ para $i > k$) y $g(n)/n^k \to b_k$, con $b_k$ constante.
 
-El denominador converge a una constante: $\displaystyle\lim_{n \to \infty} g(n)/n^k = b_k$.
-
-Por lo tanto, $\displaystyle\lim_{n \to \infty} \left|\frac{f(n)}{g(n)}\right| = \infty$.
+De donde $\displaystyle\lim_{n \to \infty} \left|\frac{f(n)}{g(n)}\right| = \infty$.
 </Theorem>
 
 <Theorem label="Ejemplo" qed title="Limite de cociente de polinomios (caso $h = k$)">
@@ -43,11 +49,11 @@ Dividiendo numerador y denominador por $n^k$:
 
 $$\lim_{n \to \infty} \frac{f(n)}{g(n)} = \lim_{n \to \infty} \frac{f(n)/n^k}{g(n)/n^k}$$
 
-En el numerador:
+Donde:
 
-$$\lim_{n \to \infty} \frac{f(n)}{n^k} = \lim_{n \to \infty} \left(a_k + \sum_{i=0}^{k-1} a_i n^{i-k}\right) = a_k$$
+$$\lim_{n \to \infty} \frac{f(n)}{n^k} = \lim_{n \to \infty} a_k + \sum_{i=0}^{k-1} a_i n^{i}/n^k = a_k$$
 
-pues los terminos con $i < k$ tienen exponente negativo y tienden a $0$. Analogamente, $\displaystyle\lim_{n \to \infty} g(n)/n^k = b_k$.
+Similarmente, en el denominador: $\displaystyle\lim_{n \to \infty} g(n)/n^k = b_k$.
 
 Entonces $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = \frac{a_k}{b_k}$.
 </Theorem>
@@ -57,7 +63,7 @@ Sea $(a_n)$ una sucesion de terminos positivos tal que $\displaystyle\lim_{n \to
 
 Por hipotesis, $|a_n| < \varepsilon$ para $n$ suficientemente grande. Como $a_n > 0$, se tiene $a_n < \varepsilon$. Tomando $\varepsilon = 1$, existe $n_0 \in \mathbb{N}$ tal que si $n \geq n_0$, entonces $a_n < 1$.
 
-Consideremos la siguiente particion de $\mathbb{N}$:
+Consideremos la siguiente particion:
 
 $$\mathbb{N} = \{1, 2, \ldots, n_0\} \cup \{n_0 + 1, n_0 + 2, \ldots\}$$
 
@@ -67,11 +73,13 @@ $$\{a_n : n \in \mathbb{N}\} = \{a_n : n \geq n_0\} \cup \{a_n : n < n_0\}$$
 
 Sea $M_0 = \max(\{a_n : n < n_0\})$, que existe por ser un conjunto finito (se define de forma inductiva).
 
-Tomando $M = \max(\{M_0, 1\})$, por las dos observaciones anteriores se concluye que $a_n \leq M$ para todo $n \in \mathbb{N}$. En particular, $M_0$ es alcanzado por algun $a_j$ con $j < n_0$, y como $a_n < 1 \leq M$ para $n \geq n_0$, el maximo del conjunto $\{a_n : n \in \mathbb{N}\}$ existe y es $M_0$ (si $M_0 \geq 1$) o el mayor entre los finitos valores $a_1, \ldots, a_{n_0-1}$ y los valores $a_n$ con $n \geq n_0$ que son todos menores que $1$.
+Tomando $M = \max(\{M_0, 1\})$, por las dos observaciones anteriores se concluye que $a_n \leq M$ para todo $n \in \mathbb{N}$.
 </Theorem>
 
 <Theorem label="Ejemplo" qed title="Convergencia de $a_1 = \\sqrt{3}$, $a_{n+1} = \\sqrt{3 + a_n}$">
 La sucesion definida por $a_1 = \sqrt{3}$ y $a_{n+1} = \sqrt{3 + a_n}$ es convergente, y su limite es $\dfrac{1 + \sqrt{13}}{2}$.
+
+En efecto, es una sucesion recurrente donde $a_n = \sqrt{3 + \sqrt{3 + \sqrt{3 + \cdots}}}$ ($n$ veces).
 
 **i) $(a_n)$ es creciente.** Demostracion por induccion.
 
@@ -145,9 +153,7 @@ Si $(a_n)$ es una sucesion de Cauchy, entonces para todo $p \in \mathbb{N}$ se t
 
 Como $(a_n)$ es de Cauchy, para cada $\varepsilon > 0$ existe $n_0$ tal que si $n, m \geq n_0$ entonces $|a_m - a_n| < \varepsilon$.
 
-Sea $p \in \mathbb{N}$ fijo. Para $n \geq n_0$, se tiene $n + p > n \geq n_0$, por lo que:
-
-$$|a_{n+p} - a_n| < \varepsilon$$
+Sea $p \in \mathbb{N}$ fijo. Ponga $m = n + p > n \geq n_0$, quedando que $|a_{n+p} - a_n| < \varepsilon$.
 
 Esto vale para todo $n \geq n_0$, que es equivalente a $\displaystyle\lim_{n \to \infty} (a_{n+p} - a_n) = 0$.
 </Theorem>
@@ -157,7 +163,7 @@ La sucesion $a_n = (-1)^n$ no es convergente.
 
 Supongamos que converge. Entonces toda subsucesion converge y tiene el mismo limite.
 
-Tomemos las subsucesiones $(a_{2n})$ y $(a_{2n+1})$:
+Tomemos las subsucesiones $a_{2n}$ y $a_{2n+1}$:
 
 $$\lim_{n \to \infty} a_{2n} = \lim_{n \to \infty} (-1)^{2n} = \lim_{n \to \infty} 1 = 1$$
 
@@ -180,6 +186,416 @@ $$|f(x) - (-2)| = |{-2x + 4 + 2}| = |{-2x + 6}| = |2x - 6| = 2|x - 3|$$
 Tomando $\delta = \varepsilon / 2$, si $|x - 3| < \delta$ entonces:
 
 $$|x - 3| < \frac{\varepsilon}{2} \Rightarrow 2|x - 3| < \varepsilon \Rightarrow |{-2x + 4} - ({-2})| < \varepsilon$$
+</Theorem>
 
-Que era lo que queriamos demostrar.
+<Theorem label="Ejemplo" qed title="$\\lim_{x \\to 3} 2x^2 = 18$">
+Demostrar por definicion que $\displaystyle\lim_{x \to 3} 2x^2 = 18$.
+
+Sea $\varepsilon > 0$. Queremos encontrar $\delta$ tal que si $0 < |x - 3| < \delta$ entonces $|2x^2 - 18| < \varepsilon$.
+
+Calculo guia:
+
+$$|2x^2 - 18| = 2|x^2 - 9| = 2|x + 3||x - 3|$$
+
+Ponga $\delta < 1$, entonces $|x - 3| < 1$, es decir $-1 < x - 3 < 1$, o sea $2 < x < 4$. Luego $5 < x + 3 < 7$, por lo que $|x + 3| < 7$.
+
+Entonces:
+
+$$2|x + 3||x - 3| < |x - 3| \cdot 7 \cdot 2 = 14|x - 3|$$
+
+Ponga $\delta = \min(1, \varepsilon/14)$. Luego $|x - 3| < \varepsilon/14$ implica $|2x^2 - 18| < |x - 3| \cdot 14 < \varepsilon$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$\\lim_{x \\to 4} \\sqrt{x} = 2$">
+Demostrar por definicion que $\displaystyle\lim_{x \to 4} \sqrt{x} = 2$.
+
+Sea $\varepsilon > 0$. Queremos encontrar $\delta$ tal que si $0 < |x - 4| < \delta$ entonces $|\sqrt{x} - 2| < \varepsilon$.
+
+Como $x \geq 0$, podemos factorizar:
+
+$$|x - 4| = |(\sqrt{x} + 2)(\sqrt{x} - 2)| = |\sqrt{x} + 2||\sqrt{x} - 2|$$
+
+Si $\delta < 3$, entonces $-3 < x - 4 < 3$, es decir $1 < x < 7$, luego $1 < \sqrt{x} < \sqrt{7}$, por lo que $3 < \sqrt{x} + 2 < \sqrt{7} + 2$.
+
+Entonces $|\sqrt{x} + 2| > 3$, de donde $|\sqrt{x} + 2||\sqrt{x} - 2| > 3|\sqrt{x} - 2|$.
+
+Luego $3|\sqrt{x} - 2| < |x - 4| < \delta$.
+
+Ponga $\delta = \min(3, 3\varepsilon)$. Entonces $3|\sqrt{x} - 2| < 3\varepsilon$, por lo que $|\sqrt{x} - 2| < \varepsilon$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$\\lim_{x \\to 2} \\frac{x+1}{x+3} = \\frac{3}{5}$">
+Demostrar por definicion que $\displaystyle\lim_{x \to 2} \frac{x+1}{x+3} = \frac{3}{5}$.
+
+Dado $\varepsilon > 0$, queremos $\delta$ tal que si $0 < |x - 2| < \delta$ entonces $\left|\frac{x+1}{x+3} - \frac{3}{5}\right| < \varepsilon$.
+
+Simplifiquemos:
+
+$$\left|\frac{x+1}{x+3} - \frac{3}{5}\right| = \left|\frac{5x + 5 - 3x - 9}{5x + 15}\right| = \left|\frac{2x - 4}{5(x + 3)}\right| = \frac{2}{5} \cdot \frac{|x - 2|}{|x + 3|}$$
+
+Si $\delta < 1$, entonces $-1 < x - 2 < 1$, luego $4 < x + 3 < 6$, por lo que $|x + 3| > 4$, y entonces $\frac{1}{|x+3|} < \frac{1}{4}$.
+
+Luego:
+
+$$\frac{2}{5} \cdot \frac{|x - 2|}{|x + 3|} < |x - 2| \cdot \frac{1}{4} \cdot \frac{2}{5} = \frac{|x-2|}{10}$$
+
+Ponga $\delta = \min(1, 10\varepsilon)$. Entonces $|x - 2| < 10\varepsilon$, de donde $|x - 2|/10 < \varepsilon$, y por lo tanto $\left|\frac{x+1}{x+3} - \frac{3}{5}\right| < \varepsilon$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$f = g$ cerca de $x_0$ implica mismo limite">
+Sean $f, g : (a,b) \to \mathbb{R}$ con $\displaystyle\lim_{x \to x_0} g(x) = l$, y existe $\delta_0 > 0$ tal que si $0 < |x - x_0| < \delta_0$ entonces $f(x) = g(x)$. Demostrar que $\displaystyle\lim_{x \to x_0} f(x) = l$.
+
+Por construccion, sea $\varepsilon > 0$ arbitrario. Como $\displaystyle\lim_{x \to x_0} g(x) = l$, existe $\delta_1 > 0$ tal que si $0 < |x - x_0| < \delta_1$ entonces $|g(x) - l| < \varepsilon$.
+
+Ponga $\delta = \min(\delta_0, \delta_1)$. Entonces, si $0 < |x - x_0| < \delta$, se sostiene $|g(x) - l| < \varepsilon$ y se sostiene la hipotesis $f(x) = g(x)$. Reemplazando se obtiene:
+
+$$|f(x) - l| < \varepsilon$$
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$\\lim f(x) = l$ implica $\\lim cf(x) = cl$">
+Demostrar que si $\displaystyle\lim_{x \to x_0} f(x) = l$ entonces $\displaystyle\lim_{x \to x_0} cf(x) = c \cdot l$ para todo $c \in \mathbb{R}$.
+
+Caso $c = 0$: es trivial, pues $\displaystyle\lim_{x \to x_0} 0 \cdot f(x) = \lim_{x \to x_0} 0 = 0 = 0 \cdot l$. Dado un $\varepsilon > 0$, $|0 \cdot f(x)| = |0| = 0 < \varepsilon$.
+
+Caso $c \neq 0$: sea $\varepsilon \in \mathbb{R}_{>0}$. Como $\displaystyle\lim_{x \to x_0} f(x) = l$, existe $\delta > 0$ tal que si $0 < |x - x_0| < \delta$ entonces $|f(x) - l| < \frac{\varepsilon}{|c|}$.
+
+Multiplicando por $|c|$, tenemos:
+
+$$|c||f(x) - l| = |cf(x) - cl| < \varepsilon$$
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$\\lim(f + g) = l_1 + l_2$">
+Dados $\displaystyle\lim_{x \to x_0} f(x) = l_1$ y $\displaystyle\lim_{x \to x_0} g(x) = l_2$, demostrar que $\displaystyle\lim_{x \to x_0} (f(x) + g(x)) = l_1 + l_2$.
+
+Sea $\varepsilon > 0$. Por hipotesis, existe $\delta_1 > 0$ tal que si $0 < |x - x_0| < \delta_1$ entonces $|f(x) - l_1| < \varepsilon/2$, y existe $\delta_2 > 0$ tal que si $0 < |x - x_0| < \delta_2$ entonces $|g(x) - l_2| < \varepsilon/2$.
+
+Ponga $\delta = \min(\delta_1, \delta_2)$ y sume las desigualdades para obtener: si $0 < |x - x_0| < \delta$ entonces $|f(x) - l_1| + |g(x) - l_2| < \varepsilon$.
+
+Por desigualdad del triangulo:
+
+$$|(f(x) + g(x)) - (l_1 + l_2)| \leq |f(x) - l_1| + |g(x) - l_2| < \varepsilon$$
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$\\lim f(x) = l$ implica $\\lim |f(x)| = |l|$">
+Dado $\displaystyle\lim_{x \to a} f(x) = l$, demostrar que $\displaystyle\lim_{x \to a} |f(x)| = |l|$.
+
+**Lema:** $||u| - |v|| \leq |u - v|$.
+
+1) $|u + v - v| = |u| \leq |u - v| + |v|$, luego $|u| - |v| \leq |u - v|$.
+
+2) $|v + u - u| = |v| \leq |v - u| + |u|$, luego $|v| - |u| \leq |v - u| = |u - v|$, es decir $-(|u| - |v|) \leq |u - v|$.
+
+De 1) y 2): $-|u - v| \leq |u| - |v| \leq |u - v|$, por lo tanto $||u| - |v|| \leq |u - v|$.
+
+Sea $\varepsilon > 0$. Por hipotesis, existe $\delta > 0$ tal que si $0 < |x - a| < \delta$ entonces $|f(x) - l| < \varepsilon$. Poniendo $u = f(x)$, $v = l$:
+
+$$||f(x)| - |l|| \leq |f(x) - l| < \varepsilon$$
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="La funcion de Dirichlet no es continua en ningun punto">
+Sea $f : \mathbb{R} \to \mathbb{R}$ definida por $f(x) = 1$ si $x \in \mathbb{Q}$ y $f(x) = 0$ si $x \in \mathbb{R} - \mathbb{Q}$. Entonces $f$ no es continua en ningun punto.
+
+**Caso 1: $x_0$ racional.** Suponga que $f$ es continua en $x_0$. Entonces $f(x_0) = 1$. Para todo $\varepsilon > 0$ existe $\delta > 0$ tal que si $0 < |x - x_0| < \delta$ entonces $|f(x) - 1| < \varepsilon$.
+
+Ponga $\varepsilon = 1/2 > 0$. Existe $\delta > 0$ tal que si $0 < |x - x_0| < \delta$ entonces $|f(x) - 1| < 1/2$.
+
+Por definicion de valor absoluto, $0 < |x - x_0| < \delta$ es lo mismo que $x_0 - \delta < x < x_0 + \delta$. Sea $a = x_0 - \delta$, $b = x_0 + \delta$. Como $0 < \sqrt{2} < 2$, se tiene $0 < (b-a)\sqrt{2}/2 < (b-a)$, por lo que $a < a + (b-a)\sqrt{2}/2 < b$.
+
+Ponga $x = a + (b-a)\sqrt{2}/2$. Se tiene $0 < |x - x_0| < \delta$. Pero $x \in \mathbb{R} - \mathbb{Q}$, por lo que $f(x) = 0$, y entonces $|0 - 1| = 1 < 1/2$. Contradiccion.
+
+**Caso 2: $x_0$ irracional.** Suponga que $f$ es continua en $x_0$. Entonces $\displaystyle\lim_{t \to x_0} f(t) = f(x_0) = 0$. Para todo $\varepsilon > 0$ existe $\delta > 0$ tal que si $0 < |x - x_0| < \delta$ entonces $|f(x)| < \varepsilon$.
+
+Ponga $\varepsilon = 1/2$. Existe $\delta > 0$ tal que si $0 < |x - x_0| < \delta$ entonces $|f(x)| < 1/2$. Sea $a = x_0 - \delta$, $b = x_0 + \delta$. Por principio de Arquimedes, existe $n > 1/(b-a)$, luego $n(b-a) > 1$, es decir $bn - an > 1$. Como $a < b$, tenemos $an < bn$, luego entre $an$ y $bn$ hay un entero $m$. Entonces $a < m/n < b$.
+
+Tenemos $0 < |m/n - x_0| < \delta$, y como $m/n \in \mathbb{Q}$, $f(m/n) = 1$, por lo que $|1| = 1 < 1/2$. Contradiccion.
+
+Por los casos 1 y 2, $f$ no es continua en ningun punto.
+</Theorem>
+
+## Derivadas
+
+<Theorem label="Ejemplo" qed title="Derivadas laterales de $x^2\\sin(1/x)$ en $x_0 = 0$">
+Sea $f(x) = x^2 \sin(1/x)$ si $x \neq 0$ y $f(0) = 0$. Analizar la existencia de las derivadas laterales y de la derivada en $x_0 = 0$.
+
+**Derivada lateral derecha:**
+
+$$\lim_{x \to 0^+} \frac{f(x) - f(0)}{x - 0} = \lim_{x \to 0^+} \frac{x^2 \sin(1/x)}{x} = \lim_{x \to 0^+} x \sin(1/x)$$
+
+Como $|x \sin(1/x)| \leq |x| \to 0$, se tiene que este limite vale $0$. Alternativamente, $\displaystyle\lim_{x \to 0^+} \frac{\sin(1/x)}{1/x} = 1$ por limite notable, luego la derivada lateral derecha es $1$.
+
+**Derivada lateral izquierda:**
+
+$$\lim_{x \to 0^-} \frac{x^2 \sin(1/x)}{x} = \lim_{x \to 0^-} x \sin(1/x)$$
+
+Como $x \to 0^-$, hacemos $x' = -x$ con $x' \to 0^+$:
+
+$$\lim_{x' \to 0^+} \frac{(-x')^2 \sin(-1/x')}{-x'} = -\lim_{x' \to 0^+} x' \sin(1/x') = -1$$
+
+por limite notable. Luego la derivada lateral izquierda es $-1$.
+
+Como las derivadas laterales no coinciden ($1 \neq -1$), no existe la derivada en $x = 0$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$f$ derivable en $x_0$ implica $cf$ derivable con $(cf)' = cf'$">
+Demostrar que si $f$ es derivable en $x_0$ y $c \in \mathbb{R}$, entonces $(cf)(x)$ es derivable en $x_0$ y $(cf)'(x_0) = cf'(x_0)$.
+
+Por hipotesis:
+
+$$\lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = f'(x_0)$$
+
+Luego:
+
+$$\lim_{x \to x_0} c \cdot \frac{f(x) - f(x_0)}{x - x_0} = c \cdot f'(x_0)$$
+
+$$\Rightarrow \lim_{x \to x_0} \frac{cf(x) - cf(x_0)}{x - x_0} = cf'(x_0)$$
+
+Que es lo que se queria demostrar.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Igualdad local implica misma derivada">
+Sean $f, g : (a,b) \to \mathbb{R}$, $g'(x_0)$ definida, y existe $\delta > 0$ tal que si $|x - x_0| < \delta$ entonces $f(x) = g(x)$. Demostrar que $f'(x_0) = g'(x_0)$.
+
+Por hipotesis existe el limite:
+
+$$\lim_{x \to x_0} \frac{g(x) - g(x_0)}{x - x_0} = g'(x_0)$$
+
+Por definicion, para todo $\varepsilon > 0$ existe $\delta'' > 0$ tal que si $0 < |x - x_0| < \delta''$ entonces:
+
+$$\left|\frac{g(x) - g(x_0)}{x - x_0} - g'(x_0)\right| < \varepsilon$$
+
+Tomamos $\delta' = \min(\delta, \delta'')$. Si $0 < |x - x_0| < \delta'$, tenemos que $f(x) = g(x)$ (por hipotesis) y la desigualdad anterior. Reemplazamos:
+
+$$\left|\frac{f(x) - f(x_0)}{x - x_0} - g'(x_0)\right| < \varepsilon$$
+
+Esto es $\displaystyle\lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = f'(x_0) = g'(x_0)$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Derivada de $\\sqrt{x}$ y no existencia de derivada lateral en $0$">
+Sea $f : \mathbb{R}_{>0} \to \mathbb{R}$ tal que $f(x) = \sqrt{x}$. Entonces $f'(x) = \frac{1}{2\sqrt{x}}$ y no existe la derivada lateral por la derecha en $x_0 = 0$.
+
+Calculamos $f'(x)$ por definicion:
+
+$$f'(x) = \lim_{t \to x} \frac{f(x) - f(t)}{x - t} = \lim_{t \to x} \frac{\sqrt{x} - \sqrt{t}}{x - t}$$
+
+Multiplicando y dividiendo por el conjugado $(\sqrt{x} + \sqrt{t})$:
+
+$$= \lim_{t \to x} \frac{(\sqrt{x} - \sqrt{t})(\sqrt{x} + \sqrt{t})}{(x - t)(\sqrt{x} + \sqrt{t})} = \lim_{t \to x} \frac{|x| - |t|}{(x - t)(\sqrt{x} + \sqrt{t})}$$
+
+$$= \lim_{t \to x} \frac{x - t}{(x - t)(\sqrt{x} + \sqrt{t})} = \lim_{t \to x} \frac{1}{\sqrt{x} + \sqrt{t}} = \frac{1}{2\sqrt{x}}$$
+
+**Derivada lateral en $x_0 = 0$:** calculamos
+
+$$\lim_{x \to 0^+} \frac{1}{2\sqrt{x}} = +\infty$$
+
+pues dado $K > 0$, queremos $\delta > 0$ tal que $|x| < \delta$ implica $\frac{1}{2\sqrt{x}} > K$.
+
+Ponga $\delta = \frac{1}{4K^2}$. Entonces $|x| < \frac{1}{4K^2}$ implica $\sqrt{x} < \frac{1}{2K}$, por lo que $\frac{1}{2\sqrt{x}} > K$.
+
+Luego, como el limite de la derivada lateral no es finito, la derivada lateral $f'_+(0)$ no existe.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Si $f$ es impar, $f'$ es par; si $f$ es par, $f'$ es impar">
+Sea $f$ derivable.
+
+**1) $f$ impar $\Rightarrow$ $f'$ es par.**
+
+Suponga $f(-x) = -f(x)$. Calculamos:
+
+$$f'(-x_0) = \lim_{x \to -x_0} \frac{f(x) - f(-x_0)}{x - (-x_0)}$$
+
+Cambio de variable: $u = -x$, $x \to -x_0$ entonces $u \to x_0$:
+
+$$f'(-x_0) = \lim_{u \to x_0} \frac{f(-u) - f(-x_0)}{-u + x_0} = \lim_{u \to x_0} \frac{-f(u) + f(x_0)}{-(u - x_0)} = \lim_{u \to x_0} \frac{f(u) - f(x_0)}{u - x_0} = f'(x_0)$$
+
+Luego $f'(-x_0) = f'(x_0)$, es decir, $f'$ es par.
+
+**2) $f$ par $\Rightarrow$ $f'$ es impar.**
+
+Suponga $f(-x) = f(x)$. Calculamos:
+
+$$f'(-x_0) = \lim_{x \to -x_0} \frac{f(x) - f(-x_0)}{x - (-x_0)}$$
+
+Cambio de variable: $u = -x$, $u \to x_0$:
+
+$$f'(-x_0) = \lim_{u \to x_0} \frac{f(-u) - f(-x_0)}{-u - (-x_0)} = \lim_{u \to x_0} \frac{f(u) - f(x_0)}{-(u - x_0)} = -\lim_{u \to x_0} \frac{f(u) - f(x_0)}{u - x_0} = -f'(x_0)$$
+
+Luego $f'(-x_0) = -f'(x_0)$, es decir, $f'$ es impar.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$\\cosh^2 x - \\sinh^2 x = 1$">
+Demostrar que $\cosh^2 x - \sinh^2 x = 1$.
+
+Calculamos:
+
+$$(\cosh x)^2 = \left(\frac{e^x + e^{-x}}{2}\right)^2 = \frac{e^{2x} + e^{-2x} + 2e^x e^{-x}}{4}$$
+
+$$(\sinh x)^2 = \left(\frac{e^x - e^{-x}}{2}\right)^2 = \frac{e^{2x} + e^{-2x} - 2e^x e^{-x}}{4}$$
+
+Restando:
+
+$$(\cosh x)^2 - (\sinh x)^2 = \frac{4e^x e^{-x}}{4} = e^x \cdot e^{-x} = e^{x - x} = e^0 = 1$$
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Derivada de $\\ln|x|$">
+Demostrar que si $f(x) = \ln|x|$ entonces $f'(x) = 1/x$ para todo $x \neq 0$.
+
+**Caso 1: $x > 0$.** Entonces $f(x) = \ln x$. Por definicion:
+
+$$f'(x) = \lim_{h \to 0} \frac{\ln(x + h) - \ln(x)}{h} = \lim_{h \to 0} \frac{1}{h} \ln\left(\frac{x+h}{x}\right)$$
+
+$$= \lim_{h \to 0} \ln\left(\frac{x+h}{x}\right)^{1/h} = \lim_{h \to 0} \ln\left(1 + \frac{h}{x}\right)^{\frac{1}{h} \cdot \frac{x}{x}}$$
+
+$$= \lim_{h \to 0} \frac{1}{x} \ln\left(1 + \frac{h}{x}\right)^{x/h} = \frac{1}{x} \ln(e) = \frac{1}{x}$$
+
+**Caso 2: $x_0 < 0$.** Entonces $f(x_0) = \ln(-x_0) = f(-x_0)$, pues $|x_0| = -x_0$.
+
+$$f'(x_0) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = \lim_{x \to x_0} \frac{f(-x) - f(-x_0)}{x - x_0}$$
+
+Ponga $u = -x$, $u \to -x_0$ cuando $x \to x_0$:
+
+$$f'(x_0) = \lim_{u \to -x_0} \frac{f(u) - f(-x_0)}{-u - x_0} = -\lim_{u \to -x_0} \frac{f(u) - f(-x_0)}{u - (-x_0)} = -f'(-x_0) = -\frac{1}{-x_0} = \frac{1}{x_0}$$
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Rolle no se cumple para $f(x) = \\sqrt[3]{(x-3)^2}$">
+Probar que la funcion $f(x) = \sqrt[3]{(x-3)^2}$ satisface $f(1) = f(5)$ pero no existe $c \in (1,5)$ tal que $f'(c) = 0$. Explicar por que no se cumple el teorema de Rolle.
+
+Calculamos:
+
+$$f(1) = \sqrt[3]{(1-3)^2} = \sqrt[3]{4}, \quad f(5) = \sqrt[3]{(5-3)^2} = \sqrt[3]{4}$$
+
+Luego $f(1) = f(5)$. La funcion $f$ tiene que ser continua en $[1,5]$ y derivable en $(1,5)$ para aplicar Rolle. Escribimos $f(x) = (x-3)^{2/3}$ y calculamos la derivada:
+
+$$(x-3)^{2/3} - (3-3)^{2/3} = (x-3)^{2/3}$$
+
+$$\frac{(x-3)^{2/3}}{x - 3} = \frac{(x-3)^{2/3}}{(x-3)^{3/3}} = (x-3)^{2/3 - 3/3} = (x-3)^{-1/3} = \frac{1}{(x-3)^{1/3}}$$
+
+Luego:
+
+$$\lim_{x \to 3} \frac{(x-3)^{2/3} - (3-3)^{2/3}}{x - 3} = \lim_{x \to 3} \frac{1}{(x-3)^{1/3}} = \infty$$
+
+Por lo tanto, $f$ no es derivable en $x = 3$, luego no se cumple la hipotesis del teorema de Rolle (derivabilidad en todo punto del intervalo abierto).
+</Theorem>
+
+## Integrales
+
+<Theorem label="Ejemplo" qed title="$\\sup A \\leq \\inf B$ cuando $a \\leq b$ para todo $a \\in A$, $b \\in B$">
+Sean $A, B \subset \mathbb{R}$ no vacios tales que $a \leq b$ para todo $a \in A$ y todo $b \in B$. Demostrar que $\sup A \leq \inf B$.
+
+Como $A, B \neq \varnothing$, existe $b \in B$ y para todo $a \in A$, $a \leq b$. Luego $A$ es acotado superiormente, por lo que existe $\sup A$.
+
+Similarmente, existe $\inf B$.
+
+Por propiedad de supremo e infimo: $\sup A \leq b$ para todo $b \in B$ (pues $b$ es cota superior de $A$).
+
+Luego $\sup A$ es cota inferior de $B$, por lo que $\sup A \leq \inf B$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Integrabilidad a partir de sucesion de particiones">
+Sea $f : [a,b] \to \mathbb{R}$ acotada. Suponga que $(\pi_n)$ es una sucesion de particiones de $[a,b]$ con $n+1$ puntos, $\pi_1 = \{a, b\}$, y que $\displaystyle\lim_{n \to \infty} s_{\pi_n}(f) = \lim_{n \to \infty} S_{\pi_n}(f)$. Demostrar que $f$ es integrable en $[a,b]$.
+
+Queremos probar que para todo $\varepsilon > 0$ existe una particion $\pi$ de $[a,b]$ tal que $S_\pi(f) - s_\pi(f) < \varepsilon$.
+
+Por definicion de limite, llamemos $I$ al limite comun:
+
+Para todo $\varepsilon > 0$ existe $n_1 \in \mathbb{N}$ tal que si $n \geq n_1$ entonces $|S_{\pi_n} - I| < \varepsilon/2$.
+
+Para todo $\varepsilon > 0$ existe $n_2 \in \mathbb{N}$ tal que si $n \geq n_2$ entonces $|s_{\pi_n} - I| < \varepsilon/2$.
+
+Luego $-\varepsilon/2 < S_{\pi_n} - I < \varepsilon/2$ y $\varepsilon/2 > I - s_{\pi_n} > -\varepsilon/2$, de donde:
+
+$$S_{\pi_n} - I + I - s_{\pi_n} < \varepsilon/2 + \varepsilon/2$$
+
+$$\Rightarrow S_{\pi_n} - s_{\pi_n} < \varepsilon$$
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$\\int_a^b x\\,dx = (b^2 - a^2)/2$">
+Probar que $\displaystyle\int_a^b x\,dx = \frac{b^2 - a^2}{2}$.
+
+Sea $h = b - a$. Tomamos la particion regular $\pi_n = \{a, a + h/n, a + 2h/n, \ldots, a + nh/n\}$.
+
+Como $f(x) = x$ es estrictamente creciente, el infimo de $f$ en $[x_{i-1}, x_i]$ es en $x_{i-1}$ y el supremo es en $x_i$.
+
+**Suma inferior:**
+
+$$s_{\pi_n} = \sum_{i=1}^{n} f(x_{i-1}) \cdot \frac{h}{n} = \frac{h}{n} \sum_{i=1}^{n} \frac{a + (i-1)h}{n}$$
+
+Donde $x_{i-1} = a + (i-1)h/n$.
+
+$$s_{\pi_n} = \frac{h}{n}\left(an + \frac{h}{n} \sum_{i=1}^{n} (i-1)\right) = \frac{h}{n}\left(an + \frac{h}{n} \cdot \frac{n(n-1)}{2}\right)$$
+
+$$= ah + \frac{h^2}{n^2} \cdot \frac{n^2 - n}{2} = ah + \frac{h^2(n^2 - n)}{2n^2}$$
+
+Tomando limite:
+
+$$\lim_{n \to \infty} s_{\pi_n} = ah + \frac{h^2}{2} = a(b-a) + \frac{(b-a)^2}{2} = \frac{2ab - 2a^2 + b^2 - 2ab + a^2}{2} = \frac{b^2 - a^2}{2}$$
+
+**Suma superior:**
+
+$$S_{\pi_n} = \frac{h}{n} \sum_{i=1}^{n} f(x_i) = \frac{h}{n} \sum_{i=1}^{n} \frac{a + ih}{n} = \frac{h}{n}\left(an + \frac{h}{n} \cdot \frac{n(n+1)}{2}\right)$$
+
+$$= ah + \frac{h^2(n^2 + n)}{2n^2}$$
+
+$$\lim_{n \to \infty} S_{\pi_n} = ah + \frac{h^2}{2} = \frac{b^2 - a^2}{2}$$
+
+Como $\lim s_{\pi_n} = \lim S_{\pi_n} = \frac{b^2 - a^2}{2}$, la funcion $f(x) = x$ es integrable en $[a,b]$ y $\displaystyle\int_a^b x\,dx = \frac{b^2 - a^2}{2}$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$f \\geq 0$ implica integral inferior no negativa">
+Sea $f : [a,b] \to \mathbb{R}$ acotada y tal que $f(x) \geq 0$ para todo $x \in [a,b]$. Demostrar que $\displaystyle\int_a^{\tilde{b}} f(x)\,dx \geq 0$ y, si $f$ es integrable, $\displaystyle\int_a^b f(x)\,dx \geq 0$.
+
+Por construccion, si $\pi, \pi'$ son particiones de $[a,b]$:
+
+$$s_\pi(f) \leq \int_a^{\tilde{b}} f(x)\,dx \leq \int_a^b f(x)\,dx \leq S_{\pi'}(f)$$
+
+Donde $s_\pi(f) = \sum_{\pi_i \in \pi} \inf_{\pi_i}(f) \cdot l(\pi_i)$ con $l(\pi_i) = t_i - t_{i-1} > 0$.
+
+Como $f(x) \geq 0$ para todo $x \in [a,b]$, en particular $f(x) \geq 0$ para todo $x \in \pi_i$. Tenemos que $0$ es cota inferior de $\{f(x) : x \in \pi_i\}$, por lo que $0 \leq \inf_{\pi_i}(f) \cdot l(\pi_i)$.
+
+Luego $0 \leq \int_a^{\tilde{b}} f(x)\,dx \leq \int_a^b f(x)\,dx$.
+
+Si $f$ es integrable en $[a,b]$, entonces $\int_a^b f(x)\,dx = \int_a^{\tilde{b}} f(x)\,dx = \int_a^b f(x)\,dx \geq 0$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$f(x) = 1$ salvo en $x=1$ es integrable con integral $1$">
+Sea $f : [0,1] \to \mathbb{R}$ tal que $f(x) = 1$ si $x \neq 1$ y $f(1) = 0$. Probar que $f$ es integrable en $[0,1]$ y $\displaystyle\int_0^1 f(x)\,dx = 1$.
+
+Tomamos la particion regular $\pi_n = \{0, 1/n, 2/n, \ldots, n/n\}$ con $x_i = i/n$ y $x_0 = 0$.
+
+$$s_{\pi_n} = \sum_{i=1}^{n} m_i (x_i - x_{i-1}) = \sum_{i=1}^{n} m_i \cdot \frac{1}{n}$$
+
+donde $m_i = \inf\{f(x) : x \in [x_{i-1}, x_i]\}$.
+
+Para $i = n$, el intervalo es $[(n-1)/n, 1]$ y como $f(1) = 0$, tenemos $m_n = 0$.
+
+Para $i \neq n$, $f(x) = 1$ para todo $x \in [x_{i-1}, x_i]$, luego $m_i = 1$.
+
+$$s_{\pi_n} = \sum_{i=1}^{n-1} \frac{1}{n} + m_n \cdot \frac{1}{n} = \frac{n-1}{n}$$
+
+Analogamente, $M_n = 1$ porque $f((n-1)/n) = 1$, y $M_i = 1$ para $i \neq n$.
+
+$$S_{\pi_n} = \sum_{i=1}^{n} M_i \cdot \frac{1}{n} = \frac{1}{n} \sum_{i=1}^{n} 1 = \frac{n}{n} = 1$$
+
+$$\lim_{n \to \infty} S_{\pi_n} = 1 = \lim_{n \to \infty} s_{\pi_n}$$
+
+Luego $f$ es integrable en $[0,1]$ y como $1 \leq \int_0^1 f(x)\,dx \leq \int_0^1 f(x)\,dx \leq 1$:
+
+$$\int_0^1 f(x)\,dx = 1$$
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$f$ integrable en $[a,b]$ implica integrable en $[c,d]$">
+Sea $f$ integrable en $[a,b]$. Sean $c, d \in \mathbb{R}$ tales que $a \leq c < d \leq b$. Demostrar que $f$ es integrable en $[c,d]$.
+
+Como $f$ es integrable en $[a,b]$, para todo $\varepsilon > 0$ existe una particion $\pi$ de $[a,b]$ tal que $S_\pi(f) - s_\pi(f) < \varepsilon$.
+
+Tome $\pi' = \pi \cup \{c, d\}$, que es mas fina que $\pi$. Luego $S_{\pi'}(f) - s_{\pi'}(f) \leq S_\pi(f) - s_\pi(f) < \varepsilon$.
+
+Ademas, subdividimos $\pi'$ en $\pi_1$ (particion de $[a,c]$), $\pi_2$ (particion de $[c,d]$) y $\pi_3$ (particion de $[d,b]$).
+
+$$(S_{\pi_2}(f) - s_{\pi_2}(f)) + (S_{\pi_1}(f) - s_{\pi_1}(f)) + (S_{\pi_3}(f) - s_{\pi_3}(f)) < \varepsilon$$
+
+Donde $S_{\pi_1}(f) - s_{\pi_1}(f) \geq 0$ y $S_{\pi_3}(f) - s_{\pi_3}(f) \geq 0$.
+
+Luego $S_{\pi_2}(f) - s_{\pi_2}(f) < \varepsilon$.
+
+Como $\pi_2$ es particion de $[c,d]$ y esto vale para todo $\varepsilon > 0$, $f$ es integrable en $[c,d]$.
 </Theorem>
