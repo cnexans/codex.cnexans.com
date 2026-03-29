@@ -1,0 +1,186 @@
+---
+title: "Introduccion a Rocq"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+En los capitulos anteriores desarrollamos la teoria de tipos homotopica de manera abstracta: tipos, reglas de formacion, eliminacion, identidad y niveles de homotopia. **Rocq** (anteriormente conocido como Coq) es un asistente de pruebas donde estos conceptos se vuelven ejecutables. La biblioteca **UniMath** implementa los fundamentos univalentes dentro de Rocq, proporcionando los tipos y notaciones que corresponden directamente a la teoria presentada.
+
+Este capitulo es una introduccion practica. No pretende ser exhaustivo, sino mostrar como las construcciones tipo-teoricas se expresan en codigo y como las tacticas del asistente corresponden a las reglas de inferencia.
+
+## Estructura basica
+
+Un archivo de Rocq/UniMath tiene una estructura recurrente:
+
+```
+Require Export UniMath.Foundations.All.
+
+Definition nombre {A : UU} (x : A) : A.
+Proof.
+  exact x.
+Defined.
+```
+
+La linea `Require Export` importa las definiciones de la biblioteca. Luego se declara un teorema o definicion indicando su **tipo** (la proposicion a demostrar). La palabra `Proof` inicia el modo interactivo de tacticas, donde construimos paso a paso el termino de prueba. `Defined` (o `Qed`) cierra la demostracion.
+
+<Definition title="Modo tactico">
+En Rocq, una demostracion es la construccion interactiva de un termino. En cada paso, el sistema muestra los **objetivos** (goals) pendientes y las **hipotesis** disponibles. Las tacticas transforman el objetivo actual hasta completar el termino.
+</Definition>
+
+## Tipos basicos en UniMath
+
+La siguiente tabla resume como los tipos teoricos se representan en UniMath:
+
+| Teoria de tipos | UniMath | Descripcion |
+|:---|:---|:---|
+| Universo $\mathcal{U}$ | `UU` | Universo de tipos |
+| $\emptyset$ | `empty` (o `∅`) | Tipo vacio |
+| $\mathbb{1}$ | `unit` | Tipo unitario, con constructor `tt` |
+| $\mathbb{2}$ | `bool` | Booleanos: `true` y `false` |
+| $\mathbb{N}$ | `nat` | Naturales: `0` y `S n` |
+| $A \times B$ | `A × B` (`dirprod`) | Producto, pares escritos como `(a,,b)` |
+| $A + B$ | `A ⨿ B` (`coprod`) | Coproducto, con `inl` e `inr` |
+| $\sum_{x:A} B(x)$ | `∑ (x : A), B x` | Tipo sigma, pares dependientes |
+| $\prod_{x:A} B(x)$ | `∏ (x : A), B x` | Tipo pi, funciones dependientes |
+| $a =_A b$ | `a = b` (`paths`) | Tipo identidad, con `idpath` como $r_a$ |
+
+## Tacticas fundamentales
+
+Las tacticas son los comandos que usamos en modo interactivo. Cada una corresponde a una regla de la teoria de tipos.
+
+<Definition title="Tacticas principales">
+
+| Tactica | Efecto | Regla correspondiente |
+|:---|:---|:---|
+| `intro x` | Asume una hipotesis `x` del dominio | Introduccion de $\to$ / $\prod$ ($\lambda$-abstraccion) |
+| `exact t` | Proporciona el termino exacto de prueba | Termino directo |
+| `apply f` | Aplica una funcion o lema al objetivo | Eliminacion de $\to$ / $\prod$ |
+| `induction x` | Descompone `x` segun sus constructores | $\text{ind}_T$ (eliminador del tipo) |
+| `simpl` / `cbn` | Simplifica por computacion | Igualdad judgmental ($\doteq$) |
+| `rewrite p` | Sustituye usando una igualdad `p` | Transporte a lo largo de un path |
+| `apply idpath` | Prueba una igualdad por reflexividad | $r_a : a =_A a$ |
+| `split` | Divide un objetivo producto en dos subobjetivos | Introduccion de $\times$ |
+| `unfold d` | Expande la definicion de `d` | Desplegado de definiciones |
+
+</Definition>
+
+## Ejemplos de demostraciones
+
+### Modus ponens
+
+Demostramos que $Q$ se sigue de $P \times (P \to Q)$, descomponiendo el par y aplicando la funcion:
+
+```
+Theorem modusPonens {P Q : UU} (h : P × (P → Q)) : Q.
+Proof.
+  induction h as [p f].
+  exact (f p).
+Qed.
+```
+
+La tactica `induction h as [p f]` corresponde a la eliminacion del producto: asume que `h` es un par `(p, f)`. Luego `exact (f p)` aplica la funcion al argumento.
+
+### Negacion booleana
+
+Definimos la negacion de booleanos por eliminacion de `bool`, que tiene dos constructores:
+
+```
+Definition not : bool → bool.
+Proof.
+  intro b.
+  induction b.
+  - exact false.
+  - exact true.
+Defined.
+```
+
+La tactica `induction b` genera dos subobjetivos, uno por cada constructor de `bool` (`true` y `false`). Esto corresponde a $\text{ind}_{\mathbb{2}}$.
+
+### Suma de naturales
+
+La suma se define por recursion (eliminacion de $\mathbb{N}$) en el segundo argumento:
+
+```
+Definition add : nat → nat → nat.
+Proof.
+  intro n.
+  intro m.
+  induction m.
+  - exact n.
+  - exact (S IHm).
+Defined.
+```
+
+El caso base devuelve `n` (es decir, $\text{add}(n, 0) \doteq n$). En el paso inductivo, `IHm` es la hipotesis de induccion ($\text{add}(n, m)$) y aplicamos el sucesor.
+
+### Neutro a izquierda: una igualdad proposicional
+
+La igualdad $\text{add}(0, n) = n$ no es judgmental y requiere induccion:
+
+```
+Definition left_unit (n : nat) : add 0 n = n.
+Proof.
+  induction n.
+  - simpl.
+    apply idpath.
+  - cbn.
+    apply (maponpaths S).
+    exact IHn.
+Defined.
+```
+
+En el caso base, `simpl` reduce `add 0 0` a `0` por computacion, y `apply idpath` cierra con reflexividad ($r_0$). En el paso inductivo, `cbn` simplifica `add 0 (S n)` a `S (add 0 n)`, y `maponpaths S` aplica $\text{ap}(S, -)$ a la hipotesis inductiva. Esto corresponde exactamente a la demostracion del capitulo de aritmetica.
+
+### Transport
+
+El transporte es un caso particular de la inducción de caminos donde el motivo $D : A \to \mathcal{U}$ depende solo de un punto (no de los dos extremos ni del camino). Dado un camino $p : a =_A b$ y un término $d : D(a)$, obtenemos un término de $D(b)$:
+
+```
+Theorem transport {A : UU} {D : A → UU} {a b : A}
+  (d : D a) (p : a = b) : D b.
+Proof.
+  induction p.
+  exact d.
+Defined.
+```
+
+La tactica `induction p` sobre un path $p : a = b$ corresponde a la eliminacion del tipo identidad (J). Al eliminar, Rocq unifica `a` con `b` y el objetivo `D b` se convierte en `D a`, donde ya tenemos `d`.
+
+### Simetria de paths
+
+La simetria de la igualdad ($a = b \to b = a$) se demuestra por eliminacion de paths:
+
+```
+Lemma symmetric_paths (A : UU) : ∏ (a b : A), a = b → b = a.
+Proof.
+  intros a b p.
+  induction p.
+  apply idpath.
+Defined.
+```
+
+Al hacer `induction p`, el objetivo `b = a` se convierte en `a = a`, que se cierra con `idpath` ($r_a$).
+
+## Correspondencia con la teoria
+
+La siguiente tabla resume la correspondencia entre los conceptos desarrollados en los capitulos anteriores y su representacion en Rocq/UniMath.
+
+| Teoria de tipos | Rocq / UniMath |
+|:---|:---|
+| $\prod_{x:A} B(x)$ | `∏ (x : A), B x` o `forall x : A, B x` |
+| $\sum_{x:A} B(x)$ | `∑ (x : A), B x` |
+| $A \to B$ | `A → B` |
+| $A \times B$ | `A × B`, pares `(a,,b)` |
+| $A + B$ | `A ⨿ B`, con `inl a` e `inr b` |
+| $\text{pair}(a, b)$ | `(a,,b)` |
+| $\text{pr}_1(c)$, $\text{pr}_2(c)$ | `pr1 c`, `pr2 c` |
+| $r_a$ (reflexividad) | `idpath a` |
+| $\text{ap}(f, p)$ | `maponpaths f p` |
+| $\text{transport}(p, d)$ | `transportf D p d` |
+| $\text{ind}_T$ (eliminador) | Tactica `induction t` |
+| Igualdad judgmental $\doteq$ | `simpl` / `cbn` (reduccion automatica) |
+| $\text{isContr}(A)$ | `iscontr A` |
+| $\text{isProp}(A)$ | `isaprop A` |
+| $\text{isSet}(A)$ | `isaset A` |
+| $n$-tipo | `isofhlevel n A` |
+| $A \simeq B$ (equivalencia) | `A ≃ B` (`weq A B`) |

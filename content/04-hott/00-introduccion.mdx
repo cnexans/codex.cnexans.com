@@ -44,7 +44,7 @@ Una diferencia fundamental con la matemática habitual es la existencia de **dos
 
 ### Constructores y eliminadores
 
-Cada tipo viene con **constructores** (formas de crear términos) y un **principio de eliminación/inducción** (forma de usar términos). La notación $\mathrm{ind}_T$ denota el principio de inducción del tipo $T$: dado un motivo (una familia de tipos sobre $T$) y casos para cada constructor, produce un término del tipo deseado.
+Cada tipo viene con **constructores** (formas de crear términos) y un **principio de eliminación/inducción** (forma de usar términos). La notación $\mathrm{ind}_T$ denota el principio de inducción del tipo $T$: dado un **motivo** $D$ y casos para cada constructor, produce un término del tipo deseado. El motivo $D$ es una familia de tipos que depende de las variables del tipo que se elimina — representa lo que se quiere construir o demostrar. Por ejemplo, en la inducción sobre $\mathbb{N}$, $D$ depende de $x : \mathbb{N}$ y es la propiedad que se demuestra para cada natural.
 
 | Notación | Rol | Descripción |
 |:---|:---|:---|
@@ -80,8 +80,8 @@ Cada tipo viene con **constructores** (formas de crear términos) y un **princip
 | $\mathrm{isContr}(A)$ | $A$ es contractible (h-level 0): tiene exactamente un punto, salvo igualdad |
 | $\mathrm{isProp}(A)$ | $A$ es una proposición (h-level 1): cualesquiera dos elementos son iguales |
 | $\mathrm{isSet}(A)$ | $A$ es un conjunto (h-level 2): cualesquiera dos igualdades entre los mismos puntos son iguales |
-| $\| T \|_1$ | truncación proposicional de $T$ (colapsa $T$ a una proposición) |
-| $\| T \|_2$ | truncación como conjunto de $T$ (colapsa $T$ a un conjunto) |
+| $\| T \|_1$ | truncación proposicional: colapsa $T$ a una proposición, olvidando *cuál* constructor se usó y quedando solo la información de que alguno existe |
+| $\| T \|_2$ | truncación como conjunto: colapsa $T$ a un conjunto, identificando caminos entre los mismos puntos |
 | $P \lor Q$ | disyunción proposicional: $\| P + Q \|_1$ |
 
 ### Tipos inductivos superiores

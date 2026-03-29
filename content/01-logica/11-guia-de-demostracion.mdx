@@ -1,0 +1,159 @@
+---
+title: "Guía de Demostración"
+---
+
+import { Definition } from '@/components/callout'
+
+
+Referencia rápida de los métodos de demostración presentados en estas notas.
+
+### Para demostrar $P \Rightarrow Q$
+
+<Definition title="Método directo">
+**Suponer** $P$. **Deducir** $Q$ mediante pasos justificados.
+
+*Justificación:* definición semántica de $\Rightarrow$.
+</Definition>
+
+<Definition title="Contrarrecíproco">
+**Suponer** $\neg Q$. **Deducir** $\neg P$.
+
+*Justificación:* $P \Rightarrow Q \equiv \neg Q \Rightarrow \neg P$.
+</Definition>
+
+<Definition title="Contradicción (para implicaciones)">
+**Suponer** $P$ y $\neg Q$. **Derivar** una contradicción ($R \land \neg R$).
+
+*Justificación:* $\neg(P \Rightarrow Q) \equiv P \land \neg Q$.
+</Definition>
+
+### Para demostrar $P$
+
+<Definition title="Contradicción (para proposiciones)">
+**Suponer** $\neg P$. **Derivar** una contradicción.
+
+*Justificación:* $(\neg P \Rightarrow \bot) \equiv P$.
+</Definition>
+
+<Definition title="Análisis de casos">
+**Encontrar** $P_1, P_2, \ldots, P_n$ tales que $P_1 \lor P_2 \lor \cdots \lor P_n \equiv \top$.
+
+**Demostrar** $P_i \Rightarrow R$ para cada $i$.
+
+*Justificación:* $(P_i \Rightarrow R \text{ para todo } i)$ y $(P_1 \lor \cdots \lor P_n) \equiv \top$ implican $R$.
+</Definition>
+
+### Para demostrar $P \Leftrightarrow Q$
+
+<Definition title="Doble implicación">
+**Demostrar** $P \Rightarrow Q$ y $Q \Rightarrow P$ por separado.
+
+*Justificación:* $P \Leftrightarrow Q \equiv (P \Rightarrow Q) \land (Q \Rightarrow P)$.
+</Definition>
+
+<Definition title="Cadena de equivalencias">
+**Demostrar** $P \equiv R_1 \equiv R_2 \equiv \cdots \equiv Q$.
+
+*Justificación:* transitividad de $\equiv$.
+</Definition>
+
+### Para demostrar $A \subseteq B$
+
+<Definition title="Subconjunto">
+**Tomar** $x \in A$ arbitrario. **Deducir** $x \in B$.
+
+*Justificación:* $A \subseteq B \equiv \forall x : x \in A \Rightarrow x \in B$.
+</Definition>
+
+### Para demostrar $A = B$ (conjuntos)
+
+<Definition title="Igualdad de conjuntos (doble inclusión)">
+**Demostrar** $A \subseteq B$ y $B \subseteq A$.
+
+*Justificación:* $A = B \equiv A \subseteq B \land B \subseteq A$.
+</Definition>
+
+<Definition title="Igualdad de conjuntos (bicondicional)">
+**Demostrar** $x \in A \Leftrightarrow x \in B$ para $x$ arbitrario.
+</Definition>
+
+### Para demostrar $\exists x : P(x)$
+
+<Definition title="Existencia constructiva">
+**Exhibir** un valor $a$ y **verificar** que $P(a)$ es verdadero.
+</Definition>
+
+<Definition title="Existencia no constructiva">
+**Suponer** $\neg \exists x : P(x)$ (es decir, $\forall x : \neg P(x)$) y **derivar** una contradicción.
+</Definition>
+
+### Para demostrar $\exists! x : P(x)$
+
+<Definition title="Unicidad">
+1. **Existencia:** demostrar $\exists x : P(x)$.
+2. **Unicidad:** suponer $P(a)$ y $P(b)$, deducir $a = b$.
+</Definition>
+
+### Para demostrar $\forall n \in \mathbb{N} : P(n)$
+
+<Definition title="Inducción">
+1. **Base:** demostrar $P(0)$ (o $P(n_0)$).
+2. **Paso inductivo:** suponer $P(n)$ (hipótesis inductiva) y deducir $P(n+1)$.
+
+*Justificación:* principio de inducción, derivado de la buena ordenación de $\mathbb{N}$.
+</Definition>
+
+<Definition title="Inducción fuerte">
+**Hipótesis inductiva:** suponer $P(k)$ para todo $k < n$.
+
+**Paso inductivo:** deducir $P(n)$.
+
+No requiere caso base separado (está incluido en el caso $n = 0$ donde la hipótesis es vacua).
+</Definition>
+
+<Definition title="Inducción múltiple">
+Para enunciados con dos variables naturales $\forall m, n : P(m, n)$: hacer inducción sobre una variable con la otra fija.
+
+1. **Inducción exterior** (sobre $m$): demostrar $\forall n : P(0, n)$ y $\forall n : P(m, n) \Rightarrow \forall n : P(m+1, n)$.
+2. Cada paso puede requerir una **inducción interior** sobre $n$.
+</Definition>
+
+### Para demostrar equivalencias ecuacionales
+
+<Definition title="Demostración ecuacional">
+Transformar una expresión en otra equivalente paso a paso, justificando cada transformación con un axioma, teorema o regla de inferencia.
+
+$$E_0 \equiv \langle \text{justificación} \rangle \equiv E_1 \equiv \cdots \equiv E_n$$
+</Definition>
+
+<Definition title="Equivalencia circular">
+Para demostrar que $P_1, \ldots, P_n$ son todas equivalentes, demostrar la cadena $P_1 \Rightarrow P_2 \Rightarrow \cdots \Rightarrow P_n \Rightarrow P_1$.
+</Definition>
+
+### Para refutar $\forall x : P(x)$
+
+<Definition title="Contraejemplo">
+**Exhibir** un valor $a$ tal que $\neg P(a)$.
+
+*Justificación:* $\neg(\forall x : P(x)) \equiv \exists x : \neg P(x)$.
+</Definition>
+
+## Consejos prácticos
+
+1. **Leer la estructura del enunciado.** Antes de intentar demostrar, identificar la forma lógica: ¿es una implicación?, ¿un bicondicional?, ¿un cuantificador universal?, ¿existencial?
+
+2. **Elegir el método según la estructura.**
+   - $P \Rightarrow Q$: intentar primero el método directo. Si la hipótesis no da suficiente información, considerar el contrarrecíproco o la contradicción.
+   - $P \Leftrightarrow Q$: demostrar ambas direcciones.
+   - $\forall n : P(n)$ con $n \in \mathbb{N}$: considerar inducción.
+   - $\exists x : P(x)$: buscar un candidato explícito.
+
+3. **Escribir la hipótesis y la meta explícitamente.** Al comenzar una demostración, escribir claramente qué se está suponiendo y qué se quiere demostrar.
+
+4. **Usar las definiciones.** Muchas demostraciones se desbloquean al reemplazar un concepto por su definición formal.
+
+5. **Trabajar desde ambos extremos.** A veces conviene manipular tanto la hipótesis como la conclusión hacia una forma intermedia común.
+
+6. **Si un enfoque no funciona, cambiar de método.** No hay vergüenza en abandonar el método directo y probar por contradicción, o viceversa.
+
+7. **Las demostraciones se descubren "hacia atrás" y se escriben "hacia adelante".** Es normal explorar la estructura del problema antes de redactar la demostración limpia.

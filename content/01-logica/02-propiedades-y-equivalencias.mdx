@@ -1,0 +1,247 @@
+---
+title: "Propiedades y Equivalencias"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+
+Los operadores lógicos satisfacen diversas propiedades algebraicas que permiten simplificar y manipular expresiones. Estas propiedades se pueden verificar mediante tablas de verdad.
+
+## Propiedades de la equivalencia
+
+<Axiom title="Asociatividad de $\Leftrightarrow$">
+$$((p \Leftrightarrow q) \Leftrightarrow r) \equiv (p \Leftrightarrow (q \Leftrightarrow r))$$
+</Axiom>
+
+<Axiom title="Conmutatividad de $\Leftrightarrow$">
+$$p \Leftrightarrow q \equiv q \Leftrightarrow p$$
+</Axiom>
+
+<Axiom title="Identidad de $\Leftrightarrow$">
+$$\top \Leftrightarrow q \equiv q$$
+</Axiom>
+
+De estos axiomas se siguen dos resultados inmediatos:
+
+<Theorem title="Verdad">
+$$\top$$
+
+es una tautología (se sigue de la identidad: $\top \equiv q \Leftrightarrow q \equiv \top$).
+</Theorem>
+
+<Theorem title="Reflexividad de $\Leftrightarrow$">
+$$p \Leftrightarrow p \equiv \top$$
+</Theorem>
+
+## Propiedades de la negación
+
+<Axiom title="Distributividad de $\neg$ sobre $\Leftrightarrow$">
+$$\neg(p \Leftrightarrow q) \equiv \neg p \Leftrightarrow q$$
+</Axiom>
+
+<Theorem title="Doble negación">
+$$\neg\neg p \equiv p$$
+
+<Proof>
+Aplicamos la distributividad de $\neg$ sobre $\Leftrightarrow$ dos veces. Primero, sustituyendo $q := \neg p$: $\neg(p \Leftrightarrow \neg p) \equiv \neg p \Leftrightarrow \neg p \equiv \top$. Luego $p \Leftrightarrow \neg p \equiv \bot$.
+
+Por otro lado, sustituyendo $q := p$: $\neg(p \Leftrightarrow p) \equiv \neg p \Leftrightarrow p$. Como $p \Leftrightarrow p \equiv \top$, tenemos $\neg \top \equiv \neg p \Leftrightarrow p$, es decir $\neg p \Leftrightarrow p \equiv \bot$.
+
+Ahora: $\neg\neg p \Leftrightarrow p \equiv \neg p \Leftrightarrow \neg p \equiv \top$. Por lo tanto $\neg\neg p \equiv p$.
+</Proof>
+</Theorem>
+
+<Theorem title="Negación de $\bot$">
+$$\neg \bot \equiv \top \qquad \neg \top \equiv \bot$$
+</Theorem>
+
+## Propiedades de la disyunción
+
+<Axiom title="Conmutatividad de $\lor$">
+$$p \lor q \equiv q \lor p$$
+</Axiom>
+
+<Axiom title="Asociatividad de $\lor$">
+$$(p \lor q) \lor r \equiv p \lor (q \lor r)$$
+</Axiom>
+
+<Axiom title="Idempotencia de $\lor$">
+$$p \lor p \equiv p$$
+</Axiom>
+
+<Axiom title="Identidad de $\lor$">
+$$p \lor \bot \equiv p$$
+</Axiom>
+
+<Axiom title="Distributividad de $\lor$ sobre $\Leftrightarrow$">
+$$p \lor (q \Leftrightarrow r) \equiv (p \lor q) \Leftrightarrow (p \lor r)$$
+</Axiom>
+
+<Theorem title="Tercero excluido">
+$$p \lor \neg p \equiv \top$$
+
+<Proof>
+Usando la distributividad de $\lor$ sobre $\Leftrightarrow$ con $q := p$ y $r := \neg p$:
+
+$$p \lor (p \Leftrightarrow \neg p)$$
+
+Sabemos que $p \Leftrightarrow \neg p \equiv \bot$ (de la doble negación). Entonces:
+
+$$p \lor \bot \equiv p$$
+
+Pero también, expandiendo la distributividad:
+
+$$(p \lor p) \Leftrightarrow (p \lor \neg p) \equiv p \Leftrightarrow (p \lor \neg p)$$
+
+Y por idempotencia, $p \lor p \equiv p$, así que $p \equiv p \Leftrightarrow (p \lor \neg p)$. Por identidad de $\Leftrightarrow$, esto da $p \lor \neg p \equiv \top$.
+</Proof>
+</Theorem>
+
+<Theorem title="Dominación de $\lor$">
+$$p \lor \top \equiv \top$$
+</Theorem>
+
+## Propiedades de la conjunción
+
+<Axiom title="Regla dorada">
+$$p \land q \equiv p \Leftrightarrow q \Leftrightarrow p \lor q$$
+</Axiom>
+
+La regla dorada conecta los tres operadores $\land$, $\lor$ y $\Leftrightarrow$. A partir de ella se pueden derivar todas las propiedades de la conjunción:
+
+<Theorem title="Conmutatividad de $\land$">
+$$p \land q \equiv q \land p$$
+</Theorem>
+
+<Theorem title="Asociatividad de $\land$">
+$$(p \land q) \land r \equiv p \land (q \land r)$$
+</Theorem>
+
+<Theorem title="Idempotencia de $\land$">
+$$p \land p \equiv p$$
+</Theorem>
+
+<Theorem title="Identidad de $\land$">
+$$p \land \top \equiv p$$
+</Theorem>
+
+<Theorem title="Dominación de $\land$">
+$$p \land \bot \equiv \bot$$
+</Theorem>
+
+<Theorem title="Absorción">
+$$p \land (p \lor q) \equiv p \qquad p \lor (p \land q) \equiv p$$
+</Theorem>
+
+## Distributividad
+
+<Theorem title="Distributividad de $\land$ sobre $\lor$">
+$$p \land (q \lor r) \equiv (p \land q) \lor (p \land r)$$
+</Theorem>
+
+<Theorem title="Distributividad de $\lor$ sobre $\land$">
+$$p \lor (q \land r) \equiv (p \lor q) \land (p \lor r)$$
+</Theorem>
+
+## Leyes de De Morgan
+
+<Theorem title="Leyes de De Morgan">
+$$\neg(p \land q) \equiv \neg p \lor \neg q$$
+$$\neg(p \lor q) \equiv \neg p \land \neg q$$
+
+<Proof>
+Para la primera ley, partimos de la regla dorada $p \land q \equiv p \Leftrightarrow q \Leftrightarrow p \lor q$ y negamos ambos lados:
+
+$$\neg(p \land q) \equiv \neg(p \Leftrightarrow q \Leftrightarrow p \lor q)$$
+$$\equiv \neg p \Leftrightarrow q \Leftrightarrow p \lor q$$
+
+Usando que $\neg p \Leftrightarrow q \equiv \neg p \Leftrightarrow q$ y manipulando con las propiedades de $\Leftrightarrow$, $\lor$ y la regla dorada, se obtiene $\neg p \lor \neg q$.
+
+La segunda ley se demuestra análogamente, o aplicando la primera a $\neg p$ y $\neg q$ y usando doble negación.
+</Proof>
+</Theorem>
+
+## Propiedades de la implicación
+
+<Theorem title="Definición de implicación">
+$$p \Rightarrow q \equiv \neg p \lor q$$
+
+<Proof>
+Partimos de la regla dorada y las propiedades de la equivalencia. La implicación en el cálculo proposicional se define como:
+
+$$p \Rightarrow q \equiv p \lor q \Leftrightarrow q$$
+
+De aquí, usando que $p \lor q \Leftrightarrow q$ tiene el mismo valor de verdad que $\neg p \lor q$ (verificable por tabla de verdad), obtenemos el resultado.
+</Proof>
+</Theorem>
+
+<Theorem title="Contrarrecíproco">
+$$p \Rightarrow q \equiv \neg q \Rightarrow \neg p$$
+
+<Proof>
+$$p \Rightarrow q \equiv \neg p \lor q$$
+$$\equiv \neg p \lor \neg\neg q$$
+$$\equiv \neg\neg q \lor \neg p$$
+$$\equiv \neg(\neg q) \lor \neg p$$
+$$\equiv \neg q \Rightarrow \neg p$$
+
+Usamos doble negación ($\neg\neg q \equiv q$), conmutatividad de $\lor$ y la definición de implicación.
+</Proof>
+</Theorem>
+
+<Theorem title="Shunting">
+$$p \land q \Rightarrow r \equiv p \Rightarrow (q \Rightarrow r)$$
+
+<Proof>
+$$p \Rightarrow (q \Rightarrow r) \equiv p \Rightarrow (\neg q \lor r)$$
+$$\equiv \neg p \lor (\neg q \lor r)$$
+$$\equiv (\neg p \lor \neg q) \lor r$$
+$$\equiv \neg(p \land q) \lor r$$
+$$\equiv p \land q \Rightarrow r$$
+
+Usamos la definición de implicación, asociatividad de $\lor$ y De Morgan.
+</Proof>
+</Theorem>
+
+<Theorem title="Equivalencia como doble implicación">
+$$p \Leftrightarrow q \equiv (p \Rightarrow q) \land (q \Rightarrow p)$$
+</Theorem>
+
+<Theorem title="Debilitamiento y fortalecimiento">
+$$p \land q \Rightarrow p \qquad p \Rightarrow p \lor q \qquad p \land q \Rightarrow p \lor q$$
+
+<Proof>
+Para $p \land q \Rightarrow p$: por definición de implicación, $p \land q \Rightarrow p \equiv \neg(p \land q) \lor p \equiv (\neg p \lor \neg q) \lor p \equiv \top \lor \neg q \equiv \top$.
+
+Para $p \Rightarrow p \lor q$: $p \Rightarrow p \lor q \equiv \neg p \lor (p \lor q) \equiv (\neg p \lor p) \lor q \equiv \top \lor q \equiv \top$.
+</Proof>
+</Theorem>
+
+<Theorem title="Modus ponens">
+$$p \land (p \Rightarrow q) \Rightarrow q$$
+
+<Proof>
+$$p \land (p \Rightarrow q) \equiv p \land (\neg p \lor q)$$
+$$\equiv (p \land \neg p) \lor (p \land q)$$
+$$\equiv \bot \lor (p \land q)$$
+$$\equiv p \land q$$
+
+Y como $p \land q \Rightarrow q$ (debilitamiento), tenemos $p \land (p \Rightarrow q) \Rightarrow q$.
+</Proof>
+</Theorem>
+
+<Theorem title="Análisis de casos">
+$$(p \Rightarrow r) \land (q \Rightarrow r) \equiv p \lor q \Rightarrow r$$
+$$(p \Rightarrow r) \land (\neg p \Rightarrow r) \equiv r$$
+
+<Proof>
+Para la primera equivalencia:
+
+$$p \lor q \Rightarrow r \equiv \neg(p \lor q) \lor r$$
+$$\equiv (\neg p \land \neg q) \lor r$$
+$$\equiv (\neg p \lor r) \land (\neg q \lor r)$$
+$$\equiv (p \Rightarrow r) \land (q \Rightarrow r)$$
+
+Para la segunda: es un caso particular con $q := \neg p$, donde $p \lor \neg p \equiv \top$, así que $\top \Rightarrow r \equiv r$.
+</Proof>
+</Theorem>

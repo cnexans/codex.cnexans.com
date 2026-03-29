@@ -1,0 +1,132 @@
+---
+title: "Metateoremas"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+
+Los capítulos anteriores presentaron teoremas *dentro* del sistema formal: equivalencias y propiedades de los operadores proposicionales. Este capítulo se mueve un nivel hacia arriba: los **metateoremas** son enunciados *acerca* del sistema formal mismo. No hablan de expresiones booleanas particulares, sino de qué se puede hacer con los teoremas como objetos.
+
+<Definition title="Metateorema">
+Un **metateorema** es un enunciado sobre el sistema formal que describe una propiedad general de los teoremas o de los métodos de demostración. Mientras que un teorema es una expresión del lenguaje formal que se demuestra igual a $\top$, un metateorema dice algo *sobre* esas expresiones: por ejemplo, que cierta operación aplicada a teoremas produce otro teorema.
+</Definition>
+
+La distinción es sutil pero importante. El teorema $p \Rightarrow p \lor q$ es una expresión del lenguaje formal. En cambio, el enunciado "si $P \Rightarrow Q$ es un teorema, entonces $P \land R \Rightarrow Q \land R$ es un teorema" es un metateorema: habla sobre qué ocurre cuando manipulamos teoremas.
+
+## Metateorema de la deducción
+
+El metateorema más utilizado en la práctica justifica el método de demostración directa.
+
+<Theorem title="Metateorema de la deducción">
+Si al agregar $P_1, \ldots, P_n$ como axiomas al sistema formal (tratando sus variables como constantes) podemos derivar $Q$, entonces:
+
+$$P_1 \land \cdots \land P_n \Rightarrow Q$$
+
+es un teorema del sistema original.
+
+<Proof>
+La idea central es que toda demostración que usa $P_i$ como axioma puede transformarse mecánicamente en una demostración de $P_1 \land \cdots \land P_n \Rightarrow Q$. Cada paso que invocaba $P_i$ se reemplaza por una aplicación de la identidad de $\land$ ($P_i \land \top \equiv P_i$) y debilitamiento. La transformación es larga pero sistemática.
+</Proof>
+</Theorem>
+
+Este metateorema es la base formal del método de "suponer el antecedente y demostrar el consecuente". Cuando escribimos "supongamos $P$" y derivamos $Q$, estamos aplicando exactamente este principio.
+
+## Metateorema de análisis por casos
+
+<Theorem title="Metateorema de análisis por casos">
+Si $E[z := \top]$ y $E[z := \bot]$ son ambos teoremas, entonces $E[z := p]$ es un teorema para toda variable $p$.
+
+<Proof>
+Por Shannon:
+
+$$E[z := p] \equiv (p \land E[z := \top]) \lor (\neg p \land E[z := \bot])$$
+
+Si $E[z := \top]$ es un teorema, por identidad de $\land$ el primer conjuntor se reduce a $p$. Si $E[z := \bot]$ es un teorema, el segundo se reduce a $\neg p$. Luego:
+
+$$E[z := p] \equiv p \lor \neg p \equiv \top$$
+
+y por tanto $E[z := p]$ es un teorema.
+</Proof>
+</Theorem>
+
+En la práctica, esto significa que para demostrar un teorema podemos considerar por separado los casos $p = \top$ y $p = \bot$ para alguna variable $p$ que aparezca en la expresión.
+
+## Metateorema de equivalencia
+
+<Theorem title="Dos teoremas cualesquiera son equivalentes">
+Si $P$ y $Q$ son ambos teoremas, entonces $P \equiv Q$ es un teorema.
+
+<Proof>
+Si $P$ es un teorema, existe una demostración que transforma $P$ en $\top$. Análogamente, si $Q$ es un teorema, existe una que transforma $Q$ en $\top$. Por transitividad de $\equiv$, se puede encadenar $P \equiv \top \equiv Q$.
+</Proof>
+</Theorem>
+
+Este metateorema nos dice que en el universo de los teoremas, la equivalencia es trivial: todos son equivalentes entre sí (pues todos equivalen a $\top$). Su utilidad real aparece como contrarrecíproco: si $P \equiv Q$ no es un teorema, entonces $P$ y $Q$ no pueden ser ambos teoremas.
+
+## Metateorema de monotonía de $\lor$
+
+<Theorem title="Monotonía de $\lor$">
+Si $P \Rightarrow Q$ es un teorema, entonces $P \lor R \Rightarrow Q \lor R$ es un teorema.
+
+<Proof>
+Partimos del consecuente, que tiene más estructura:
+
+$$Q \lor R$$
+
+Por la definición de implicación, $P \Rightarrow Q \equiv P \lor Q \equiv Q$. Sustituyendo $Q$ por $P \lor Q$:
+
+$$P \lor Q \lor R$$
+
+Y por debilitamiento, $P \lor R \Rightarrow P \lor Q \lor R$. Combinando con $P \lor Q \lor R \equiv Q \lor R$, obtenemos $P \lor R \Rightarrow Q \lor R$.
+</Proof>
+</Theorem>
+
+La monotonía nos permite "agregar un disjunto" a ambos lados de una implicación sin perder validez.
+
+## Metateorema de monotonía de $\land$
+
+<Theorem title="Monotonía de $\land$">
+Si $P \Rightarrow Q$ es un teorema, entonces $P \land R \Rightarrow Q \land R$ es un teorema.
+
+<Proof>
+Por la definición de implicación, $P \Rightarrow Q \equiv P \land Q \equiv P$. Reemplazamos $P$ por $P \land Q$ en la expresión $P \land R$, obteniendo $P \land Q \land R$. Por debilitamiento, $P \land Q \land R \Rightarrow Q \land R$.
+</Proof>
+</Theorem>
+
+La monotonía de $\land$ es el dual: permite "mantener una conjunción" a ambos lados de una implicación.
+
+## Metateorema de dualidad
+
+<Theorem title="Dualidad">
+Si $E$ es un teorema del cálculo proposicional, entonces la expresión $E^D$ obtenida al intercambiar simultáneamente $\lor$ con $\land$, $\top$ con $\bot$ y $\bot$ con $\top$ en $E$ también es un teorema.
+
+<Proof>
+La dualidad se sigue de la negación y la doble negación. Negar una expresión intercambia $\lor$ y $\land$ (por De Morgan) y $\top$ y $\bot$ (por $\neg\top \equiv \bot$ y $\neg\bot \equiv \top$). Si $E$ es un teorema, entonces $E \equiv \top$, y por tanto $\neg E \equiv \bot$. Pero $\neg E$ tiene la estructura dual de $E$. Aplicando doble negación se recupera una expresión equivalente a $E^D$.
+
+Más concretamente: si $E \equiv \top$, entonces $\neg E \equiv \bot$. La expresión $\neg E$ es equivalente a $E^D[p := \neg p, q := \neg q, \ldots]$ (por De Morgan aplicado recursivamente). Sustituyendo de vuelta, se obtiene que $E^D$ es un teorema.
+</Proof>
+</Theorem>
+
+La dualidad explica por qué los teoremas del cálculo vienen en pares. Por ejemplo, la dominación $p \lor \top \equiv \top$ tiene como dual $p \land \bot \equiv \bot$. La absorción $p \land (p \lor q) \equiv p$ tiene como dual $p \lor (p \land q) \equiv p$. Las leyes de De Morgan son duales entre sí. En la práctica, cada vez que demostramos un teorema, obtenemos su dual gratis.
+
+## Metateorema del testigo
+
+<Theorem title="Metateorema del testigo">
+Para cualquier expresión $E$ del tipo apropiado:
+
+$$P[x := E] \Rightarrow (\exists x : P(x))$$
+</Theorem>
+
+Este metateorema se trató en detalle en el capítulo de existencia y unicidad. El teorema del testigo opera al nivel de *cómo demostramos* enunciados existenciales: exhibir un testigo y verificar la propiedad es suficiente para concluir la existencia.
+
+## Resumen
+
+| Metateorema | Forma |
+|:---|:---|
+| Deducción | Si asumiendo $P$ se puede derivar $Q$, entonces $P \Rightarrow Q$ es un teorema |
+| Análisis por casos | Si $E[\top]$ y $E[\bot]$ son teoremas, $E[p]$ es un teorema |
+| Equivalencia | Si $P$ y $Q$ son teoremas, $P \equiv Q$ es un teorema |
+| Monotonía de $\lor$ | Si $P \Rightarrow Q$ es un teorema, $P \lor R \Rightarrow Q \lor R$ es un teorema |
+| Monotonía de $\land$ | Si $P \Rightarrow Q$ es un teorema, $P \land R \Rightarrow Q \land R$ es un teorema |
+| Dualidad | Si $E$ es un teorema, su dual $E^D$ (intercambiando $\lor \leftrightarrow \land$, $\top \leftrightarrow \bot$) también lo es |
+| Testigo | $P[x := E] \Rightarrow (\exists x : P(x))$ |

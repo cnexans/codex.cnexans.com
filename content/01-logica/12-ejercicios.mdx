@@ -1,0 +1,151 @@
+---
+title: "Ejercicios"
+---
+
+Ejercicios organizados por tema para practicar las técnicas presentadas en los capítulos anteriores. La dificultad es progresiva dentro de cada sección.
+
+## Lógica proposicional
+
+1. Traduzca cada una de las siguientes oraciones a una expresión de lógica proposicional. Indique claramente qué variable representa cada proposición atómica.
+   - "Si llueve y no tengo paraguas, me mojaré."
+   - "El tren llega a tiempo salvo que haya una huelga."
+   - "Para aprobar el curso es necesario aprobar el examen final o aprobar ambos parciales."
+
+2. Construya la tabla de verdad de cada una de las siguientes fórmulas e indique cuáles son tautologías, cuáles contradicciones y cuáles contingencias.
+   - $P \Rightarrow (Q \Rightarrow P)$
+   - $(P \Rightarrow Q) \land (P \Rightarrow \neg Q)$
+   - $(P \lor Q) \land (\neg P \lor Q) \land (P \lor \neg Q) \land (\neg P \lor \neg Q)$
+
+3. Determine si las siguientes fórmulas son lógicamente equivalentes justificando con tabla de verdad o con leyes algebraicas:
+   - $P \Rightarrow (Q \Rightarrow R)$ y $(P \land Q) \Rightarrow R$
+   - $P \Rightarrow (Q \land R)$ y $(P \Rightarrow Q) \land (P \Rightarrow R)$
+
+4. Simplifique la siguiente expresión usando leyes del álgebra booleana (De Morgan, absorción, idempotencia, etc.). Escriba cada paso y nombre la ley utilizada.
+
+$$(\neg P \lor Q) \land (P \lor Q) \land (P \lor \neg Q)$$
+
+5. Demuestre la siguiente equivalencia mediante una cadena de pasos ecuacionales al estilo Gries-Schneider. En cada paso, indique la ley que justifica la transformación.
+
+$$P \Rightarrow (Q \lor R) \;\equiv\; (P \land \neg Q) \Rightarrow R$$
+
+6. Demuestre mediante pasos ecuacionales que:
+
+$$\neg(P \Rightarrow Q) \;\equiv\; P \land \neg Q$$
+
+7. Determine si el siguiente argumento es válido. Justifique con tabla de verdad.
+   - Premisa 1: $P \Rightarrow Q$
+   - Premisa 2: $Q \Rightarrow R$
+   - Premisa 3: $\neg R$
+   - Conclusión: $\neg P$
+
+8. Para cada una de las siguientes fórmulas, encuentre una fórmula equivalente que use únicamente los conectivos $\neg$ y $\lor$. Justifique la equivalencia.
+   - $P \Rightarrow Q$
+   - $P \Leftrightarrow Q$
+   - $\neg(P \Rightarrow (Q \land R))$
+
+
+## Cuantificadores y predicados
+
+1. Sea $\mathbb{Z}$ el conjunto de los enteros. Traduzca cada enunciado a lenguaje simbólico con cuantificadores y, recíprocamente, traduzca cada fórmula a español.
+   - "Todo entero par es divisible por 2."
+   - "Existe un número entero que es su propio cuadrado."
+   - $\forall x \in \mathbb{Z}\;\exists y \in \mathbb{Z}\;(x + y = 0)$
+   - $\exists x \in \mathbb{R}\;\forall y \in \mathbb{R}\;(xy = y)$
+
+2. Escriba la negación formal de cada uno de los siguientes enunciados y luego exprésela en español sencillo (sin usar "no es cierto que...").
+   - $\forall x\;(P(x) \Rightarrow Q(x))$
+   - $\exists x\;(P(x) \land Q(x))$
+   - $\forall x\;\exists y\;(x < y)$
+
+3. Sea $U = \{1, 2, 3, 4, 5, 6\}$. Defina $P(x)$: "$x$ es par" y $Q(x)$: "$x > 3$". Determine el valor de verdad de cada enunciado.
+   - $\forall x\;(P(x) \Rightarrow Q(x))$
+   - $\exists x\;(P(x) \land \neg Q(x))$
+   - $\forall x\;(P(x) \lor Q(x))$
+
+4. Explique por qué el orden de los cuantificadores importa dando un ejemplo concreto en $\mathbb{R}$ donde $\forall x\;\exists y\;R(x,y)$ sea verdadero pero $\exists y\;\forall x\;R(x,y)$ sea falso.
+
+5. Traduzca al lenguaje de cuantificadores: "Entre dos números racionales cualesquiera siempre hay otro racional." *Pista: formalice "racional" como un predicado.*
+
+6. Niegue el siguiente enunciado y simplifique la negación: $\forall \varepsilon > 0\;\exists N \in \mathbb{N}\;\forall n \geq N\;(|a_n - L| < \varepsilon)$. Interprete el resultado: ¿qué significa que una sucesión **no** converja a $L$?
+
+
+## Demostraciones directas e implicaciones
+
+1. Demuestre directamente: si $n$ es un entero impar, entonces $n^2$ es impar.
+
+2. Demuestre directamente: si $a \mid b$ y $a \mid c$, entonces $a \mid (b + c)$. *(Recuerde: $a \mid b$ significa que existe $k \in \mathbb{Z}$ tal que $b = ka$.)*
+
+3. Demuestre por contrarrecíproco: si $n^2$ es par, entonces $n$ es par.
+
+4. Demuestre directamente: si $0 < a < b$, entonces $a^2 < b^2$.
+
+5. Demuestre por contrarrecíproco: para todo entero $n$, si $n^3 + 5$ es impar entonces $n$ es par.
+
+6. Para cada uno de los siguientes enunciados, decida cuál es la estrategia más conveniente (directa, contrarrecíproco o contradicción) y justifique su elección sin escribir la demostración completa.
+   - Si $x$ es irracional, entonces $x + 1$ es irracional.
+   - Si $n^2$ es divisible por 3, entonces $n$ es divisible por 3.
+   - Si $a$ y $b$ son racionales, entonces $a + b$ es racional.
+
+
+## Contradicción
+
+1. Demuestre por contradicción que $\sqrt{2}$ es irracional.
+
+2. Demuestre por contradicción que no existe un entero que sea simultáneamente par e impar.
+
+3. Demuestre por contradicción que si $a, b \in \mathbb{R}$ y $a + b > 10$, entonces $a > 5$ o $b > 5$.
+
+4. Demuestre por contradicción que existen infinitos números primos. *Pista: suponga que hay una cantidad finita $p_1, p_2, \ldots, p_k$ y considere el número $p_1 p_2 \cdots p_k + 1$.*
+
+
+## Conjuntos
+
+1. Sean $A$, $B$ y $C$ conjuntos. Demuestre que si $A \subseteq B$ y $B \subseteq C$, entonces $A \subseteq C$.
+
+2. Demuestre que para cualesquiera conjuntos $A$ y $B$:
+
+$$A \cap (A \cup B) = A$$
+
+*Pista: demuestre la doble inclusión o use la equivalencia lógica correspondiente.*
+
+3. Demuestre la ley de De Morgan para conjuntos: $(A \cup B)^c = A^c \cap B^c$, donde $X^c$ denota el complemento de $X$ respecto de un universo $U$.
+
+4. Demuestre que $A \setminus (B \cup C) = (A \setminus B) \cap (A \setminus C)$.
+
+5. Demuestre que $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$.
+
+6. Sean $A$ y $B$ conjuntos. Demuestre que $A = B$ si y solo si $A \subseteq B$ y $B \subseteq A$. Luego use este método para demostrar que $(A \cup B) \setminus B = A \setminus B$.
+
+
+## Inducción
+
+1. Demuestre por inducción que para todo $n \geq 1$:
+
+$$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$$
+
+2. Demuestre por inducción que para todo $n \geq 1$:
+
+$$\sum_{i=1}^{n} i^2 = \frac{n(n+1)(2n+1)}{6}$$
+
+3. Demuestre por inducción que para todo $n \geq 1$: $n^3 - n$ es divisible por 3.
+
+4. Demuestre por inducción que para todo $n \geq 4$: $n! > 2^n$.
+
+5. Use inducción fuerte para demostrar que todo entero $n \geq 2$ se puede escribir como producto de primos.
+
+6. Demuestre por inducción que para todo $n \geq 1$:
+
+$$\sum_{i=0}^{n} 2^i = 2^{n+1} - 1$$
+
+*Pista: en el paso inductivo, separe el último término de la suma.*
+
+
+## Existencia y unicidad
+
+1. Demuestre constructivamente que existe un número irracional $x$ tal que $x^2$ es racional.
+
+2. Demuestre que existen enteros $a$ y $b$, no ambos nulos, tales que $2a + 3b = 1$.
+
+3. Demuestre que existe un entero $n$ tal que $n^2 + n + 41$ no es primo. *Pista: pruebe un valor adecuado.*
+
+4. Demuestre que el elemento neutro de un grupo $(G, \cdot)$ es único. Es decir, si $e$ y $e'$ son elementos neutros de $G$, entonces $e = e'$. *Pista: calcule $e \cdot e'$ de dos maneras.*

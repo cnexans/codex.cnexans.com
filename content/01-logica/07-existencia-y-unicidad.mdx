@@ -1,0 +1,103 @@
+---
+title: "Existencia y Unicidad"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+
+## Demostración de existencia
+
+<Definition title="Existencia">
+Una demostración de existencia muestra que existe al menos un objeto con cierta propiedad. Formalmente, se demuestra un enunciado de la forma $\exists x : P(x)$.
+</Definition>
+
+### Existencia constructiva y el teorema del testigo
+
+La forma fundamental de demostrar una existencia se formaliza en el *teorema del testigo*: para demostrar $\exists x : P(x)$, basta exhibir un valor concreto $w$ — llamado *testigo* — y verificar que $P(w)$ es verdadero.
+
+<Theorem title="Teorema del testigo">
+Para cualquier expresión $E$ del tipo apropiado:
+
+$$P[x := E] \Rightarrow (\exists x : P(x))$$
+
+Es decir, si $P(E)$ es verdadero para algún término $E$, entonces $\exists x : P(x)$.
+
+<Proof>
+Por la ley generalizada de De Morgan: $(\exists x : P(x)) \equiv \neg(\forall x : \neg P(x))$. La instanciación universal establece $(\forall x : P(x)) \Rightarrow P[x := E]$. Tomando el contrarrecíproco con $\neg P$ en lugar de $P$:
+
+$$\neg(\neg P)[x := E] \Rightarrow \neg(\forall x : \neg P(x))$$
+
+Por doble negación y De Morgan generalizada, esto es $P[x := E] \Rightarrow (\exists x : P(x))$.
+</Proof>
+</Theorem>
+
+Este teorema da lugar al **método de demostración por testigo**: para probar $\exists x : P(x)$, basta proponer un testigo $w$ y verificar que $P(w)$.
+
+<Theorem title="Ejemplo: testigo directo" label="Ejemplo" qed>
+**Enunciado:** Existe un entero $n$ tal que $n^2 + n = 6$.
+
+**Demostración.** Sea $w = 2$. Verificamos: $w^2 + w = 4 + 2 = 6$. Por el teorema del testigo, $\exists n \in \mathbb{Z} : n^2 + n = 6$.
+</Theorem>
+
+En la práctica, encontrar el testigo suele ser el desafío principal. Muchas veces el método constructivo requiere primero *deducir* quién es el testigo a partir de las condiciones del problema, y luego verificar que efectivamente cumple la propiedad.
+
+<Theorem title="Ejemplo: deducir el testigo" label="Ejemplo" qed>
+**Enunciado:** Existe $n \in \mathbb{N}$ tal que $3n + 7 = 22$.
+
+**Demostración.** Si tal $n$ existe, debe cumplir $3n = 15$, es decir $n = 5$. Verificamos: $3 \cdot 5 + 7 = 22$. Luego $n = 5$ es un testigo válido.
+
+Notar que la deducción "$3n + 7 = 22 \Rightarrow n = 5$" no es la demostración: solo nos dice *quién podría ser* el testigo. La verificación $3 \cdot 5 + 7 = 22$ es lo que completa la prueba. Esto es importante porque deducir un candidato asumiendo que existe no garantiza que realmente exista — la deducción podría partir de una hipótesis contradictoria.
+</Theorem>
+
+<Theorem title="Ejemplo: verificación necesaria" label="Ejemplo" qed>
+**Enunciado:** Existe $n \in \mathbb{N}$ tal que $n^2 - 5n + 2 = 0$.
+
+**Intento.** Si tal $n$ existe, por la fórmula cuadrática $n = (5 \pm \sqrt{17})/2$. Pero ninguno de estos valores es un número natural. La deducción produjo candidatos que no pertenecen al dominio $\mathbb{N}$, por lo que no hay testigo válido y el enunciado es falso.
+
+Esto ilustra por qué la verificación es esencial: la deducción algebraica opera en $\mathbb{R}$ (o $\mathbb{C}$), no en $\mathbb{N}$, por lo que puede producir candidatos fuera del dominio del cuantificador.
+</Theorem>
+
+### Existencia no constructiva
+
+Se demuestra que la inexistencia lleva a una contradicción, sin exhibir el testigo explícitamente. Estas demostraciones usan el tercero excluido: $\exists x : P(x) \lor \neg \exists x : P(x) \equiv \top$.
+
+<Theorem title="Ejemplo de existencia no constructiva" label="Ejemplo" qed>
+**Enunciado:** Existe un par de números irracionales $a, b$ tal que $a^b$ es racional.
+
+**Demostración.** Considerar $r = \sqrt{2}^{\sqrt{2}}$. Si $r$ es racional, entonces $a = b = \sqrt{2}$ es el testigo y hemos terminado. Si $r$ es irracional, entonces:
+
+$$r^{\sqrt{2}} = \left(\sqrt{2}^{\sqrt{2}}\right)^{\sqrt{2}} = \sqrt{2}^2 = 2$$
+
+que es racional, y $a = r$, $b = \sqrt{2}$ es el testigo. En ambos casos existe el par, pero no sabemos cuál de los dos candidatos funciona.
+</Theorem>
+
+## Demostración de unicidad
+
+<Definition title="Unicidad">
+Una demostración de unicidad muestra que existe exactamente un objeto con cierta propiedad. Formalmente:
+
+$$\exists! x : P(x) \equiv \exists x : P(x) \land (\forall y : P(y) \Rightarrow y = x)$$
+</Definition>
+
+### Estructura de la demostración de unicidad
+
+1. **Existencia:** Demostrar que existe al menos un $x$ con $P(x)$
+2. **Unicidad:** Suponer que $P(a)$ y $P(b)$ son verdaderos, y deducir que $a = b$
+
+<Theorem title="Ejemplo de unicidad" label="Ejemplo" qed>
+**Enunciado:** Para todo $a \in \mathbb{R}$, existe un único $b \in \mathbb{R}$ tal que $a + b = 0$.
+
+**Demostración.**
+
+*Existencia:* $b = -a$ satisface $a + (-a) = 0$ por los axiomas de cuerpo.
+
+*Unicidad:* Supongamos que $a + b_1 = 0$ y $a + b_2 = 0$. Entonces:
+
+$$b_1 = b_1 + 0$$
+$$= b_1 + (a + b_2)$$
+$$= (b_1 + a) + b_2$$
+$$= 0 + b_2$$
+$$= b_2$$
+
+Por lo tanto $b_1 = b_2$.
+</Theorem>

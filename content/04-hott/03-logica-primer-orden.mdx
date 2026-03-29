@@ -1,0 +1,197 @@
+---
+title: "Lógica de Primer Orden en Teoría de Tipos"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+En los capítulos anteriores introdujimos la correspondencia de Curry-Howard y los tipos inductivos fundamentales. Ahora veremos que estas herramientas son suficientes para **reconstruir toda la lógica de primer orden** dentro de la teoría de tipos. El sistema tipo-teórico no solo soporta razonamiento lógico: contiene la lógica clásica como un fragmento.
+
+## Conectivas lógicas como tipos
+
+La correspondencia de Curry-Howard establece una traducción sistemática entre las conectivas de la lógica y los constructores de tipos. Probar una proposición es construir un término del tipo correspondiente.
+
+<Definition title="Diccionario proposiciones-tipos">
+
+| Lógica | Tipos | Descripción |
+|:---|:---|:---|
+| $\top$ | $\mathbb{1}$ | Tipo unitario, un solo término |
+| $\bot$ | $\emptyset$ | Tipo vacío, sin constructores |
+| $P \land Q$ | $P \times Q$ | Par: $\text{pair}(p, q)$ con $p : P$ y $q : Q$ |
+| $P \lor Q$ | $\lVert P + Q \rVert_1$ | Coproducto truncado |
+| $P \Rightarrow Q$ | $P \to Q$ | Función: $\lambda x.\, q$ |
+| $\neg P$ | $P \to \emptyset$ | Función al tipo vacío |
+| $\forall x : A,\; P(x)$ | $\prod_{x:A} P(x)$ | Función dependiente |
+| $\exists x : A,\; P(x)$ | $\lVert \sum_{x:A} P(x) \rVert_1$ | Par dependiente truncado |
+
+</Definition>
+
+La conjunción $P \land Q$ corresponde al producto $P \times Q$: para probar ambas, necesitamos un testigo de $P$ y un testigo de $Q$, es decir, un par $\text{pair}(p, q)$. La implicación $P \Rightarrow Q$ corresponde al tipo función $P \to Q$: una prueba es una función $\lambda x.\, q$ que transforma testigos de $P$ en testigos de $Q$.
+
+La negación $\neg P$ se define como $P \to \emptyset$: si pudiéramos construir un término de $P$, obtendríamos un término de $\emptyset$, lo cual es imposible.
+
+Para la disyunción y el existencial usamos la **truncación proposicional** $\lVert - \rVert_1$, que colapsa un tipo a una proposición olvidando cuál constructor se usó. Sin truncación, $P + Q$ distingue *cuál* de los dos lados vale, lo cual es más información de la que una proposición debería tener.
+
+## Teoremas de lógica clásica
+
+Cada teorema se presenta como un tipo (la proposición) junto con su término de prueba, usando las reglas de formación y eliminación de los capítulos anteriores.
+
+### Modus ponens
+
+<Theorem title="Modus ponens">
+$$P \times (P \to Q) \;\to\; Q$$
+
+<Proof>
+Sea $h : P \times (P \to Q)$. Por eliminación del producto obtenemos $p : P$ y $f : P \to Q$. Por eliminación de la función ($\beta$-reducción), $f(p) : Q$.
+</Proof>
+</Theorem>
+
+### Eliminación de la conjunción
+
+<Theorem title="Eliminación de la conjunción">
+$$(P \times Q) \;\to\; P$$
+
+<Proof>
+Sea $c : P \times Q$. Por la regla de eliminación del producto, obtenemos directamente un término de tipo $P$.
+</Proof>
+</Theorem>
+
+### Conmutatividad de la conjunción
+
+<Theorem title="Conmutatividad de $\times$">
+$$P \times Q \;\to\; Q \times P$$
+
+<Proof>
+Sea $c : P \times Q$. Por eliminación obtenemos $p : P$ y $q : Q$. Por introducción del producto, $\text{pair}(q, p) : Q \times P$.
+</Proof>
+</Theorem>
+
+### Asociatividad de la conjunción
+
+<Theorem title="Asociatividad de $\times$">
+$$(P \times Q) \times R \;\to\; P \times (Q \times R)$$
+
+<Proof>
+Sea $c : (P \times Q) \times R$. Por eliminación obtenemos $d : P \times Q$ y $r : R$. Eliminando $d$ obtenemos $p : P$ y $q : Q$. Por introducción: $\text{pair}(p, \text{pair}(q, r)) : P \times (Q \times R)$.
+</Proof>
+</Theorem>
+
+### Composición de funciones (silogismo hipotético)
+
+<Theorem title="Composición / Silogismo hipotético">
+$$(P \to Q) \;\to\; (Q \to R) \;\to\; P \to R$$
+
+<Proof>
+Sean $f : P \to Q$ y $g : Q \to R$. Construimos $\lambda p.\, g(f(p))$, que tiene tipo $P \to R$. Esto es la composición $g \circ f$.
+</Proof>
+</Theorem>
+
+### Contrarrecíproco
+
+<Theorem title="Contrarrecíproco">
+$$(P \to Q) \;\to\; (\neg Q \to \neg P)$$
+
+Es decir: $(P \to Q) \to (Q \to \emptyset) \to (P \to \emptyset)$.
+
+<Proof>
+Sean $f : P \to Q$ y $g : Q \to \emptyset$. Construimos $\lambda p.\, g(f(p)) : P \to \emptyset$. Este es el mismo término que la composición: el contrarrecíproco **es** un caso particular de la composición de funciones.
+</Proof>
+</Theorem>
+
+### Doble negación (una dirección)
+
+<Theorem title="Introducción de la doble negación">
+$$P \;\to\; \neg\neg P$$
+
+Es decir: $P \to (P \to \emptyset) \to \emptyset$.
+
+<Proof>
+Sean $p : P$ y $f : P \to \emptyset$. Por eliminación de la función, $f(p) : \emptyset$. El término es $\lambda p.\, \lambda f.\, f(p)$.
+</Proof>
+</Theorem>
+
+### Ex falso quodlibet
+
+<Theorem title="Ex falso quodlibet">
+$$\emptyset \;\to\; P$$
+
+<Proof>
+Sea $x : \emptyset$. Por el principio de eliminación del tipo vacío ($\text{ind}_\emptyset$), obtenemos un término de cualquier tipo $P$ sin necesidad de considerar ningún caso (no hay constructores de $\emptyset$):
+
+$$\lambda x.\, \text{ind}_\emptyset(x)$$
+</Proof>
+</Theorem>
+
+### Currying (shunting)
+
+<Theorem title="Currying">
+$$(P \times Q \to R) \;\to\; (P \to Q \to R)$$
+
+<Proof>
+Sea $f : P \times Q \to R$. Construimos $\lambda p.\, \lambda q.\, f(\text{pair}(p, q))$. Dado $p : P$ y $q : Q$, formamos el par por introducción y aplicamos $f$.
+</Proof>
+</Theorem>
+
+<Theorem title="Uncurrying">
+$$(P \to Q \to R) \;\to\; (P \times Q \to R)$$
+
+<Proof>
+Sea $g : P \to Q \to R$ y $c : P \times Q$. Por eliminación del producto obtenemos $p : P$ y $q : Q$. El término es $g(p)(q) : R$.
+</Proof>
+</Theorem>
+
+### Distributividad
+
+<Theorem title="Distributividad del producto sobre el coproducto">
+$$A \times B + A \times C \;\to\; A \times (B + C)$$
+
+<Proof>
+Sea $x : A \times B + A \times C$. Por eliminación del coproducto ($\text{ind-}+$):
+
+- Si $x \equiv \text{inl}(c_1)$ con $c_1 : A \times B$: por eliminación de $c_1$ obtenemos $a : A$ y $b : B$. Por introducción: $\text{pair}(a, \text{inl}(b)) : A \times (B + C)$.
+- Si $x \equiv \text{inr}(c_2)$ con $c_2 : A \times C$: análogamente, $\text{pair}(a, \text{inr}(c)) : A \times (B + C)$.
+</Proof>
+</Theorem>
+
+## Lógica clásica vs constructiva
+
+Los teoremas anteriores son demostrables en la teoría de tipos sin axiomas adicionales. Sin embargo, hay principios de la lógica clásica que **no** son demostrables constructivamente.
+
+<Theorem title="Tercero excluido (no demostrable)">
+El principio del tercero excluido afirma que para todo tipo $P$:
+
+$$P \lor \neg P$$
+
+Es decir, $\lVert P + (P \to \emptyset) \rVert_1$. En la teoría de tipos, esto **no** es demostrable en general: para construir un término del coproducto necesitaríamos decidir si $P$ está habitado o no, lo cual no es siempre posible de manera constructiva.
+</Theorem>
+
+<Theorem title="Eliminación de la doble negación (no demostrable)">
+$$\neg\neg P \;\to\; P$$
+
+Es decir, $((P \to \emptyset) \to \emptyset) \to P$. Tampoco es demostrable en general. La dirección $P \to \neg\neg P$ sí es demostrable (como vimos arriba), pero la inversa no.
+</Theorem>
+
+Ambos principios son **consistentes** con la teoría de tipos: se pueden agregar como axiomas sin generar contradicciones. Sin embargo, al agregarlos se pierde el carácter computacional del sistema: toda prueba deja de tener un contenido algorítmico directo.
+
+Para **proposiciones** (tipos de h-level 1), agregar el tercero excluido recupera la lógica clásica en su totalidad. En la práctica, gran parte de la matemática se desarrolla sobre proposiciones, por lo que la lógica clásica queda disponible como un caso especial.
+
+## Nota sobre Rocq y UniMath
+
+Los teoremas de este capítulo pueden formalizarse en el asistente de pruebas **Rocq** usando la biblioteca **UniMath**. A modo de ilustración:
+
+```
+Theorem modusPonens {P Q : UU} (h : P × (P → Q)) : Q.
+Proof.
+  induction h as [p f].
+  exact (f p).
+Qed.
+```
+
+```
+Theorem comp {P Q R : UU} (f : P → Q) (g : Q → R) : P → R.
+Proof.
+  intro p.
+  exact (g (f p)).
+Qed.
+```
+
+La táctica `induction` descompone un término del tipo producto en sus componentes (regla de eliminación), `intro` asume una hipótesis (regla de introducción de $\to$), y `exact` proporciona el término de prueba. El código en Rocq refleja directamente las construcciones tipo-teóricas de las secciones anteriores.

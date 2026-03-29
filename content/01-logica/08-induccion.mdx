@@ -1,0 +1,117 @@
+---
+title: "Inducción"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+
+## Demostración por inducción
+
+La inducción es un método para demostrar que una propiedad vale para todos los números naturales (o, más generalmente, para todos los elementos de un conjunto bien ordenado).
+
+<Theorem title="Principio de inducción">
+Sea $P(n)$ una propiedad de los números naturales. Si:
+
+1. **Base:** $P(0)$ es verdadero
+2. **Paso inductivo:** Para todo $n \in \mathbb{N}$, $P(n) \Rightarrow P(n+1)$
+
+Entonces $P(n)$ es verdadero para todo $n \in \mathbb{N}$.
+
+$$P(0) \land (\forall n \in \mathbb{N} : P(n) \Rightarrow P(n+1)) \Rightarrow \forall n \in \mathbb{N} : P(n)$$
+
+<Proof>
+El principio de inducción se justifica por la buena ordenación de $\mathbb{N}$: todo subconjunto no vacío de $\mathbb{N}$ tiene un elemento mínimo.
+
+Supongamos que $P(0)$ es verdadero y que $P(n) \Rightarrow P(n+1)$ para todo $n$. Si existiera un $n_0$ tal que $\neg P(n_0)$, entonces el conjunto $S = \{n \in \mathbb{N} : \neg P(n)\}$ sería no vacío. Por buena ordenación, $S$ tiene un mínimo $m$. Como $P(0)$ es verdadero, $m \neq 0$, así que $m \geq 1$. Pero entonces $m-1 \in \mathbb{N}$ y $m-1 \notin S$ (por minimalidad de $m$), así que $P(m-1)$ es verdadero. Por el paso inductivo, $P(m)$ es verdadero, contradiciendo $m \in S$.
+</Proof>
+</Theorem>
+
+### Estructura de una demostración por inducción
+
+1. **Definir** claramente la propiedad $P(n)$
+2. **Base:** Verificar $P(0)$ (o $P(n_0)$ para el valor inicial apropiado)
+3. **Hipótesis inductiva:** Suponer $P(n)$ para un $n$ arbitrario
+4. **Paso inductivo:** Demostrar $P(n+1)$ usando la hipótesis inductiva
+5. **Concluir** por inducción que $P(n)$ para todo $n \geq n_0$
+
+<Theorem title="Ejemplo de inducción" label="Ejemplo" qed>
+**Enunciado:** Para todo $n \geq 1$:
+
+$$\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$$
+
+**Demostración (por inducción sobre $n$).**
+
+*Base ($n = 1$):* $\sum_{i=1}^{1} i = 1 = \frac{1 \cdot 2}{2}$. $\checkmark$
+
+*Paso inductivo:* Supongamos que $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$ (hipótesis inductiva). Entonces:
+
+$$\sum_{i=1}^{n+1} i = \left(\sum_{i=1}^{n} i\right) + (n+1)$$
+$$= \frac{n(n+1)}{2} + (n+1)$$
+$$= \frac{n(n+1) + 2(n+1)}{2}$$
+$$= \frac{(n+1)(n+2)}{2}$$
+
+Que es la fórmula evaluada en $n+1$.
+</Theorem>
+
+## Variantes de la inducción
+
+<Theorem title="Inducción fuerte (o completa)">
+Si para todo $n \in \mathbb{N}$, la verdad de $P(k)$ para todo $k < n$ implica $P(n)$, entonces $P(n)$ es verdadero para todo $n \in \mathbb{N}$.
+
+$$(\forall n \in \mathbb{N} : (\forall k < n : P(k)) \Rightarrow P(n)) \Rightarrow \forall n \in \mathbb{N} : P(n)$$
+
+<Proof>
+La inducción fuerte es equivalente a la inducción ordinaria. Definimos $Q(n) := \forall k \leq n : P(k)$. Entonces:
+
+- *Base:* $Q(0) \equiv P(0)$, que se sigue del caso $n = 0$ de la hipótesis (donde "$\forall k < 0 : P(k)$" es vacuamente verdadero).
+- *Paso:* Si $Q(n)$ es verdadero, entonces $P(k)$ para todo $k \leq n$. Por la hipótesis con $n+1$, obtenemos $P(n+1)$, y por tanto $Q(n+1)$.
+
+Por inducción ordinaria, $Q(n)$ para todo $n$, y en particular $P(n)$ para todo $n$.
+</Proof>
+</Theorem>
+
+## Inducción múltiple
+
+Cuando un enunciado involucra dos (o más) variables naturales, puede ser necesario realizar *inducción múltiple*: una inducción anidada donde se hace inducción sobre una variable mientras la otra permanece fija, y luego (posiblemente) se usa inducción sobre la segunda variable dentro de la demostración.
+
+La estructura general para demostrar $\forall m, n \in \mathbb{N} : P(m, n)$ es:
+
+1. **Inducción externa** sobre $n$ (para $m$ arbitrario fijo):
+   - **Base:** Demostrar $\forall m \in \mathbb{N} : P(m, 0)$. Esto puede requerir su propia inducción sobre $m$.
+   - **Paso inductivo:** Suponer $\forall m \in \mathbb{N} : P(m, n)$ y demostrar $\forall m \in \mathbb{N} : P(m, n+1)$.
+
+2. Dentro de cada paso, se puede necesitar una **inducción interna** sobre $m$.
+
+La clave es identificar cuál variable conviene fijar y sobre cuál hacer la inducción principal.
+
+<Theorem title="Ejemplo de inducción doble" label="Ejemplo" qed>
+**Enunciado:** Para todo $m, n \in \mathbb{N}$, se cumple $2^m \cdot 2^n = 2^{m+n}$, usando únicamente la definición recursiva:
+
+$$2^0 = 1, \qquad 2^{k+1} = 2 \cdot 2^k$$
+
+**Demostración (por inducción sobre $n$, con $m$ arbitrario fijo).**
+
+*Base ($n = 0$):* Debemos demostrar $2^m \cdot 2^0 = 2^{m+0}$.
+
+$$2^m \cdot 2^0 = 2^m \cdot 1 = 2^m = 2^{m+0}$$
+
+usando que $2^0 = 1$ y que $m + 0 = m$. $\checkmark$
+
+*Paso inductivo:* Supongamos que para todo $m$ vale $2^m \cdot 2^n = 2^{m+n}$ (hipótesis inductiva). Queremos demostrar $2^m \cdot 2^{n+1} = 2^{m+(n+1)}$.
+
+$$2^m \cdot 2^{n+1} = 2^m \cdot (2 \cdot 2^n)$$
+
+por la definición recursiva ($2^{n+1} = 2 \cdot 2^n$). Usando asociatividad y conmutatividad de la multiplicación:
+
+$$= (2^m \cdot 2) \cdot 2^n = (2 \cdot 2^m) \cdot 2^n = 2^{m+1} \cdot 2^n$$
+
+donde usamos la definición recursiva en reversa: $2 \cdot 2^m = 2^{m+1}$. Ahora aplicamos la hipótesis inductiva con $m+1$ en lugar de $m$:
+
+$$= 2^{(m+1)+n} = 2^{m+(n+1)}$$
+
+donde el último paso usa asociatividad de la suma y que $(m+1)+n = m+(n+1)$.
+
+Por inducción, $2^m \cdot 2^n = 2^{m+n}$ para todo $n \in \mathbb{N}$ y todo $m \in \mathbb{N}$.
+</Theorem>
+
+Nótese que en este ejemplo, el caso base no requirió una inducción interna sobre $m$ porque la verificación fue directa. En otros casos, como demostrar la conmutatividad $m + n = n + m$ (a partir de los axiomas de Peano) el caso base $0 + m = m + 0$ sí requiere su propia inducción sobre $m$ (ya que solo $m + 0 = m$ es un axioma, pero $0 + m = m$ no lo es directamente).

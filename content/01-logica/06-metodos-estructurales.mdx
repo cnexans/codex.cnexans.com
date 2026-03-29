@@ -1,0 +1,176 @@
+---
+title: "Métodos Estructurales de Demostración"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+
+Los métodos básicos (directo, contrapositivo, contradicción) son estrategias generales: funcionan sin importar la forma del enunciado. Los métodos de este capítulo, en cambio, aprovechan la **estructura lógica** de lo que se quiere demostrar. Un bicondicional se parte en dos implicaciones, una disyunción en casos, una universalidad se refuta con un contraejemplo. En cada caso, la forma del enunciado dicta la estrategia.
+
+## Demostración por análisis de casos
+
+<Theorem title="Análisis de casos (versión disyuntiva)">
+$$(P \Rightarrow R) \land (Q \Rightarrow R) \equiv (P \lor Q) \Rightarrow R$$
+
+<Proof>
+$$(P \lor Q) \Rightarrow R \equiv \neg(P \lor Q) \lor R$$
+$$\equiv (\neg P \land \neg Q) \lor R$$
+$$\equiv (\neg P \lor R) \land (\neg Q \lor R)$$
+$$\equiv (P \Rightarrow R) \land (Q \Rightarrow R)$$
+
+Usamos la definición de implicación, De Morgan y distributividad de $\lor$ sobre $\land$.
+</Proof>
+</Theorem>
+
+<Theorem title="Análisis de casos (versión exhaustiva)">
+$$(P \Rightarrow R) \land (\neg P \Rightarrow R) \equiv R$$
+
+<Proof>
+Es un caso particular del anterior con $Q := \neg P$. Como $P \lor \neg P \equiv \top$ (tercero excluido):
+
+$$(P \lor \neg P) \Rightarrow R \equiv \top \Rightarrow R \equiv R$$
+</Proof>
+</Theorem>
+
+### Estructura del análisis de casos
+
+1. **Identificar** una disyunción $P_1 \lor P_2 \lor \cdots \lor P_n$ que cubra todos los casos posibles
+2. **Demostrar** $P_i \Rightarrow R$ para cada $i$
+3. **Concluir** $R$
+
+<Theorem title="Ejemplo de análisis de casos" label="Ejemplo" qed>
+**Enunciado:** Para todo $n \in \mathbb{Z}$, $n^2 + n$ es par.
+
+**Demostración (por casos).** Todo entero $n$ es par o impar.
+
+**Caso 1:** $n$ es par. Entonces $n = 2k$ y $n^2 + n = 4k^2 + 2k = 2(2k^2 + k)$, que es par.
+
+**Caso 2:** $n$ es impar. Entonces $n = 2k+1$ y $n^2 + n = 4k^2 + 4k + 1 + 2k + 1 = 4k^2 + 6k + 2 = 2(2k^2 + 3k + 1)$, que es par.
+
+En ambos casos, $n^2 + n$ es par.
+</Theorem>
+
+## Demostración del bicondicional
+
+<Theorem title="Equivalencia como doble implicación">
+$$P \Leftrightarrow Q \equiv (P \Rightarrow Q) \land (Q \Rightarrow P)$$
+
+<Proof>
+Se puede verificar por tabla de verdad, o derivar algebraicamente. Partiendo de la definición $P \Rightarrow Q \equiv \neg P \lor Q$:
+
+$$(P \Rightarrow Q) \land (Q \Rightarrow P) \equiv (\neg P \lor Q) \land (\neg Q \lor P)$$
+
+Expandiendo por distributividad:
+
+$$\equiv (\neg P \land \neg Q) \lor (\neg P \land P) \lor (Q \land \neg Q) \lor (Q \land P)$$
+$$\equiv (\neg P \land \neg Q) \lor \bot \lor \bot \lor (P \land Q)$$
+$$\equiv (\neg P \land \neg Q) \lor (P \land Q)$$
+
+Y esta última expresión es verdadera exactamente cuando $P$ y $Q$ tienen el mismo valor de verdad, que es la definición de $P \Leftrightarrow Q$.
+</Proof>
+</Theorem>
+
+### Estructura de la demostración bicondicional
+
+Para demostrar $P \Leftrightarrow Q$, basta demostrar las dos implicaciones:
+
+1. **Ida ($\Rightarrow$):** Suponer $P$ y deducir $Q$
+2. **Vuelta ($\Leftarrow$):** Suponer $Q$ y deducir $P$
+
+<Theorem title="Ejemplo de bicondicional" label="Ejemplo" qed>
+**Enunciado:** Sea $n \in \mathbb{Z}$. Entonces $n$ es par si y solo si $n^2$ es par.
+
+**Demostración.**
+
+*Ida ($\Rightarrow$):* Supongamos que $n$ es par. Entonces $n = 2k$ para algún $k \in \mathbb{Z}$, y $n^2 = 4k^2 = 2(2k^2)$, que es par.
+
+*Vuelta ($\Leftarrow$):* Supongamos que $n^2$ es par. Si $n$ fuera impar, tendríamos $n = 2k+1$ y $n^2 = 2(2k^2+2k)+1$, que es impar. Contradicción. Luego $n$ es par.
+</Theorem>
+
+<Theorem title="Cadena de equivalencias" label="Método alternativo">
+En lugar de dos implicaciones separadas, a veces es más elegante demostrar una cadena de equivalencias:
+
+$$P \equiv R_1 \equiv R_2 \equiv \cdots \equiv R_n \equiv Q$$
+
+Por transitividad de $\equiv$, esto demuestra $P \equiv Q$.
+</Theorem>
+
+## Refutación por contraejemplo
+
+<Definition title="Contraejemplo">
+Para refutar una proposición universal $\forall x : P(x)$, basta exhibir un **contraejemplo**: un valor $a$ tal que $P(a)$ es falso.
+
+$$\neg(\forall x : P(x)) \equiv \exists x : \neg P(x)$$
+</Definition>
+
+Notar que un contraejemplo no demuestra $\forall x : \neg P(x)$; solo demuestra que la universalidad falla.
+
+<Theorem title="Ejemplo de contraejemplo" label="Ejemplo" qed>
+**Enunciado (falso):** Todo número primo es impar.
+
+**Refutación.** El número $2$ es primo y es par.
+</Theorem>
+
+## Demostración de equivalencias encadenadas
+
+<Theorem title="Equivalencia circular">
+Para demostrar que las proposiciones $P_1, P_2, \ldots, P_n$ son todas equivalentes, basta demostrar las implicaciones en cadena:
+
+$$P_1 \Rightarrow P_2 \Rightarrow P_3 \Rightarrow \cdots \Rightarrow P_n \Rightarrow P_1$$
+
+(donde cada $\Rightarrow$ representa una implicación demostrada por separado).
+
+<Proof>
+Cada $P_i \Rightarrow P_j$ se obtiene por transitividad de la cadena. Por ejemplo, $P_2 \Rightarrow P_1$ se sigue de la cadena $P_2 \Rightarrow P_3 \Rightarrow \cdots \Rightarrow P_n \Rightarrow P_1$. Como tenemos tanto $P_i \Rightarrow P_j$ como $P_j \Rightarrow P_i$ para cualesquiera $i, j$, obtenemos $P_i \Leftrightarrow P_j$.
+</Proof>
+</Theorem>
+
+## Demostración ecuacional
+
+Una **demostración ecuacional** transforma una expresión en otra equivalente paso a paso, justificando cada transformación:
+
+$$E_0$$
+$$\equiv \quad \langle \text{justificación 1} \rangle$$
+$$E_1$$
+$$\equiv \quad \langle \text{justificación 2} \rangle$$
+$$E_2$$
+$$\equiv \quad \cdots$$
+$$E_n$$
+
+Cada paso aplica un axioma, teorema o regla de inferencia. La cadena establece $E_0 \equiv E_n$ por transitividad de $\equiv$.
+
+<Theorem title="Ejemplo de demostración ecuacional" label="Ejemplo" qed>
+Demostrar que $p \Rightarrow p \equiv \top$:
+
+$$p \Rightarrow p$$
+$$\equiv \quad \langle \text{definición de } \Rightarrow \rangle$$
+$$\neg p \lor p$$
+$$\equiv \quad \langle \text{conmutatividad de } \lor \rangle$$
+$$p \lor \neg p$$
+$$\equiv \quad \langle \text{tercero excluido} \rangle$$
+$$\top$$
+</Theorem>
+
+Este estilo ecuacional es la base del razonamiento formal en el cálculo proposicional y se extiende naturalmente a la manipulación de igualdades en cualquier dominio matemático.
+
+<Theorem title="Ejemplo: el límite de $\sin(1/x)$ no existe" label="Ejemplo" qed>
+**Enunciado:** $\lim_{x \to 0} \sin(1/x)$ no existe.
+
+**Demostración.** Partimos de la definición formal de límite y la negamos paso a paso. Que el límite exista significa:
+
+$$\exists L \in \mathbb{R} : \forall \varepsilon > 0 : \exists \delta > 0 : \forall x : (0 < |x| < \delta \Rightarrow |\sin(1/x) - L| < \varepsilon)$$
+
+Negamos esta expresión, aplicando De Morgan para cuantificadores en cada paso:
+
+$$\neg(\exists L : \forall \varepsilon > 0 : \exists \delta > 0 : \forall x : \ldots)$$
+$$\equiv \quad \langle \neg\exists \equiv \forall\neg \rangle$$
+$$\forall L : \neg(\forall \varepsilon > 0 : \exists \delta > 0 : \forall x : \ldots)$$
+$$\equiv \quad \langle \neg\forall \equiv \exists\neg \rangle$$
+$$\forall L : \exists \varepsilon > 0 : \neg(\exists \delta > 0 : \forall x : \ldots)$$
+$$\equiv \quad \langle \neg\exists \equiv \forall\neg \rangle$$
+$$\forall L : \exists \varepsilon > 0 : \forall \delta > 0 : \neg(\forall x : \ldots)$$
+$$\equiv \quad \langle \neg\forall \equiv \exists\neg \rangle$$
+$$\forall L : \exists \varepsilon > 0 : \forall \delta > 0 : \exists x : (0 < |x| < \delta \land |\sin(1/x) - L| \geq \varepsilon)$$
+
+Debemos demostrar esta última expresión. Sea $L \in \mathbb{R}$ cualquiera. Elegimos $\varepsilon = 1/2$. Dado cualquier $\delta > 0$, las sucesiones $x_n = 1/(2n\pi)$ y $x_n' = 1/((2n+1/2)\pi)$ se acercan a $0$, con $\sin(1/x_n) = 0$ y $\sin(1/x_n') = 1$. Para $n$ suficientemente grande, $|x_n| < \delta$ y $|x_n'| < \delta$. Como $\sin(1/x)$ toma los valores $0$ y $1$ arbitrariamente cerca de $0$, al menos uno de ellos dista de $L$ al menos $1/2$. Esto da el testigo $x$ requerido.
+</Theorem>

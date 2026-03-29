@@ -1,0 +1,152 @@
+---
+title: "Cuantificadores y Predicados"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+import { Aside } from '@/components/aside'
+
+
+Hasta ahora hemos trabajado con proposiciones: enunciados que son verdaderos o falsos. Pero muchas afirmaciones matemáticas hablan de *todos* los elementos de un conjunto o de la *existencia* de alguno. Para expresar estas ideas necesitamos **predicados** y **cuantificadores**.
+
+## Predicados y funciones proposicionales
+
+<Definition title="Predicado">
+Un **predicado** (o función proposicional) es una expresión $P(x)$ que contiene una o más variables libres y que se convierte en una proposición cuando cada variable se reemplaza por un valor concreto de algún dominio $D$.
+
+Por ejemplo, si $D = \mathbb{Z}$ y $P(x) \equiv x > 0$, entonces $P(3) \equiv \top$ y $P(-1) \equiv \bot$.
+</Definition>
+
+<Definition title="Variables libres y ligadas">
+Una variable es **libre** en una expresión si no está bajo el alcance de ningún cuantificador. Una variable es **ligada** si está bajo el alcance de un cuantificador.
+
+En $\forall x : P(x) \land Q(y)$, la variable $x$ es ligada (cuantificada por $\forall$) y la variable $y$ es libre.
+</Definition>
+
+<Definition title="Dominio de discurso">
+El **dominio de discurso** $D$ es el conjunto de valores que pueden tomar las variables cuantificadas. Cuando el dominio no se indica explícitamente, se asume un dominio universal acordado por contexto.
+</Definition>
+
+## Cuantificador universal
+
+<Definition title="Cuantificador universal">
+La expresión $\forall x : D : P(x)$ afirma que $P(x)$ es verdadera para **todo** $x$ en el dominio $D$:
+
+$$\forall x : D : P(x) \equiv P(d_1) \land P(d_2) \land \cdots$$
+
+para todos los elementos $d_1, d_2, \ldots$ de $D$. Cuando el dominio es claro se escribe simplemente $\forall x : P(x)$.
+
+</Definition>
+
+Esta definición se abstrae de si el dominio es numerable o no. Los naturales, enteros y racionales son numerables, pero los reales no. La cuantificación universal aplica igual en ambos casos: $\forall x \in \mathbb{R} : P(x)$ tiene el mismo significado lógico que $\forall n \in \mathbb{N} : P(n)$.
+
+Una notación equivalente, común en matemáticas, restringe el dominio mediante una condición:
+
+$$\forall x \in D : P(x) \quad\equiv\quad \forall x : (x \in D \Rightarrow P(x))$$
+
+<Theorem title="Distributividad de $\forall$ sobre $\land$">
+$$\forall x : (P(x) \land Q(x)) \equiv (\forall x : P(x)) \land (\forall x : Q(x))$$
+
+<Proof>
+Si $P(x) \land Q(x)$ vale para todo $x$, entonces en particular $P(x)$ vale para todo $x$ y $Q(x)$ vale para todo $x$. Recíprocamente, si ambas valen para todo $x$, su conjunción vale para todo $x$.
+</Proof>
+</Theorem>
+
+Notar que $\forall$ **no** distribuye sobre $\lor$ en general. De $\forall x : (P(x) \lor Q(x))$ no se sigue que $(\forall x : P(x)) \lor (\forall x : Q(x))$.
+
+## Cuantificador existencial
+
+<Definition title="Cuantificador existencial">
+La expresión $\exists x : D : P(x)$ afirma que existe **al menos un** $x$ en $D$ tal que $P(x)$:
+
+$$\exists x : D : P(x) \equiv P(d_1) \lor P(d_2) \lor \cdots$$
+
+para los elementos $d_1, d_2, \ldots$ de $D$.
+</Definition>
+
+<Theorem title="Distributividad de $\exists$ sobre $\lor$">
+$$\exists x : (P(x) \lor Q(x)) \equiv (\exists x : P(x)) \lor (\exists x : Q(x))$$
+
+<Proof>
+Existe un $x$ que satisface $P(x) \lor Q(x)$ si y solo si existe uno que satisface $P(x)$ o existe uno que satisface $Q(x)$ (pueden ser distintos).
+</Proof>
+</Theorem>
+
+Análogamente, $\exists$ **no** distribuye sobre $\land$ en general.
+
+## Negación de cuantificadores (leyes de De Morgan)
+
+Las leyes de De Morgan se extienden de las conectivas proposicionales a los cuantificadores:
+
+<Theorem title="De Morgan para cuantificadores">
+$$\neg(\forall x : P(x)) \equiv \exists x : \neg P(x)$$
+$$\neg(\exists x : P(x)) \equiv \forall x : \neg P(x)$$
+
+<Proof>
+Para la primera ley: negar que $P(x)$ vale para todo $x$ equivale a afirmar que existe algún $x$ donde $P(x)$ falla. Formalmente, usando la interpretación como conjunción/disyunción:
+
+$$\neg(\forall x : P(x)) \equiv \neg(P(d_1) \land P(d_2) \land \cdots)$$
+$$\equiv \neg P(d_1) \lor \neg P(d_2) \lor \cdots$$
+$$\equiv \exists x : \neg P(x)$$
+
+La segunda ley es dual y se demuestra análogamente negando una disyunción.
+</Proof>
+</Theorem>
+
+Estas leyes son fundamentales: nos dicen exactamente qué significa refutar una afirmación universal (dar un contraejemplo) o refutar una afirmación existencial (demostrar que ningún elemento cumple).
+
+## Cuantificador de unicidad
+
+<Definition title="Cuantificador de unicidad">
+La expresión $\exists! x : P(x)$ afirma que existe **exactamente un** $x$ que satisface $P(x)$:
+
+$$\exists! x : P(x) \equiv \exists x : \left(P(x) \land \forall y : (P(y) \Rightarrow y = x)\right)$$
+
+Es decir, existe un $x$ que cumple $P$ y todo otro elemento que cumpla $P$ debe ser igual a $x$.
+</Definition>
+
+## Propiedades y leyes
+
+<Theorem title="Dominio vacío">
+$$\forall x \in \emptyset : P(x) \equiv \top \qquad\qquad \exists x \in \emptyset : P(x) \equiv \bot$$
+
+La proposición universal sobre el vacío es vacuamente verdadera (no hay contraejemplo posible). La existencial sobre el vacío es falsa (no hay testigo posible).
+</Theorem>
+
+<Theorem title="Intercambio de cuantificadores del mismo tipo">
+$$\forall x\, \forall y : P(x,y) \equiv \forall y\, \forall x : P(x,y)$$
+$$\exists x\, \exists y : P(x,y) \equiv \exists y\, \exists x : P(x,y)$$
+
+<Proof>
+Cuantificadores del mismo tipo pueden intercambiarse porque la conjunción (o disyunción) es conmutativa y asociativa.
+</Proof>
+</Theorem>
+
+<Theorem title="Relación entre cuantificadores mixtos">
+Para cuantificadores de distinto tipo, solo vale una dirección:
+
+$$\exists x\, \forall y : P(x,y) \Rightarrow \forall y\, \exists x : P(x,y)$$
+
+El recíproco **no** vale en general.
+</Theorem>
+
+## Cuantificadores anidados
+
+El orden de los cuantificadores mixtos importa. Considérese el predicado $P(x,y) \equiv x + y = 0$ sobre $\mathbb{Z}$:
+
+- $\forall x\, \exists y : x + y = 0$ es **verdadera**: para cada $x$, basta tomar $y = -x$.
+- $\exists y\, \forall x : x + y = 0$ es **falsa**: no existe un único $y$ que funcione para *todo* $x$.
+
+Este ejemplo muestra que $\forall x\, \exists y : P(x,y)$ y $\exists y\, \forall x : P(x,y)$ son proposiciones distintas. En la primera, $y$ puede depender de $x$; en la segunda, $y$ debe funcionar uniformemente para todo $x$.
+
+Otro ejemplo con $D = \mathbb{R}$ y $Q(x,y) \equiv x < y$:
+
+- $\forall x\, \exists y : x < y$ es **verdadera**: para cada $x$, basta tomar $y = x + 1$.
+- $\exists y\, \forall x : x < y$ es **falsa**: no existe un número real mayor que todos los demás.
+
+## La verdad vacua
+
+Una implicación $P \Rightarrow Q$ es trivialmente verdadera cuando $P$ es falso, ya que $P \Rightarrow Q \equiv \neg P \lor Q$, y $\neg P$ verdadero hace que toda la expresión sea $\top$.
+
+Esto es una consecuencia de la definición de implicación. Su importancia práctica es reconocerla para no intentar demostrar algo que ya es trivialmente verdadero.
+
+Por ejemplo, "$\forall x \in \emptyset : P(x)$" es siempre verdadero porque no existe ningún $x \in \emptyset$ que pueda servir de contraejemplo.

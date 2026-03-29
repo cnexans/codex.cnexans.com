@@ -1,0 +1,95 @@
+---
+title: "Expresividad: Matemáticas en UniMath"
+---
+
+import { Definition } from '@/components/callout'
+
+Los capítulos anteriores mostraron que la lógica proposicional, la lógica de primer orden y la aritmética de Peano son fragmentos de la teoría de tipos. Pero el poder expresivo de los fundamentos univalentes va mucho más allá. La biblioteca **UniMath** es un esfuerzo de formalización a gran escala que demuestra esto: implementa porciones sustanciales de las matemáticas dentro del marco de la teoría homotópica de tipos, utilizando Rocq como asistente de pruebas.
+
+## Fundamentos
+
+UniMath parte de la teoría de tipos de Martin-Löf junto con el axioma de univalencia y axiomas de redimensionamiento (*resizing*). Sobre esta base construye:
+
+- **Proposiciones** ($\text{isProp}$): tipos con a lo sumo un habitante.
+- **Conjuntos** ($\text{isSet}$): tipos donde las igualdades son proposiciones.
+- **Groupoides** y niveles de homotopía superiores.
+- **Tipos inductivos superiores** para cocientes y construcciones análogas.
+
+Todo lo que sigue se construye a partir de estos ingredientes, sin axiomas adicionales más allá de la univalencia y el redimensionamiento.
+
+## Álgebra
+
+El paquete `Algebra` de UniMath formaliza una torre completa de estructuras algebraicas:
+
+- **Operaciones binarias** y sus propiedades (asociatividad, conmutatividad, existencia de inversos).
+- **Monoides** y **monoides abelianos**.
+- **Grupos** y **grupos abelianos**, definidos como un tipo $\Sigma$ sobre $\text{Set}$ (exactamente el enfoque que vimos en el capítulo de niveles de homotopía).
+- **Anillos**, **anillos conmutativos**, **rigs** (semianillos).
+- **Dominios de integridad** y **cuerpos** (fields).
+- **Módulos** sobre anillos.
+- **Matrices** y **eliminación gaussiana** (álgebra lineal).
+- **Acciones de grupo**.
+- **Monoides y grupos libres** (construcciones universales).
+
+Un punto clave: gracias al axioma de univalencia, si dos grupos $G$ y $H$ son isomorfos, entonces $G = H$ en el universo de grupos. Esto convierte el principio informal de "estructuras isomorfas son esencialmente iguales" en un teorema preciso.
+
+## Teoría de categorías
+
+La teoría de categorías es una de las áreas más desarrolladas de UniMath, con más de cien archivos de formalización. El paquete `CategoryTheory` incluye:
+
+- **Categorías**, **functores** y **transformaciones naturales**.
+- **Adjunciones** y **reflexiones**.
+- **Límites y colímites** (productos, coproductos, ecualizadores, pullbacks).
+- **Categorías exhibidas** (*displayed categories*), una técnica para construir categorías de estructuras de forma modular.
+- **Equivalencias de categorías**.
+- **Categorías abelianas** y **categorías aditivas**.
+- La **completación de Rezk**: dado cualquier categoría precategórica, se puede construir una categoría univalente equivalente. Esta construcción utiliza tipos inductivos superiores (el cociente por la relación de isomorfismo).
+
+<Definition title="Categoría univalente">
+Una categoría $\mathcal{C}$ es **univalente** si para todos $a, b : \text{ob}(\mathcal{C})$, la función canónica
+
+$$
+(a = b) \to (a \cong b)
+$$
+
+es una equivalencia. Es decir, la igualdad entre objetos coincide con el isomorfismo.
+</Definition>
+
+El paquete también incluye formalizaciones de **bicategorías**, **categorías dobles**, **categorías monoidales**, **categorías enriquecidas**, y **categorías de comprensión** relevantes para la semántica de la teoría de tipos.
+
+## Números reales
+
+UniMath construye los números reales mediante **cortes de Dedekind**. La cadena de construcción es:
+
+$$
+\mathbb{N} \xrightarrow{\text{ind.}} \mathbb{Z} \xrightarrow{\text{cociente}} \mathbb{Q} \xrightarrow{\text{cortes}} \mathbb{R}
+$$
+
+1. $\mathbb{N}$ es un tipo inductivo.
+2. $\mathbb{Z}$ se construye a partir de pares de naturales con una relación de equivalencia.
+3. $\mathbb{Q}$ se construye como fracciones de enteros, nuevamente con un cociente.
+4. $\mathbb{R}$ se define como el tipo de cortes de Dedekind sobre $\mathbb{Q}$: subconjuntos $L, U \subseteq \mathbb{Q}$ que satisfacen las propiedades clásicas de estar habitados, redondeados, acotados y ser disjuntos.
+
+El paquete también incluye los **reales no negativos** y las **propiedades arquimedianas**.
+
+## Otras teorías formalizadas
+
+UniMath contiene formalizaciones en muchas otras áreas:
+
+- **Teoría de orden**: conjuntos parcialmente ordenados, dominios continuos dirigidos completos (DCPOs), retículos, preórdenes.
+- **Combinatoria**: conjuntos finitos, conjuntos finitos estándar, grafos, caminos en grafos, vectores, listas, búsqueda acotada, relaciones bien fundadas.
+- **Topología**: filtros, espacios topológicos, la categoría $\textbf{Top}$.
+- **Números $p$-ádicos**: series formales de potencias, fracciones, aritmética módulo $p$.
+- **Álgebra homológica**: complejos de cadenas, conos de mapeo, cilindros, categorías trianguladas, el complejo de cohomología.
+- **Geometría algebraica**: haces de anillos, el functor $\text{Spec}$, la topología de Zariski.
+- **Teoría homotópica sintética**: la línea afín, el círculo $S^1$, la semirrecta.
+- **Teorías algebraicas** y **sistemas de sustitución**.
+- **Teoría de K** (K-theory).
+
+## Observaciones finales
+
+Todo lo formalizado en UniMath se construye a partir de los mismos ingredientes fundamentales: tipos, funciones, tipos inductivos, el axioma de univalencia y tipos inductivos superiores para cocientes. No se requieren axiomas específicos para cada rama de las matemáticas.
+
+El axioma de univalencia juega un papel especialmente importante en el álgebra y la teoría de categorías: convierte el principio de "isomorfismo implica igualdad" en un teorema demostrable, lo cual simplifica el razonamiento y elimina la necesidad de transportar propiedades manualmente a lo largo de isomorfismos.
+
+UniMath es un proyecto activo y en crecimiento. Su existencia demuestra que los fundamentos univalentes no son solamente un marco teórico, sino una base práctica y viable para formalizar matemáticas a gran escala.

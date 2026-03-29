@@ -1,0 +1,137 @@
+---
+title: "Aritmética en Teoría de Tipos"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+Así como mostramos que la lógica de primer orden es un fragmento de la teoría de tipos, ahora veremos que las propiedades familiares de los números naturales emergen del principio de inducción. Toda la aritmética que conocemos puede derivarse dentro del sistema, sin postular axiomas sobre la suma o la multiplicación.
+
+## Operaciones básicas
+
+Recordemos las definiciones del capítulo sobre tipos inductivos. La suma se define por recursión en el segundo argumento:
+
+$$\text{add}(n, 0) \doteq n$$
+
+$$\text{add}(n, Sm) \doteq S(\text{add}(n, m))$$
+
+La multiplicación se define de manera análoga:
+
+$$\text{mult}(n, 0) \doteq 0$$
+
+$$\text{mult}(n, Sm) \doteq \text{add}(n, \text{mult}(n, m))$$
+
+Ambas definiciones utilizan únicamente el principio de eliminación de $\mathbb{N}$. A partir de ellas, las propiedades aritméticas se demuestran por inducción.
+
+## Propiedades de la suma
+
+<Theorem title="Neutro a derecha: $\text{add}(n, 0) =_{\mathbb{N}} n$">
+Por la regla de computación, $\text{add}(n, 0) \doteq n$. Luego, por reflexividad, $r_n : \text{add}(n, 0) =_{\mathbb{N}} n$. Esta igualdad es **judgmental**: se obtiene directamente de la definición.
+</Theorem>
+
+<Theorem title="Neutro a izquierda: $\text{add}(0, n) =_{\mathbb{N}} n$">
+Esta igualdad **no** es judgmental: como la recursión se hace en el segundo argumento, $\text{add}(0, n)$ no se reduce directamente a $n$. Necesitamos inducción sobre $n$.
+
+<Proof>
+**Caso base** ($n \equiv 0$):
+
+$\text{add}(0, 0) \doteq 0$ por computación. Luego $r_0 : \text{add}(0, 0) =_{\mathbb{N}} 0$.
+
+**Paso inductivo** ($n \equiv Sk$, hipótesis $p : \text{add}(0, k) =_{\mathbb{N}} k$):
+
+Por computación: $\text{add}(0, Sk) \doteq S(\text{add}(0, k))$.
+
+Aplicando $S$ a la hipótesis inductiva ($\text{ap}(S, p)$): $S(\text{add}(0, k)) =_{\mathbb{N}} Sk$.
+
+Componiendo ambas igualdades: $\text{add}(0, Sk) =_{\mathbb{N}} Sk$.
+</Proof>
+</Theorem>
+
+<Theorem title="$\text{add}(n, Sm) =_{\mathbb{N}} S(\text{add}(n, m))$">
+Por la regla de computación, $\text{add}(n, Sm) \doteq S(\text{add}(n, m))$. La igualdad se obtiene por reflexividad. Esta es otra igualdad judgmental.
+</Theorem>
+
+<Theorem title="$\text{add}(Sn, m) =_{\mathbb{N}} S(\text{add}(n, m))$">
+No es judgmental. Se demuestra por inducción sobre $m$.
+
+<Proof>
+**Caso base** ($m \equiv 0$):
+
+$\text{add}(Sn, 0) \doteq Sn$ y $S(\text{add}(n, 0)) \doteq Sn$, ambos por computación. Luego $r_{Sn}$ es testigo.
+
+**Paso inductivo** ($m \equiv Sk$, hipótesis $p : \text{add}(Sn, k) =_{\mathbb{N}} S(\text{add}(n, k))$):
+
+Por computación: $\text{add}(Sn, Sk) \doteq S(\text{add}(Sn, k))$.
+
+Aplicando $S$ a la hipótesis: $S(\text{add}(Sn, k)) =_{\mathbb{N}} S(S(\text{add}(n, k)))$.
+
+Por computación: $S(\text{add}(n, Sk)) \doteq S(S(\text{add}(n, k)))$.
+
+Componiendo: $\text{add}(Sn, Sk) =_{\mathbb{N}} S(\text{add}(n, Sk))$.
+</Proof>
+</Theorem>
+
+<Theorem title="Conmutatividad: $\text{add}(n, m) =_{\mathbb{N}} \text{add}(m, n)$">
+Por inducción sobre $m$, usando los lemas anteriores.
+
+<Proof>
+**Caso base** ($m \equiv 0$):
+
+Debemos mostrar $\text{add}(n, 0) =_{\mathbb{N}} \text{add}(0, n)$.
+
+El lado izquierdo es $n$ por computación. El lado derecho es $n$ por el lema del neutro a izquierda.
+
+Componiendo ambas igualdades obtenemos el resultado.
+
+**Paso inductivo** ($m \equiv Sk$, hipótesis $p : \text{add}(n, k) =_{\mathbb{N}} \text{add}(k, n)$):
+
+Por computación: $\text{add}(n, Sk) \doteq S(\text{add}(n, k))$.
+
+Aplicando $S$ a la hipótesis: $S(\text{add}(n, k)) =_{\mathbb{N}} S(\text{add}(k, n))$.
+
+Por el lema anterior: $\text{add}(Sk, n) =_{\mathbb{N}} S(\text{add}(k, n))$.
+
+Por simetría: $S(\text{add}(k, n)) =_{\mathbb{N}} \text{add}(Sk, n)$.
+
+Componiendo: $\text{add}(n, Sk) =_{\mathbb{N}} \text{add}(Sk, n)$.
+</Proof>
+</Theorem>
+
+<Theorem title="Asociatividad: $\text{add}(\text{add}(n, m), k) =_{\mathbb{N}} \text{add}(n, \text{add}(m, k))$">
+Por inducción sobre $k$.
+
+<Proof>
+**Caso base** ($k \equiv 0$):
+
+Ambos lados se reducen a $\text{add}(n, m)$ por computación. El resultado se sigue por reflexividad.
+
+**Paso inductivo** ($k \equiv Sj$, hipótesis $p : \text{add}(\text{add}(n, m), j) =_{\mathbb{N}} \text{add}(n, \text{add}(m, j))$):
+
+Por computación: $\text{add}(\text{add}(n, m), Sj) \doteq S(\text{add}(\text{add}(n, m), j))$.
+
+Aplicando $S$ a la hipótesis: $S(\text{add}(\text{add}(n, m), j)) =_{\mathbb{N}} S(\text{add}(n, \text{add}(m, j)))$.
+
+Por computación: $\text{add}(n, \text{add}(m, Sj)) \doteq \text{add}(n, S(\text{add}(m, j))) \doteq S(\text{add}(n, \text{add}(m, j)))$.
+
+Componiendo: $\text{add}(\text{add}(n, m), Sj) =_{\mathbb{N}} \text{add}(n, \text{add}(m, Sj))$.
+</Proof>
+</Theorem>
+
+## Propiedades de la multiplicación
+
+<Theorem title="Absorbente a derecha: $\text{mult}(n, 0) =_{\mathbb{N}} 0$">
+Por computación, $\text{mult}(n, 0) \doteq 0$. La igualdad se obtiene por reflexividad.
+</Theorem>
+
+<Theorem title="Neutro a derecha: $\text{mult}(n, 1) =_{\mathbb{N}} n$">
+Por computación: $\text{mult}(n, S0) \doteq \text{add}(n, \text{mult}(n, 0)) \doteq \text{add}(n, 0) \doteq n$. La igualdad se obtiene por reflexividad.
+</Theorem>
+
+<Theorem title="Distributividad: $\text{mult}(n, \text{add}(m, k)) =_{\mathbb{N}} \text{add}(\text{mult}(n, m), \text{mult}(n, k))$">
+Se demuestra por inducción sobre $k$, usando la asociatividad de la suma. El caso base se sigue por computación, y el paso inductivo combina las reglas de computación de $\text{mult}$ y $\text{add}$ con la hipótesis inductiva y la asociatividad.
+</Theorem>
+
+## Observaciones
+
+La asimetría entre $\text{add}(n, 0)$ y $\text{add}(0, n)$ ilustra una distinción fundamental. La primera es una igualdad **judgmental** ($\doteq$): se obtiene directamente de la regla de computación, sin necesidad de prueba. La segunda es una igualdad **proposicional** ($=_{\mathbb{N}}$): requiere construir un término testigo mediante inducción. Esta diferencia refleja el hecho de que la recursión se realiza en el segundo argumento; el primer argumento permanece opaco hasta que se descompone por inducción.
+
+Todas las demostraciones de este capítulo utilizan exclusivamente el principio de inducción de $\mathbb{N}$ y las propiedades del tipo identidad. No se postulan axiomas sobre la aritmética: las propiedades emergen de la estructura del tipo inductivo.

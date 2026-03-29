@@ -1,0 +1,98 @@
+---
+title: "Ejercicios"
+---
+
+Seleccion de ejercicios de los trabajos practicos de Fundamentos de Analisis.
+
+## Numeros Reales
+
+1. Demostrar la unicidad de $0$ y $1$ como elementos neutros para la suma y multiplicacion de numeros reales, respectivamente.
+
+2. Considerando la definicion axiomatica de $\mathbb{R}$, que ocurre si no se pide que $1 \neq 0$? Es decir, que ocurriria si fuese $1 = 0$?
+
+3. Utilizando la definicion axiomatica de $\mathbb{R}$, demostrar las siguientes afirmaciones donde $a, b, c, d \in \mathbb{R}$:
+    - (a) Si $a + c = b + c$ entonces $a = b$ (ley cancelativa de la suma).
+    - (c) $a \cdot 0 = 0$.
+    - (d) $-(-a) = a$.
+    - (k) Si $a \neq 0$ entonces $a^2 > 0$.
+    - (m) Si $a \cdot b = 0$ entonces $a = 0$ o $b = 0$.
+    - (u) $a^2 + b^2 = 0$ si y solo si $a = b = 0$.
+
+4. Demostrar que no existe ningun numero racional $r$ tal que $r^2 = 5$.
+
+5. Sea $A \subset \mathbb{R}$ no vacio y acotado inferiormente. Demostrar que las siguientes afirmaciones son equivalentes:
+    - (a) $m = \inf A$.
+    - (b) $m$ es cota inferior de $A$ y para todo $\epsilon > 0$ existe $a \in A$ tal que $a < m + \epsilon$.
+
+6. Sea $a, b \in \mathbb{R}$. Demostrar que $|a - b| = |b - a|$, $|a|^2 = |a^2| = a^2$ y, si $a \neq 0$, entonces $|a^{-1}| = |a|^{-1}$.
+
+7. Sean $a, b \in \mathbb{R}$. Demostrar que $|a - b| \geq |a| - |b|$ (**sugerencia:** escribir $a = (a - b) + b$ y utilizar la desigualdad triangular). Luego, demostrar que $-|a - b| \leq |a| - |b|$ (**sugerencia:** intercambiar $a$ y $b$ en el resultado anterior). Concluir que $||a| - |b|| \leq |a - b|$.
+
+8. Demostrar que si $a \in \mathbb{R}$ cumple que para todo $\epsilon > 0$, $|a| < \epsilon$, entonces $a = 0$.
+
+## Sucesiones
+
+1. Sea $(a_n)$ una sucesion de numeros reales convergente. Demostrar que el limite $l \in \mathbb{R}$ es unico.
+
+2. Demostrar usando la definicion de limite de sucesiones que:
+    - (a) $\displaystyle\lim_{n \to \infty} \frac{1}{n} = 0$.
+    - (b) $\displaystyle\lim_{n \to \infty} \frac{n+1}{n} = 1$.
+    - (d) $\displaystyle\lim_{n \to \infty} \frac{n^2 + 2n + 1}{n^2 - 3n - 2} = 1$.
+    - (e) $\displaystyle\lim_{n \to \infty} (\sqrt{n+1} - \sqrt{n}) = 0$.
+
+3. Sea $(a_n)$ una sucesion de numeros reales convergente. Demostrar que el conjunto de los valores de la sucesion $\{a_n : n \in \mathbb{N}\}$ es acotado.
+
+4. Sea $(a_n)$ una sucesion de numeros reales y sea $l \in \mathbb{R}$. Demostrar que las siguientes afirmaciones son equivalentes:
+    - (a) $\displaystyle\lim_{n \to \infty} a_n = l$.
+    - (b) $\displaystyle\lim_{n \to \infty} |a_n - l| = 0$.
+
+5. Sea $(a_n)$ una sucesion convergente con limite $l \in \mathbb{R}$. Sea $a_n > b$ para todo $n$ mayor que un cierto $n_0 \in \mathbb{N}$. Entonces $l \geq b$.
+
+6. Sean $f, g$ funciones polinomicas de grados $h, k$ respectivamente. Para cada $n \in \mathbb{N}$ estan definidos $f(n)$ y $g(n)$. Demostrar que:
+    - (a) $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = 0$ si $h < k$.
+    - (b) $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = \infty$ si $h > k$.
+    - Cuanto vale $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)}$ si $h = k$?
+
+7. Sea $(a_n)$ una sucesion de terminos positivos tal que $\displaystyle\lim_{n \to \infty} a_n = 0$. Demostrar que $\{a_n : n \in \mathbb{N}\}$ tiene un maximo.
+
+8. Demostrar que la siguiente sucesion es convergente: $a_1 = \sqrt{3}$, $a_{n+1} = \sqrt{3 + a_n}$.
+
+9. Demostrar las siguientes propiedades de la funcion $\log : \mathbb{R}_{>0} \to \mathbb{R}$:
+    - (a) Sean $x, y \in \mathbb{R}_{>0}$, entonces $\log(x \cdot y) = \log x + \log y$.
+    - (b) Si $x \in \mathbb{R}_{>0}$ e $y \in \mathbb{R}$, entonces $\log x^y = y \log x$.
+
+10. Probar que una sucesion $(a_n)$ es de Cauchy si y solo si para todo $\epsilon > 0$ existe $n_0 \in \mathbb{N}$ tal que para $n \geq n_0$, $|a_{n+p} - a_n| < \epsilon$ cualquiera sea $p \in \mathbb{N}$.
+
+11. Probar que si $(a_n)$ es una sucesion de Cauchy entonces para todo $p \in \mathbb{N}$ es $\displaystyle\lim_{n \to \infty} (a_{n+p} - a_n) = 0$.
+
+12. Demostrar que la sucesion dada por $a_n = (-1)^n$ no es convergente.
+
+## Limites y Continuidad
+
+1. Utilizando la definicion de limite demostrar las siguientes afirmaciones:
+    - (a) $\displaystyle\lim_{x \to 3} (-2x + 4) = -2$.
+    - (b) $\displaystyle\lim_{x \to 3} 2x^2 = 18$.
+
+2. Sea $l \in \mathbb{R}$ y sean $f, g : (a,b) \to \mathbb{R}$ tales que $\displaystyle\lim_{x \to x_0} g(x) = l$ y existe $\delta_0 > 0$ tal que $f(x) = g(x)$ para todo $x \in \mathbb{R}$ tal que $0 < |x - x_0| < \delta_1$. Demostrar que $\displaystyle\lim_{x \to x_0} f(x) = l$.
+
+3. Sean $f, g : ((a,b) - \{x_0\}) \to \mathbb{R}$ para un $x_0 \in (a,b)$ tales que $\displaystyle\lim_{x \to x_0} f(x) = l_1$ y $\displaystyle\lim_{x \to x_0} g(x) = l_2$. Demostrar que:
+    - (a) $\displaystyle\lim_{x \to x_0} (f(x) + g(x)) = l_1 + l_2$.
+    - (b) $\displaystyle\lim_{x \to x_0} f(x) \cdot g(x) = l_1 \cdot l_2$.
+    - (c) Si $l_2 \neq 0$ y $g(x) \neq 0$ para todo $x \in ((a,b) - \{x_0\})$ entonces $\displaystyle\lim_{x \to x_0} f(x)/g(x) = l_1/l_2$.
+
+4. Demostrar que $\displaystyle\lim_{x \to x_0} f(x) = l$ si y solo si para toda sucesion $(x_n)$ tal que $\displaystyle\lim_{n \to \infty} x_n = x_0$, para todo $n \in \mathbb{N}$, $x_n > x_0$ y $x_n$ pertenece al dominio de $f$, entonces $\displaystyle\lim_{n \to \infty} f(x_n) = l$.
+
+5. Probar usando la definicion que las siguientes funciones son continuas:
+    - (a) $f(x) = |3x + 1|$.
+    - (b) $f(x) = 1/x$ para $x > 0$.
+    - (c) $f(x) = x^2$.
+
+6. Demostrar que la ecuacion $x^3 - 3x + 1 = 0$ tiene una raiz real en el intervalo $(1, 2)$.
+
+7. Demostrar que existe un numero real que es solucion de la ecuacion $\cos x - x = 0$.
+
+8. Sean $x \in \mathbb{R}$ y $\epsilon > 0$. Llamamos **bola abierta** de centro $x$ y radio $\epsilon$ al subconjunto de $\mathbb{R}$:
+$$B_\epsilon(x) = \{y \in \mathbb{R} : |y - x| < \epsilon\}.$$
+Demostrar que $B_\epsilon(x) = (x - \epsilon, x + \epsilon)$. Como se podria definir una bola abierta en un espacio metrico $(X, d)$ cualquiera?
+
+9. Un conjunto $A \subset \mathbb{R}$ se dice **abierto** si y solo si para todo $a \in A$ existe una bola abierta $B_\epsilon(a) \subset A$. Demostrar que una bola abierta es un conjunto abierto (**sugerencia:** tomar un punto cualquiera $y \in B_\epsilon(x)$ y considerar la bola abierta de centro $y$ y radio $\epsilon - |x - y| > 0$). Luego, demostrar que un intervalo abierto $(a, b) \subset \mathbb{R}$ es un conjunto abierto.

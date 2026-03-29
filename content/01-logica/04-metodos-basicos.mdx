@@ -1,0 +1,157 @@
+---
+title: "Métodos Básicos de Demostración"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+
+El capítulo anterior presentó la lógica como un sistema formal: un lenguaje con operadores, axiomas y reglas de inferencia. Ahora usamos esa maquinaria para fundamentar los **métodos de demostración** que se emplean en todas las ramas de las matemáticas.
+
+Cada método de demostración se justifica por un teorema de la lógica proposicional. Entender *por qué* funciona un método — no solo *cómo* se aplica — es lo que distingue un uso mecánico de uno genuinamente comprendido.
+
+## Demostración directa
+
+<Theorem title="Fundamento de la demostración directa">
+Para demostrar $P \Rightarrow Q$, basta suponer $P$ verdadero y, usando axiomas, definiciones y resultados conocidos, deducir $Q$.
+
+<Proof>
+El método se justifica por la propia definición semántica de la implicación: $P \Rightarrow Q$ es falso únicamente cuando $P$ es verdadero y $Q$ es falso. Por lo tanto, si bajo la suposición de que $P$ es verdadero logramos demostrar que $Q$ también lo es, hemos descartado el único caso en que la implicación sería falsa.
+
+Formalmente, esto corresponde al *teorema de la deducción*: si a partir de las premisas y de $P$ podemos derivar $Q$, entonces podemos derivar $P \Rightarrow Q$.
+</Proof>
+</Theorem>
+
+### Estructura de una demostración directa
+
+1. **Suponer** que $P$ es verdadero
+2. **Deducir** $Q$ mediante una cadena de pasos justificados
+3. **Concluir** que $P \Rightarrow Q$
+
+<Theorem title="Ejemplo de demostración directa" label="Ejemplo" qed>
+**Enunciado:** Si $n$ es par, entonces $n^2$ es par.
+
+**Demostración.** Supongamos que $n$ es par. Entonces existe $k \in \mathbb{Z}$ tal que $n = 2k$. Luego:
+
+$$n^2 = (2k)^2 = 4k^2 = 2(2k^2)$$
+
+Como $2k^2 \in \mathbb{Z}$, concluimos que $n^2$ es par.
+</Theorem>
+
+## Demostración por contrarrecíproco
+
+<Theorem title="Contrarrecíproco">
+$$P \Rightarrow Q \equiv \neg Q \Rightarrow \neg P$$
+
+<Proof>
+Usando la definición de implicación y la doble negación:
+
+$$P \Rightarrow Q \equiv \neg P \lor Q$$
+$$\equiv \neg P \lor \neg\neg Q$$
+$$\equiv \neg\neg Q \lor \neg P$$
+$$\equiv \neg Q \Rightarrow \neg P$$
+
+Cada paso usa equivalencias del cálculo proposicional: definición de $\Rightarrow$, doble negación ($\neg\neg Q \equiv Q$), conmutatividad de $\lor$, y nuevamente la definición de $\Rightarrow$.
+</Proof>
+</Theorem>
+
+Este teorema nos da un método alternativo para demostrar implicaciones: en lugar de suponer $P$ y deducir $Q$, podemos suponer $\neg Q$ y deducir $\neg P$.
+
+### Cuándo usar el contrarrecíproco
+
+El contrarrecíproco es especialmente útil cuando:
+- La negación de $Q$ tiene una estructura más manejable que $P$
+- Es más natural razonar "hacia atrás" desde la conclusión
+
+<Theorem title="Ejemplo de contrarrecíproco" label="Ejemplo" qed>
+**Enunciado:** Si $n^2$ es par, entonces $n$ es par.
+
+**Demostración (por contrarrecíproco).** Supongamos que $n$ no es par, es decir, $n$ es impar. Entonces existe $k \in \mathbb{Z}$ tal que $n = 2k + 1$. Luego:
+
+$$n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$$
+
+Como $2k^2 + 2k \in \mathbb{Z}$, concluimos que $n^2$ es impar, es decir, $n^2$ no es par.
+</Theorem>
+
+## Demostración por contradicción
+
+<Theorem title="Fundamento de la contradicción (para proposiciones)">
+Para demostrar $P$: si al suponer $\neg P$ se deriva una contradicción ($\bot$), entonces $P$ es verdadero.
+
+$$(\neg P \Rightarrow \bot) \equiv P$$
+
+<Proof>
+$$\neg P \Rightarrow \bot \equiv \neg(\neg P) \lor \bot$$
+$$\equiv P \lor \bot$$
+$$\equiv P$$
+
+Usamos la definición de implicación, doble negación y la identidad de $\lor$.
+</Proof>
+</Theorem>
+
+<Theorem title="Fundamento de la contradicción (para implicaciones)">
+Para demostrar $P \Rightarrow Q$: si al suponer $P \land \neg Q$ se deriva una contradicción, entonces $P \Rightarrow Q$ es verdadero.
+
+$$\neg(P \Rightarrow Q) \equiv P \land \neg Q$$
+
+<Proof>
+$$\neg(P \Rightarrow Q) \equiv \neg(\neg P \lor Q)$$
+$$\equiv \neg(\neg P) \land \neg Q$$
+$$\equiv P \land \neg Q$$
+
+Usamos la definición de implicación y la ley de De Morgan.
+</Proof>
+</Theorem>
+
+### Estructura: demostrar una proposición $P$
+
+1. **Suponer** $\neg P$
+2. **Derivar** una contradicción: una afirmación de la forma $R \land \neg R$
+3. **Concluir** que la suposición era falsa, por lo tanto $P$
+
+<Theorem title="Ejemplo: contradicción para una proposición" label="Ejemplo" qed>
+**Enunciado:** $\sqrt{2}$ es irracional.
+
+**Demostración (por contradicción).** Supongamos que $\sqrt{2}$ es racional. Entonces existen $a, b \in \mathbb{Z}$ con $b \neq 0$ y $\gcd(a,b) = 1$ tales que $\sqrt{2} = a/b$. Elevando al cuadrado:
+
+$$2 = \frac{a^2}{b^2} \implies a^2 = 2b^2$$
+
+Luego $a^2$ es par, y por el ejemplo anterior, $a$ es par. Escribimos $a = 2c$:
+
+$$4c^2 = 2b^2 \implies b^2 = 2c^2$$
+
+Luego $b^2$ es par, y por tanto $b$ es par. Pero entonces $\gcd(a,b) \geq 2$, lo que contradice $\gcd(a,b) = 1$.
+
+Esta contradicción muestra que $\sqrt{2}$ no puede ser racional.
+</Theorem>
+
+### Estructura: demostrar una implicación $P \Rightarrow Q$
+
+El método se extiende naturalmente a implicaciones. Negar $P \Rightarrow Q$ equivale a suponer que la hipótesis es verdadera y la conclusión es falsa:
+
+1. **Suponer** $P$ y $\neg Q$
+2. **Derivar** una contradicción
+3. **Concluir** $P \Rightarrow Q$
+
+<Theorem title="Ejemplo: contradicción para una implicación" label="Ejemplo" qed>
+**Enunciado:** Si $a^2$ es par, entonces $a$ es par.
+
+**Demostración (por contradicción).** Supongamos que $a^2$ es par y que $a$ es impar. Como $a$ es impar, existe $k \in \mathbb{Z}$ tal que $a = 2k + 1$. Entonces:
+
+$$a^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$$
+
+Luego $a^2$ es impar. Esto contradice la hipótesis de que $a^2$ es par.
+
+Por lo tanto, si $a^2$ es par, entonces $a$ es par.
+</Theorem>
+
+### Contradicción vs. contrarrecíproco
+
+Ambos métodos parten de negar algo, pero son distintos:
+
+| | Contrarrecíproco | Contradicción ($P$) | Contradicción ($P \Rightarrow Q$) |
+|:---|:---|:---|:---|
+| **Se supone** | $\neg Q$ | $\neg P$ | $P \land \neg Q$ |
+| **Se deduce** | $\neg P$ | $R \land \neg R$ | $R \land \neg R$ |
+| **Justificación** | $P \Rightarrow Q \equiv \neg Q \Rightarrow \neg P$ | $(\neg P \Rightarrow \bot) \equiv P$ | $\neg(P \Rightarrow Q) \equiv P \land \neg Q$ |
+
+El contrarrecíproco es más directo cuando la meta es clara ($\neg P$), mientras que la contradicción es más flexible porque se busca *cualquier* contradicción.

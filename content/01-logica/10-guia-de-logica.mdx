@@ -1,0 +1,78 @@
+---
+title: "Guía de Lógica"
+---
+
+Referencia rápida de los principales teoremas y equivalencias de la lógica proposicional y de predicados.
+
+## Equivalencia y negación
+
+| Nombre | Teorema |
+|:---|:---|
+| Doble negación | $\neg\neg p \equiv p$ |
+| Negación de $\top$ y $\bot$ | $\neg \top \equiv \bot$, $\quad \neg \bot \equiv \top$ |
+| Reflexividad de $\Leftrightarrow$ | $p \Leftrightarrow p \equiv \top$ |
+| Identidad de $\Leftrightarrow$ | $\top \Leftrightarrow p \equiv p$ |
+| Distributividad de $\neg$ sobre $\Leftrightarrow$ | $\neg(p \Leftrightarrow q) \equiv \neg p \Leftrightarrow q$ |
+
+## Disyunción
+
+| Nombre | Teorema |
+|:---|:---|
+| Conmutatividad | $p \lor q \equiv q \lor p$ |
+| Asociatividad | $(p \lor q) \lor r \equiv p \lor (q \lor r)$ |
+| Idempotencia | $p \lor p \equiv p$ |
+| Identidad | $p \lor \bot \equiv p$ |
+| Dominación | $p \lor \top \equiv \top$ |
+| Tercero excluido | $p \lor \neg p \equiv \top$ |
+
+## Conjunción
+
+| Nombre | Teorema |
+|:---|:---|
+| Regla dorada | $p \land q \equiv p \Leftrightarrow q \Leftrightarrow p \lor q$ |
+| Conmutatividad | $p \land q \equiv q \land p$ |
+| Asociatividad | $(p \land q) \land r \equiv p \land (q \land r)$ |
+| Idempotencia | $p \land p \equiv p$ |
+| Identidad | $p \land \top \equiv p$ |
+| Dominación | $p \land \bot \equiv \bot$ |
+| Contradicción | $p \land \neg p \equiv \bot$ |
+
+## Distributividad y absorción
+
+| Nombre | Teorema |
+|:---|:---|
+| $\land$ sobre $\lor$ | $p \land (q \lor r) \equiv (p \land q) \lor (p \land r)$ |
+| $\lor$ sobre $\land$ | $p \lor (q \land r) \equiv (p \lor q) \land (p \lor r)$ |
+| Absorción | $p \land (p \lor q) \equiv p$, $\quad p \lor (p \land q) \equiv p$ |
+
+## Leyes de De Morgan
+
+| Nombre | Teorema |
+|:---|:---|
+| De Morgan ($\land$) | $\neg(p \land q) \equiv \neg p \lor \neg q$ |
+| De Morgan ($\lor$) | $\neg(p \lor q) \equiv \neg p \land \neg q$ |
+
+## Implicación
+
+| Nombre | Teorema |
+|:---|:---|
+| Definición | $p \Rightarrow q \equiv \neg p \lor q$ |
+| Contrarrecíproco | $p \Rightarrow q \equiv \neg q \Rightarrow \neg p$ |
+| Shunting | $p \land q \Rightarrow r \equiv p \Rightarrow (q \Rightarrow r)$ |
+| Doble implicación | $p \Leftrightarrow q \equiv (p \Rightarrow q) \land (q \Rightarrow p)$ |
+| Debilitamiento | $p \land q \Rightarrow p$, $\quad p \Rightarrow p \lor q$ |
+| Modus ponens | $p \land (p \Rightarrow q) \Rightarrow q$ |
+| Análisis de casos | $(p \Rightarrow r) \land (q \Rightarrow r) \equiv (p \lor q) \Rightarrow r$ |
+| Casos exhaustivos | $(p \Rightarrow r) \land (\neg p \Rightarrow r) \equiv r$ |
+
+## Cuantificadores
+
+| Nombre | Teorema |
+|:---|:---|
+| Distributividad de $\forall$ sobre $\land$ | $\forall x : (P(x) \land Q(x)) \equiv (\forall x : P(x)) \land (\forall x : Q(x))$ |
+| Distributividad de $\exists$ sobre $\lor$ | $\exists x : (P(x) \lor Q(x)) \equiv (\exists x : P(x)) \lor (\exists x : Q(x))$ |
+| De Morgan ($\forall$) | $\neg(\forall x : P(x)) \equiv \exists x : \neg P(x)$ |
+| De Morgan ($\exists$) | $\neg(\exists x : P(x)) \equiv \forall x : \neg P(x)$ |
+| Dominio vacío | $\forall x \in \emptyset : P(x) \equiv \top$, $\quad \exists x \in \emptyset : P(x) \equiv \bot$ |
+| Intercambio (mismo tipo) | $\forall x\, \forall y : P \equiv \forall y\, \forall x : P$; análogo para $\exists$ |
+| Cuantificadores mixtos | $\exists x\, \forall y : P \Rightarrow \forall y\, \exists x : P$ (el recíproco no vale) |

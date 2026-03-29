@@ -239,12 +239,16 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     # YAML metadata for Pandoc
+    parts = discover_parts()
+
+    # --- Generate combined codex.md ---
     yaml_header = """---
 title: "Codex"
 author: "Carlos Nexans"
 lang: es
 toc: true
 toc-depth: 2
+numbersections: true
 top-level-division: chapter
 ---
 
@@ -253,10 +257,7 @@ top-level-division: chapter
     all_content = [yaml_header]
     chapter_count = 0
 
-    parts = discover_parts()
-
     for part_info in parts:
-        # Part header (renders as \part{} in LaTeX report class)
         part_block = f"\\part{{{part_info['title']}}}\n"
         if part_info.get("description"):
             part_block += f"\n{part_info['description']}\n"
@@ -274,6 +275,33 @@ top-level-division: chapter
     output_path.write_text(combined)
     print(f"\n  Output: {output_path}")
     print(f"  Parts: {len(parts)}, Chapters: {chapter_count}")
+
+    # --- Generate individual part markdown files ---
+    for part_info in parts:
+        part_yaml = f"""---
+title: "{part_info['title']}"
+author: "Carlos Nexans"
+lang: es
+toc: true
+toc-depth: 2
+numbersections: true
+top-level-division: chapter
+---
+
+"""
+        part_content = [part_yaml]
+        if part_info.get("description"):
+            part_content.append(part_info["description"] + "\n")
+
+        for ch in part_info["chapters"]:
+            content = process_file(ch["path"], ch["title"])
+            if content:
+                part_content.append(content)
+
+        part_combined = "\n\n".join(part_content)
+        part_output = OUTPUT_DIR / f"{part_info['slug']}.md"
+        part_output.write_text(part_combined)
+        print(f"  Part: {part_output}")
 
 
 if __name__ == "__main__":

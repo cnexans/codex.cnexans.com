@@ -1,0 +1,161 @@
+---
+title: "Demostraciones sobre Conjuntos"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+
+
+## Nociones basicas de conjuntos
+
+Un **conjunto** es una coleccion de objetos, llamados **elementos**. Se puede describir de dos formas:
+
+- **Por extension:** listando sus elementos, como $\{1, 2, 3\}$
+- **Por comprension:** usando una propiedad, como $\{x : P(x)\}$, que se lee "el conjunto de todos los $x$ tales que $P(x)$"
+
+<Definition title="Pertenencia">
+Un elemento $x$ pertenece a un conjunto $A$, escrito $x \in A$, si $x$ es uno de los elementos de $A$.
+</Definition>
+
+<Definition title="Conjunto vacio">
+El **conjunto vacio** $\emptyset$ es el conjunto que no tiene elementos. Para todo $x$:
+
+$$x \in \emptyset \equiv \bot$$
+</Definition>
+
+<Definition title="Subconjunto">
+$A$ es subconjunto de $B$, escrito $A \subseteq B$, si todo elemento de $A$ es elemento de $B$:
+
+$$A \subseteq B \equiv \forall x : x \in A \Rightarrow x \in B$$
+</Definition>
+
+<Definition title="Igualdad de conjuntos">
+Dos conjuntos son iguales si tienen exactamente los mismos elementos:
+
+$$A = B \equiv A \subseteq B \land B \subseteq A$$
+
+Equivalentemente:
+
+$$A = B \equiv \forall x : x \in A \Leftrightarrow x \in B$$
+</Definition>
+
+### Operaciones basicas
+
+<Definition title="Union">
+$$x \in A \cup B \equiv x \in A \lor x \in B$$
+</Definition>
+
+<Definition title="Interseccion">
+$$x \in A \cap B \equiv x \in A \land x \in B$$
+</Definition>
+
+<Definition title="Complemento">
+$$x \in \overline{A} \equiv \neg(x \in A)$$
+</Definition>
+
+<Definition title="Diferencia">
+$$x \in A \setminus B \equiv x \in A \land \neg(x \in B)$$
+</Definition>
+
+
+## Como demostrar que un conjunto es subconjunto de otro
+
+Para demostrar $A \subseteq B$, debemos probar que $\forall x : x \in A \Rightarrow x \in B$. Esto se reduce a tomar un $x$ arbitrario, suponer $x \in A$, y demostrar $x \in B$. Es decir, es una prueba directa de una implicacion universalmente cuantificada.
+
+<Theorem title="La interseccion es subconjunto">
+$$A \cap B \subseteq A$$
+
+<Proof>
+Sea $x$ arbitrario. Supongamos $x \in A \cap B$.
+
+Por definicion de interseccion:
+
+$$x \in A \cap B \equiv x \in A \land x \in B$$
+
+Como $x \in A \land x \in B$ vale, en particular $x \in A$.
+
+Como $x$ fue arbitrario, concluimos $A \cap B \subseteq A$.
+</Proof>
+</Theorem>
+
+<Theorem title="Monotonia de la interseccion" label="Ejemplo" qed>
+**Enunciado:** Si $A \subseteq B$, entonces $A \cap C \subseteq B \cap C$.
+
+**Demostracion:** Sea $x$ arbitrario. Supongamos $x \in A \cap C$. Por definicion, $x \in A$ y $x \in C$. Como $A \subseteq B$ y $x \in A$, tenemos $x \in B$. Luego $x \in B$ y $x \in C$, es decir, $x \in B \cap C$.
+</Theorem>
+
+
+## Como demostrar que dos conjuntos son iguales
+
+Para demostrar $A = B$ hay dos metodos equivalentes:
+
+- **Doble inclusion:** demostrar $A \subseteq B$ y $B \subseteq A$ por separado.
+- **Bicondicional:** tomar $x$ arbitrario y demostrar $x \in A \Leftrightarrow x \in B$.
+
+En la practica, ambos metodos funcionan expandiendo las definiciones de las operaciones de conjuntos hasta reducir el enunciado a una equivalencia logica.
+
+<Theorem title="Ley de De Morgan para conjuntos">
+$$\overline{A \cup B} = \overline{A} \cap \overline{B}$$
+
+<Proof>
+Sea $x$ arbitrario. Mostramos $x \in \overline{A \cup B} \Leftrightarrow x \in \overline{A} \cap \overline{B}$:
+
+$$x \in \overline{A \cup B}$$
+
+$$\equiv \neg(x \in A \cup B)$$
+
+$$\equiv \neg(x \in A \lor x \in B)$$
+
+$$\equiv \neg(x \in A) \land \neg(x \in B)$$
+
+$$\equiv x \in \overline{A} \land x \in \overline{B}$$
+
+$$\equiv x \in \overline{A} \cap \overline{B}$$
+
+El paso clave usa la ley de De Morgan de la logica proposicional: $\neg(p \lor q) \equiv \neg p \land \neg q$.
+</Proof>
+</Theorem>
+
+<Theorem title="Distributividad de la union sobre la interseccion" label="Ejemplo" qed>
+**Enunciado:** $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$
+
+**Demostracion:** Sea $x$ arbitrario. Tenemos:
+
+$$x \in A \cup (B \cap C)$$
+
+$$\equiv x \in A \lor (x \in B \land x \in C)$$
+
+$$\equiv (x \in A \lor x \in B) \land (x \in A \lor x \in C)$$
+
+$$\equiv x \in (A \cup B) \cap (A \cup C)$$
+
+El paso central usa la distributividad de $\lor$ sobre $\land$: $p \lor (q \land r) \equiv (p \lor q) \land (p \lor r)$.
+</Theorem>
+
+
+## Conexion entre conjuntos y logica
+
+Las demostraciones anteriores revelan un patron: cada operacion de conjuntos se corresponde con un conectivo logico.
+
+| Operacion de conjuntos | Conectivo logico |
+|:---|:---|
+| $A \cup B$ | $p \lor q$ |
+| $A \cap B$ | $p \land q$ |
+| $\overline{A}$ | $\neg p$ |
+| $A \subseteq B$ | $p \Rightarrow q$ |
+| $A = B$ | $p \Leftrightarrow q$ |
+| $\emptyset$ | $\bot$ |
+
+Esta correspondencia explica por que toda identidad de conjuntos tiene una identidad logica asociada, y viceversa. Por ejemplo:
+
+- La ley de De Morgan para conjuntos ($\overline{A \cup B} = \overline{A} \cap \overline{B}$) se corresponde con la ley de De Morgan logica ($\neg(p \lor q) \equiv \neg p \land \neg q$).
+- La distributividad de $\cup$ sobre $\cap$ se corresponde con la distributividad de $\lor$ sobre $\land$.
+- La propiedad $A \cap B \subseteq A$ se corresponde con la simplificacion $p \land q \Rightarrow p$.
+
+En la practica, demostrar una igualdad de conjuntos consiste en **traducir** las operaciones de conjuntos a logica, aplicar las equivalencias logicas conocidas, y luego **traducir de vuelta** a conjuntos. El metodo es siempre el mismo:
+
+1. Tomar un elemento $x$ arbitrario
+2. Expandir las definiciones de las operaciones de conjuntos
+3. Manipular la expresion logica resultante
+4. Concluir la pertenencia al otro conjunto
+
+Esta relacion profunda entre conjuntos y logica es una de las razones por las que la teoria de conjuntos sirve como fundamento de la matematica: los conjuntos dan una semantica concreta a las operaciones logicas abstractas.

@@ -1,0 +1,184 @@
+---
+title: "Expresiones y Operadores"
+---
+
+import { Axiom, Definition, Theorem } from '@/components/callout'
+import { Aside } from '@/components/aside'
+
+
+La lógica formal es el lenguaje de las matemáticas. Antes de demostrar teoremas o construir teorías, necesitamos un lenguaje preciso para expresar proposiciones y razonar sobre ellas.
+
+Este capítulo presenta la lógica como un **sistema formal**: un lenguaje con una sintaxis definida, axiomas y reglas de inferencia que permiten derivar verdades de manera puramente simbólica.
+
+La manipulación sintáctica de fórmulas lógicas es una herramienta poderosa para descubrir y certificar verdades. Aprender a razonar simbólicamente es tan importante como razonar semánticamente.
+
+## Expresiones booleanas
+
+<Definition title="Proposición">
+Una **proposición** es un enunciado que puede ser verdadero o falso, pero no ambos simultáneamente.
+
+Por ejemplo, "7 es primo" es una proposición (verdadera), mientras que "$x > 3$" no es una proposición hasta que se especifique el valor de $x$.
+</Definition>
+
+<Definition title="Expresión booleana">
+Una **expresión booleana** $E$ se construye recursivamente a partir de:
+
+- **Constantes:** $\top$ (verdad) y $\bot$ (falsedad)
+- **Variables booleanas:** letras minúsculas $p, q, r, \ldots$ que representan proposiciones
+- **Operadores:** $\neg,\ \land,\ \lor,\ \Rightarrow,\ \Leftarrow,\ \Leftrightarrow$
+
+Si $E_1$ y $E_2$ son expresiones booleanas, entonces también lo son $\neg E_1$, $(E_1 \land E_2)$, $(E_1 \lor E_2)$, $(E_1 \Rightarrow E_2)$, $(E_1 \Leftarrow E_2)$ y $(E_1 \Leftrightarrow E_2)$.
+</Definition>
+
+## Operadores lógicos
+
+Cada operador lógico se define por su **tabla de verdad**, que especifica el valor de la expresión compuesta para cada combinación de valores de sus operandos.
+
+<Definition title="Negación">
+El operador unario $\neg$ (negación, "no") invierte el valor de verdad:
+
+| $p$ | $\neg p$ |
+|:---:|:---:|
+| $\top$ | $\bot$ |
+| $\bot$ | $\top$ |
+</Definition>
+
+<Definition title="Conjunción">
+El operador $\land$ (conjunción, "y") es verdadero solo cuando ambos operandos son verdaderos:
+
+| $p$ | $q$ | $p \land q$ |
+|:---:|:---:|:---:|
+| $\top$ | $\top$ | $\top$ |
+| $\top$ | $\bot$ | $\bot$ |
+| $\bot$ | $\top$ | $\bot$ |
+| $\bot$ | $\bot$ | $\bot$ |
+</Definition>
+
+<Definition title="Disyunción">
+El operador $\lor$ (disyunción, "o") es verdadero cuando al menos un operando es verdadero:
+
+| $p$ | $q$ | $p \lor q$ |
+|:---:|:---:|:---:|
+| $\top$ | $\top$ | $\top$ |
+| $\top$ | $\bot$ | $\top$ |
+| $\bot$ | $\top$ | $\top$ |
+| $\bot$ | $\bot$ | $\bot$ |
+
+Nota: la disyunción lógica es **inclusiva** — "$p$ o $q$" es verdadero incluso si ambos lo son.
+</Definition>
+
+<Definition title="Implicación">
+El operador $\Rightarrow$ (implicación, "si ... entonces") es falso únicamente cuando el antecedente es verdadero y el consecuente es falso:
+
+| $p$ | $q$ | $p \Rightarrow q$ |
+|:---:|:---:|:---:|
+| $\top$ | $\top$ | $\top$ |
+| $\top$ | $\bot$ | $\bot$ |
+| $\bot$ | $\top$ | $\top$ |
+| $\bot$ | $\bot$ | $\top$ |
+
+En $p \Rightarrow q$, llamamos a $p$ el **antecedente** y a $q$ el **consecuente**. Observar que $\bot \Rightarrow q$ es siempre $\top$: de lo falso se sigue cualquier cosa (*ex falso quodlibet*).
+</Definition>
+
+<Definition title="Consecuente">
+El operador $\Leftarrow$ (consecuente, "se sigue de") satisface $p \Leftarrow q \equiv q \Rightarrow p$:
+
+| $p$ | $q$ | $p \Leftarrow q$ |
+|:---:|:---:|:---:|
+| $\top$ | $\top$ | $\top$ |
+| $\top$ | $\bot$ | $\top$ |
+| $\bot$ | $\top$ | $\bot$ |
+| $\bot$ | $\bot$ | $\top$ |
+</Definition>
+
+<Definition title="Equivalencia">
+El operador $\Leftrightarrow$ (equivalencia, "si y solo si") es verdadero cuando ambos operandos tienen el mismo valor de verdad:
+
+| $p$ | $q$ | $p \Leftrightarrow q$ |
+|:---:|:---:|:---:|
+| $\top$ | $\top$ | $\top$ |
+| $\top$ | $\bot$ | $\bot$ |
+| $\bot$ | $\top$ | $\bot$ |
+| $\bot$ | $\bot$ | $\top$ |
+</Definition>
+
+### Resumen de operadores
+
+<Definition title="Tabla de operadores">
+Usando las variables $p$: "mañana nevará" y $q$: "mañana lloverá":
+
+| Símbolo | Nombre | Ejemplo | Significado |
+|:---:|:---:|:---:|:---|
+| $\neg$ | negación | $\neg p$ | Mañana no nevará |
+| $\lor$ | disyunción | $p \lor q$ | Mañana nevará o lloverá |
+| $\land$ | conjunción | $p \land q$ | Mañana nevará y lloverá |
+| $\Rightarrow$ | implicación | $p \Rightarrow q$ | Si nieva, entonces llueve |
+| $\Leftarrow$ | consecuente | $p \Leftarrow q$ | Que llueva es consecuencia de que nieve |
+| $\Leftrightarrow$ | equivalencia | $p \Leftrightarrow q$ | Nieva si y solo si llueve |
+</Definition>
+
+### Precedencia de operadores
+
+Los operadores lógicos tienen un orden de precedencia (de mayor a menor):
+
+1. $\neg$ (negación)
+2. $\land$ (conjunción)
+3. $\lor$ (disyunción)
+4. $\Rightarrow$, $\Leftarrow$ (implicación, consecuente)
+5. $\Leftrightarrow$ (equivalencia)
+
+Así, $\neg p \land q \Rightarrow r$ se lee como $(\neg p) \land q \Rightarrow r$, es decir $((\neg p) \land q) \Rightarrow r$.
+
+## Traducción al lenguaje simbólico
+
+Cualquier proposición matemática puede expresarse en lógica simbólica. El proceso consiste en:
+
+1. Identificar las subproposiciones atómicas y asignarles variables booleanas
+2. Reemplazar las subproposiciones por sus variables
+3. Traducir las conectivas del lenguaje natural a operadores lógicos
+
+<Theorem title="Traducción de enunciados" label="Ejemplo">
+"Si $p$ es primo y divide a $ab$, entonces divide a $a$ o a $b$":
+
+$$r \land s \Rightarrow t \lor u$$
+
+donde $r$: "$p$ es primo", $s$: "$p$ divide a $ab$", $t$: "$p$ divide a $a$", $u$: "$p$ divide a $b$".
+</Theorem>
+
+<Theorem title="Traducción de enunciados" label="Ejemplo">
+"$f(a)=0$ si y solo si $(x-a)$ divide a $f(x)$":
+
+$$r \Leftrightarrow s$$
+
+donde $r$: "$f(a)=0$" y $s$: "$(x-a)$ divide a $f(x)$".
+</Theorem>
+
+## Tautologías y contradicciones
+
+<Definition title="Tautología">
+Una expresión booleana es una **tautología** (o es **válida**) si es verdadera en todo estado posible, es decir, para toda asignación de valores a sus variables. Se denota como $\vDash E$.
+
+Por ejemplo, $p \lor \neg p$ es una tautología.
+</Definition>
+
+<Definition title="Contradicción">
+Una expresión booleana es una **contradicción** si es falsa en todo estado posible.
+
+Por ejemplo, $p \land \neg p$ es una contradicción.
+</Definition>
+
+<Definition title="Satisfacibilidad">
+Una expresión booleana es **satisfacible** si existe al menos un estado en el que es verdadera. Toda tautología es satisfacible; toda contradicción es insatisfacible.
+</Definition>
+
+<Theorem title="Relación entre tautología y contradicción">
+$E$ es una tautología si y solo si $\neg E$ es una contradicción.
+</Theorem>
+
+## Equivalencia lógica
+
+<Definition title="Equivalencia lógica">
+Dos expresiones booleanas $E_1$ y $E_2$ son **lógicamente equivalentes**, escrito $E_1 \equiv E_2$, si tienen el mismo valor de verdad en todo estado posible. Equivalentemente, $E_1 \equiv E_2$ si y solo si $E_1 \Leftrightarrow E_2$ es una tautología.
+</Definition>
+
+La equivalencia lógica nos permite reemplazar una expresión por otra en cualquier contexto sin alterar el valor de verdad. Esta es la base del razonamiento ecuacional: transformar expresiones paso a paso, manteniendo la equivalencia.

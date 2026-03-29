@@ -10,6 +10,7 @@ interface CalloutProps {
   title?: string;
   label?: string;
   collapsible?: boolean;
+  qed?: boolean;
   children: ReactNode;
   variant: Variant;
 }
@@ -34,7 +35,7 @@ function resolveCounter(variant: Variant, label?: string): CounterName | null {
   return variantDefaults[variant].counter;
 }
 
-function CalloutInner({ title, label, collapsible, children, variant }: CalloutProps) {
+function CalloutInner({ title, label, collapsible, qed, children, variant }: CalloutProps) {
   const { next } = useNumbering();
   const displayLabel = label ?? variantDefaults[variant].label;
   const counter = resolveCounter(variant, displayLabel);
@@ -75,11 +76,12 @@ function CalloutInner({ title, label, collapsible, children, variant }: CalloutP
     </span>
   );
 
+  const showQed = isProof || qed;
   const body = (
     <>
       {children}
-      {isProof && (
-        <div className="mt-2 text-right text-sm italic text-gray-500 select-none">
+      {showQed && (
+        <div className="mt-2 text-right font-['Source_Sans_3',sans-serif] text-[0.8rem] italic text-gray-400 select-none">
           QED
         </div>
       )}
@@ -116,6 +118,7 @@ interface SimpleCalloutProps {
   title?: string;
   label?: string;
   collapsible?: boolean;
+  qed?: boolean;
   children: ReactNode;
 }
 
@@ -135,9 +138,9 @@ export function Definition({ title, label, children }: SimpleCalloutProps) {
   );
 }
 
-export function Theorem({ title, label, children }: SimpleCalloutProps) {
+export function Theorem({ title, label, qed, children }: SimpleCalloutProps) {
   return (
-    <CalloutInner variant="theorem" title={title} label={label}>
+    <CalloutInner variant="theorem" title={title} label={label} qed={qed}>
       {children}
     </CalloutInner>
   );

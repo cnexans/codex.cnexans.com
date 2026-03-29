@@ -1,0 +1,76 @@
+---
+title: "Sistema Formal"
+---
+
+import { Axiom, Definition, Theorem, Proof } from '@/components/callout'
+import { Aside } from '@/components/aside'
+
+
+La presentación anterior sugiere que la lógica proposicional puede verse como un **sistema formal** (o *cálculo*), con tres componentes:
+
+<Definition title="Sistema formal proposicional">
+Un **sistema formal proposicional** consiste en:
+
+1. **Lenguaje:** las expresiones booleanas definidas anteriormente
+2. **Axiomas:** un conjunto de expresiones booleanas que se aceptan como verdaderas sin demostración (las propiedades marcadas como "Axioma" arriba)
+3. **Reglas de inferencia:** mecanismos para derivar nuevas verdades a partir de verdades conocidas
+</Definition>
+
+## Reglas de inferencia
+
+Las reglas de inferencia permiten derivar nuevas expresiones válidas a partir de expresiones ya establecidas. Las dos reglas fundamentales son:
+
+<Definition title="Regla de sustitución">
+Si $E$ es un teorema (expresión válida) y $v$ es una variable, entonces $E[v := F]$ (el resultado de reemplazar toda ocurrencia de $v$ en $E$ por la expresión $F$) también es un teorema.
+
+$$\frac{E}{E[v := F]}$$
+</Definition>
+
+<Definition title="Regla de Leibniz">
+Si $X = Y$ es un teorema, entonces para cualquier expresión $E$ y variable $z$:
+
+$$\frac{X = Y}{E[z := X] = E[z := Y]}$$
+
+Es decir: si dos expresiones son iguales, se puede sustituir una por la otra en cualquier contexto.
+
+<Aside>Esta regla formaliza el principio de **identidad de los indiscernibles** de Leibniz: si dos objetos son iguales, toda propiedad que vale para uno vale para el otro.</Aside>
+</Definition>
+
+<Definition title="Regla de transitividad">
+$$\frac{X = Y, \quad Y = Z}{X = Z}$$
+</Definition>
+
+## Qué es un teorema
+
+<Definition title="Teorema del sistema formal">
+Un **teorema** del cálculo proposicional es una expresión booleana que:
+
+- Es un axioma, o
+- Se obtiene a partir de axiomas y teoremas ya demostrados mediante las reglas de inferencia
+
+Todo teorema es una tautología: es verdadero en todos los estados posibles.
+</Definition>
+
+El poder de este enfoque es que permite razonar **sintácticamente**: podemos manipular fórmulas aplicando reglas mecánicas, sin necesidad de evaluar tablas de verdad. Esto es especialmente útil cuando las expresiones tienen muchas variables, donde las tablas de verdad crecen exponencialmente.
+
+## Ejemplo de prueba formal
+
+Para ilustrar el estilo de prueba ecuacional, demostremos que $p \land \top \equiv p$:
+
+<Theorem title="Identidad de la conjunción">
+$$p \land \top \equiv p$$
+
+<Proof>
+Usamos la regla dorada: $p \land q \equiv p \Leftrightarrow q \Leftrightarrow p \lor q$. Sustituyendo $q := \top$:
+
+$$p \land \top \equiv p \Leftrightarrow \top \Leftrightarrow p \lor \top$$
+
+Sabemos que $p \lor \top \equiv \top$ (dominación) y $p \Leftrightarrow \top \equiv p$ (identidad de $\Leftrightarrow$). Entonces:
+
+$$p \land \top \equiv p \Leftrightarrow \top \Leftrightarrow \top$$
+$$\equiv p \Leftrightarrow \top$$
+$$\equiv p$$
+</Proof>
+</Theorem>
+
+Este estilo ecuacional, donde cada paso transforma una expresión en otra equivalente con una justificación explícita, es el corazón del razonamiento formal en lógica proposicional.

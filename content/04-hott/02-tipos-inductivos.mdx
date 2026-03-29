@@ -15,12 +15,6 @@ Comparado con ZF: en la teoría de conjuntos, productos, funciones, etc. deben s
 ## Los booleanos
 
 <Definition title="$\text{bool}$">
-En Agda/Rocq:
-```
-data Bool : Type where
-  true false : Bool
-```
-
 $\text{bool}$ es generado por dos términos canónicos: $\text{true}$ y $\text{false}$.
 
 **Formación:**
@@ -31,14 +25,25 @@ $$\frac{}{\vdash \text{bool} \;\text{type}}$$
 
 $$\frac{}{\vdash \text{true} : \text{bool}} \qquad \frac{}{\vdash \text{false} : \text{bool}}$$
 
-**Eliminación:** Si $\Gamma, x : \text{bool} \vdash D \;\text{type}$, $\Gamma \vdash a : D[\text{true}/x]$ y $\Gamma \vdash b : D[\text{false}/x]$, entonces:
+**Eliminación:** Dados:
+- $\Gamma, x : \text{bool} \vdash D \;\text{type}$
+- $\Gamma \vdash a : D[\text{true}/x]$
+- $\Gamma \vdash b : D[\text{false}/x]$
 
-$$\Gamma, x : \text{bool} \vdash \text{ind-bool}_{a,b} : D$$
+Entonces: $\Gamma, x : \text{bool} \vdash \text{ind-bool}_{a,b} : D$
+
+Es decir: para construir algo de tipo $D$ para cualquier booleano, basta dar un valor para el caso $\text{true}$ y otro para el caso $\text{false}$.
 
 **Computación:**
 
 $$\text{ind-bool}_{a,b}[\text{true}/x] \doteq a : D[\text{true}/x]$$
 $$\text{ind-bool}_{a,b}[\text{false}/x] \doteq b : D[\text{false}/x]$$
+
+En Agda/Rocq:
+```
+data Bool : Type where
+  true false : Bool
+```
 </Definition>
 
 <Theorem title="$\text{not} : \text{bool} \to \text{bool}$" label="Ejemplo">
@@ -54,9 +59,14 @@ En la derivación, usamos la regla de formación debilitada de $\text{bool}$ (en
 
 **Introducción:** Si $\Gamma \vdash p : P$, entonces $\Gamma \vdash \text{inl}(p) : P + Q$. Si $\Gamma \vdash q : Q$, entonces $\Gamma \vdash \text{inr}(q) : P + Q$.
 
-**Eliminación:** Si $\Gamma, x : P + Q \vdash D \;\text{type}$, $\Gamma, p : P \vdash a : D[\text{inl}(p)/x]$ y $\Gamma, q : Q \vdash b : D[\text{inr}(q)/x]$, entonces:
+**Eliminación:** Dados:
+- $\Gamma, x : P + Q \vdash D \;\text{type}$
+- $\Gamma, p : P \vdash a : D[\text{inl}(p)/x]$
+- $\Gamma, q : Q \vdash b : D[\text{inr}(q)/x]$
 
-$$\Gamma, x : P + Q \vdash \text{ind-}+_{a,b} : D$$
+Entonces: $\Gamma, x : P + Q \vdash \text{ind-}+_{a,b} : D$
+
+Es decir: para construir algo a partir de $P + Q$, basta manejar el caso en que viene de $P$ (vía $\text{inl}$) y el caso en que viene de $Q$ (vía $\text{inr}$).
 
 **Computación:**
 
@@ -83,9 +93,13 @@ Luego por eliminación del coproducto obtenemos la función deseada.
 
 **Introducción:** Si $\Gamma \vdash p : P$ y $\Gamma \vdash q : Q[p/x]$, entonces $\Gamma \vdash \text{pair}(p, q) : \sum_{x:P} Q$.
 
-**Eliminación:** Si $\Gamma, y : \sum_{x:P} Q \vdash D \;\text{type}$ y $\Gamma, x : P, z : Q \vdash a : D[\text{pair}(x,z)/y]$, entonces:
+**Eliminación:** Dados:
+- $\Gamma, y : \sum_{x:P} Q \vdash D \;\text{type}$
+- $\Gamma, x : P, z : Q \vdash a : D[\text{pair}(x,z)/y]$
 
-$$\Gamma, y : \sum_{x:P} Q \vdash \text{ind}_\Sigma(a, y) : D$$
+Entonces: $\Gamma, y : \sum_{x:P} Q \vdash \text{ind}_\Sigma(a, y) : D$
+
+Es decir: para construir algo a partir de un par dependiente, basta decir qué hacer dado el primer componente $x : P$ y el segundo $z : Q$.
 
 **Computación:** $\text{ind}_\Sigma(a, \text{pair}(x, z)) \doteq a : D[\text{pair}(x,z)/y]$.
 </Definition>
@@ -109,9 +123,14 @@ Si $\text{Vect}(n)$ denota el tipo de vectores de longitud $n$, entonces $\sum_{
 
 **Introducción:** $\vdash 0 : \mathbb{N}$, y si $\Gamma \vdash n : \mathbb{N}$, entonces $\Gamma \vdash S\, n : \mathbb{N}$.
 
-**Eliminación (inducción):** Si $\Gamma, x : \mathbb{N} \vdash D \;\text{type}$, $\Gamma \vdash a : D[0/x]$ y $\Gamma, x : \mathbb{N}, y : D \vdash b : D[Sx/x]$, entonces:
+**Eliminación (inducción):** Dados:
+- $\Gamma, x : \mathbb{N} \vdash D \;\text{type}$
+- $\Gamma \vdash a : D[0/x]$
+- $\Gamma, x : \mathbb{N}, y : D \vdash b : D[Sx/x]$
 
-$$\Gamma, x : \mathbb{N} \vdash \text{ind}_{\mathbb{N}}(a, b, x) : D$$
+Entonces: $\Gamma, x : \mathbb{N} \vdash \text{ind}_{\mathbb{N}}(a, b, x) : D$
+
+Es decir: para construir algo para todo natural, basta dar el caso base ($0$) y el paso inductivo (de $x$ a $Sx$). Esto es el principio de inducción.
 
 **Computación:**
 
@@ -145,9 +164,13 @@ Pero no todas las igualdades que queremos son judgmentales. Por ejemplo, $\text{
 
 **Introducción (reflexividad):** Si $\Gamma \vdash a : A$, entonces $\Gamma \vdash r_a : a =_A a$.
 
-**Eliminación (inducción de caminos):** Si $x : A, y : A, z : x =_A y \vdash D(x, y, z) \;\text{type}$ y $x : A \vdash d : D(x, x, r_x)$, entonces:
+**Eliminación (inducción de caminos):** Dados:
+- $x : A, y : A, z : x =_A y \vdash D(x, y, z) \;\text{type}$
+- $x : A \vdash d : D(x, x, r_x)$
 
-$$x : A, y : A, z : x =_A y \vdash \text{ind}_=(d, x, y, z) : D(x, y, z)$$
+Entonces: $x : A, y : A, z : x =_A y \vdash \text{ind}_=(d, x, y, z) : D(x, y, z)$
+
+Es decir: para demostrar algo sobre cualquier igualdad $z : x =_A y$, basta demostrarlo para el caso reflexivo $r_x : x =_A x$. El resto se propaga por inducción.
 
 **Computación:** $x : A \vdash \text{ind}_=(d, x, x, r_x) \doteq d : D(x, x, r_x)$.
 </Definition>
