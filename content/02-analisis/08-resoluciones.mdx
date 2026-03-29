@@ -1,0 +1,185 @@
+---
+title: "Resoluciones"
+---
+
+import { Theorem } from '@/components/callout'
+
+Resoluciones de ejercicios seleccionados de los trabajos practicos.
+
+## Sucesiones
+
+<Theorem label="Ejemplo" qed title="Limite de cociente de polinomios (caso $h < k$)">
+Sean $f, g$ funciones polinomicas de grados $h$ y $k$ respectivamente, con $h < k$. Entonces $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = 0$.
+
+Escribimos $f(n) = \sum_{i=0}^{h} a_i n^i$ y $g(n) = \sum_{i=0}^{k} b_i n^i$. Dividiendo numerador y denominador por $n^h$:
+
+$$\lim_{n \to \infty} \frac{f(n)}{g(n)} = \lim_{n \to \infty} \frac{\sum_{i=0}^{h} a_i n^i / n^h}{\sum_{i=0}^{k} b_i n^i / n^h}$$
+
+En el numerador, $\displaystyle\lim_{n \to \infty} \sum_{i=0}^{h} a_i n^{i-h} = a_h$, pues los terminos con $i < h$ tienen exponente negativo y tienden a $0$.
+
+En el denominador, los terminos con $i > h$ tienen exponente positivo, por lo que $\displaystyle\lim_{n \to \infty} \sum_{i=0}^{k} b_i n^{i-h} = +\infty$.
+
+Por lo tanto, $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = \frac{a_h}{+\infty} = 0$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Limite de cociente de polinomios (caso $h > k$)">
+Sean $f, g$ funciones polinomicas de grados $h$ y $k$ respectivamente, con $h > k$. Entonces $\displaystyle\lim_{n \to \infty} \left|\frac{f(n)}{g(n)}\right| = \infty$.
+
+Dividiendo numerador y denominador por $n^k$:
+
+$$\lim_{n \to \infty} \left|\frac{f(n)}{g(n)}\right| = \lim_{n \to \infty} \left|\frac{f(n)/n^k}{g(n)/n^k}\right|$$
+
+El numerador tiene terminos con exponente $i - k > 0$ para $i > k$, por lo que $\displaystyle\lim_{n \to \infty} f(n)/n^k = +\infty$.
+
+El denominador converge a una constante: $\displaystyle\lim_{n \to \infty} g(n)/n^k = b_k$.
+
+Por lo tanto, $\displaystyle\lim_{n \to \infty} \left|\frac{f(n)}{g(n)}\right| = \infty$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Limite de cociente de polinomios (caso $h = k$)">
+Sean $f, g$ funciones polinomicas de grado $k$ ambas, con coeficientes principales $a_k$ y $b_k$ respectivamente. Entonces $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = \frac{a_k}{b_k}$.
+
+Dividiendo numerador y denominador por $n^k$:
+
+$$\lim_{n \to \infty} \frac{f(n)}{g(n)} = \lim_{n \to \infty} \frac{f(n)/n^k}{g(n)/n^k}$$
+
+En el numerador:
+
+$$\lim_{n \to \infty} \frac{f(n)}{n^k} = \lim_{n \to \infty} \left(a_k + \sum_{i=0}^{k-1} a_i n^{i-k}\right) = a_k$$
+
+pues los terminos con $i < k$ tienen exponente negativo y tienden a $0$. Analogamente, $\displaystyle\lim_{n \to \infty} g(n)/n^k = b_k$.
+
+Entonces $\displaystyle\lim_{n \to \infty} \frac{f(n)}{g(n)} = \frac{a_k}{b_k}$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Sucesion positiva que tiende a cero tiene maximo">
+Sea $(a_n)$ una sucesion de terminos positivos tal que $\displaystyle\lim_{n \to \infty} a_n = 0$. Entonces $\{a_n : n \in \mathbb{N}\}$ tiene un maximo.
+
+Por hipotesis, $|a_n| < \varepsilon$ para $n$ suficientemente grande. Como $a_n > 0$, se tiene $a_n < \varepsilon$. Tomando $\varepsilon = 1$, existe $n_0 \in \mathbb{N}$ tal que si $n \geq n_0$, entonces $a_n < 1$.
+
+Consideremos la siguiente particion de $\mathbb{N}$:
+
+$$\mathbb{N} = \{1, 2, \ldots, n_0\} \cup \{n_0 + 1, n_0 + 2, \ldots\}$$
+
+De donde:
+
+$$\{a_n : n \in \mathbb{N}\} = \{a_n : n \geq n_0\} \cup \{a_n : n < n_0\}$$
+
+Sea $M_0 = \max(\{a_n : n < n_0\})$, que existe por ser un conjunto finito (se define de forma inductiva).
+
+Tomando $M = \max(\{M_0, 1\})$, por las dos observaciones anteriores se concluye que $a_n \leq M$ para todo $n \in \mathbb{N}$. En particular, $M_0$ es alcanzado por algun $a_j$ con $j < n_0$, y como $a_n < 1 \leq M$ para $n \geq n_0$, el maximo del conjunto $\{a_n : n \in \mathbb{N}\}$ existe y es $M_0$ (si $M_0 \geq 1$) o el mayor entre los finitos valores $a_1, \ldots, a_{n_0-1}$ y los valores $a_n$ con $n \geq n_0$ que son todos menores que $1$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Convergencia de $a_1 = \\sqrt{3}$, $a_{n+1} = \\sqrt{3 + a_n}$">
+La sucesion definida por $a_1 = \sqrt{3}$ y $a_{n+1} = \sqrt{3 + a_n}$ es convergente, y su limite es $\dfrac{1 + \sqrt{13}}{2}$.
+
+**i) $(a_n)$ es creciente.** Demostracion por induccion.
+
+Caso base: $a_1 = \sqrt{3} < \sqrt{3 + \sqrt{3}} = \sqrt{3 + a_1} = a_2$.
+
+Paso inductivo: supongamos que $a_{n-1} < a_n$. Entonces:
+
+$$a_{n-1} < a_n \Rightarrow 3 + a_{n-1} < 3 + a_n \Rightarrow \sqrt{3 + a_{n-1}} < \sqrt{3 + a_n} \Rightarrow a_n < a_{n+1}$$
+
+Por el caso base y el paso inductivo, $(a_n)$ es estrictamente creciente.
+
+**ii) $(a_n)$ esta acotada superiormente.** Demostracion por induccion: $a_n < 3$ para todo $n$.
+
+Caso base: $a_1 = \sqrt{3} < 3$.
+
+Paso inductivo: si $a_n < 3$, entonces $3 + a_n < 3 + 3 = 6$, luego $a_{n+1} = \sqrt{3 + a_n} < \sqrt{6} < 3$.
+
+Entonces $\sqrt{3} < a_n < 3$ para todo $n \in \mathbb{N}$.
+
+**iii) Calculo del limite.** Por i) y ii), usando el criterio de monotonia, $(a_n)$ converge. Sea $l = \displaystyle\lim_{n \to \infty} a_n$. Entonces:
+
+$$l = \sqrt{3 + l}$$
+
+$$l^2 = 3 + l$$
+
+$$l^2 - l - 3 = 0$$
+
+$$l = \frac{1 \pm \sqrt{1 + 12}}{2} = \frac{1 \pm \sqrt{13}}{2}$$
+
+Como $l > \sqrt{3} > 0$, se tiene $l = \dfrac{1 + \sqrt{13}}{2}$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$\\log(x \\cdot y) = \\log x + \\log y$">
+Sean $x, y \in \mathbb{R}_{>0}$. Entonces $\log(x \cdot y) = \log x + \log y$.
+
+Como $e \circ \log$ es la identidad (es decir, $e^{\log(x)} = x$), escribimos:
+
+$$\log x + \log y = \log\left(e^{\log x + \log y}\right) = \log\left(e^{\log x} \cdot e^{\log y}\right)$$
+
+Por la propiedad $e^{a+b} = e^a \cdot e^b$:
+
+$$\log x + \log y = \log\left(x \cdot y\right)$$
+
+Que era lo que queriamos demostrar.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$\\log(x^y) = y \\log x$">
+Sea $x \in \mathbb{R}_{>0}$ e $y \in \mathbb{R}$. Entonces $\log(x^y) = y \log x$.
+
+Calculamos:
+
+$$y \log x = \log\left(e^{y \log x}\right) = \log\left((e^{\log x})^y\right) = \log(x^y)$$
+
+Dado que $(e^a)^b = e^{ab}$ y $e^{\log x} = x$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Reciproco del criterio de Cauchy">
+Probar que si para todo $p \in \mathbb{N}$ se cumple $\displaystyle\lim_{n \to \infty} (a_{n+p} - a_n) = 0$, entonces $(a_n)$ es de Cauchy.
+
+Dado $\varepsilon > 0$, por hipotesis existe $n_0$ tal que si $n \geq n_0$ entonces $|a_{n+p} - a_n| < \varepsilon$ para todo $p \in \mathbb{N}$.
+
+Sean $m, n \geq n_0$ con $m \geq n$. Si $m = n$, entonces $|a_m - a_n| = 0 < \varepsilon$. Si $m > n$, escribimos $m = n + p$ para algun $p \in \mathbb{N}$. Luego:
+
+$$|a_m - a_n| = |a_{n+p} - a_n| < \varepsilon$$
+
+Por lo tanto, $(a_n)$ es de Cauchy.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="Cauchy implica $\\lim(a_{n+p} - a_n) = 0$">
+Si $(a_n)$ es una sucesion de Cauchy, entonces para todo $p \in \mathbb{N}$ se tiene $\displaystyle\lim_{n \to \infty} (a_{n+p} - a_n) = 0$.
+
+Como $(a_n)$ es de Cauchy, para cada $\varepsilon > 0$ existe $n_0$ tal que si $n, m \geq n_0$ entonces $|a_m - a_n| < \varepsilon$.
+
+Sea $p \in \mathbb{N}$ fijo. Para $n \geq n_0$, se tiene $n + p > n \geq n_0$, por lo que:
+
+$$|a_{n+p} - a_n| < \varepsilon$$
+
+Esto vale para todo $n \geq n_0$, que es equivalente a $\displaystyle\lim_{n \to \infty} (a_{n+p} - a_n) = 0$.
+</Theorem>
+
+<Theorem label="Ejemplo" qed title="$a_n = (-1)^n$ no converge">
+La sucesion $a_n = (-1)^n$ no es convergente.
+
+Supongamos que converge. Entonces toda subsucesion converge y tiene el mismo limite.
+
+Tomemos las subsucesiones $(a_{2n})$ y $(a_{2n+1})$:
+
+$$\lim_{n \to \infty} a_{2n} = \lim_{n \to \infty} (-1)^{2n} = \lim_{n \to \infty} 1 = 1$$
+
+$$\lim_{n \to \infty} a_{2n+1} = \lim_{n \to \infty} (-1)^{2n+1} = \lim_{n \to \infty} (-1) = -1$$
+
+Como $1 \neq -1$, las dos subsucesiones tienen limites distintos, lo cual es una contradiccion. Por lo tanto, $(a_n)$ no converge.
+</Theorem>
+
+## Limites y Continuidad
+
+<Theorem label="Ejemplo" qed title="$\\lim_{x \\to 3} (-2x + 4) = -2$">
+Demostrar por definicion que $\displaystyle\lim_{x \to 3} (-2x + 4) = -2$.
+
+Queremos demostrar que para todo $\varepsilon > 0$ existe $\delta > 0$ tal que si $0 < |x - 3| < \delta$ entonces $|f(x) - (-2)| < \varepsilon$.
+
+Calculamos:
+
+$$|f(x) - (-2)| = |{-2x + 4 + 2}| = |{-2x + 6}| = |2x - 6| = 2|x - 3|$$
+
+Tomando $\delta = \varepsilon / 2$, si $|x - 3| < \delta$ entonces:
+
+$$|x - 3| < \frac{\varepsilon}{2} \Rightarrow 2|x - 3| < \varepsilon \Rightarrow |{-2x + 4} - ({-2})| < \varepsilon$$
+
+Que era lo que queriamos demostrar.
+</Theorem>

@@ -96,3 +96,61 @@ $$B_\epsilon(x) = \{y \in \mathbb{R} : |y - x| < \epsilon\}.$$
 Demostrar que $B_\epsilon(x) = (x - \epsilon, x + \epsilon)$. Como se podria definir una bola abierta en un espacio metrico $(X, d)$ cualquiera?
 
 9. Un conjunto $A \subset \mathbb{R}$ se dice **abierto** si y solo si para todo $a \in A$ existe una bola abierta $B_\epsilon(a) \subset A$. Demostrar que una bola abierta es un conjunto abierto (**sugerencia:** tomar un punto cualquiera $y \in B_\epsilon(x)$ y considerar la bola abierta de centro $y$ y radio $\epsilon - |x - y| > 0$). Luego, demostrar que un intervalo abierto $(a, b) \subset \mathbb{R}$ es un conjunto abierto.
+
+## Derivadas
+
+1. Calcular, usando la definicion de derivada (limite del cociente incremental), la derivada de las siguientes funciones en un punto $x_0$ generico de su dominio:
+    - (a) $f(x) = x^3$.
+    - (b) $f(x) = \sqrt{x}$ para $x > 0$.
+    - (c) $f(x) = \sin(x)$ (*sugerencia:* usar la identidad $\sin(\alpha + \beta) = \sin\alpha\cos\beta + \cos\alpha\sin\beta$ y el limite $\lim_{h \to 0} \frac{\sin h}{h} = 1$).
+
+2. Sea $f(x) = |x|$. Demostrar que $f$ no es derivable en $x_0 = 0$ (*sugerencia:* calcular los limites laterales del cociente incremental y verificar que no coinciden).
+
+3. Sea $f : \mathbb{R} \to \mathbb{R}$ definida por:
+$$f(x) = \begin{cases} x^2 & \text{si } x \geq 0 \\ -x^2 & \text{si } x < 0 \end{cases}$$
+Demostrar que $f$ es derivable en $x_0 = 0$ y calcular $f'(0)$.
+
+4. Sean $f$ y $g$ derivables en $x_0$. Demostrar, usando la definicion de derivada, que $(f + g)'(x_0) = f'(x_0) + g'(x_0)$.
+
+5. Utilizando la regla de la cadena, calcular la derivada de las siguientes funciones:
+    - (a) $h(x) = \sin(x^2 + 1)$.
+    - (b) $h(x) = e^{-x^2}$.
+    - (c) $h(x) = \ln(\cos x)$ para $x \in (-\pi/2, \pi/2)$.
+
+6. Sea $f:[0,2] \to \mathbb{R}$ continua en $[0,2]$, derivable en $(0,2)$, con $f(0) = 0$ y $f(2) = 2$. Demostrar que existe $c \in (0,2)$ tal que $f'(c) = 1$ (*sugerencia:* aplicar el Teorema del Valor Medio).
+
+7. Sea $f:[a,b] \to \mathbb{R}$ continua en $[a,b]$, derivable en $(a,b)$, con $f(a) = f(b) = 0$ y $f(c) > 0$ para algun $c \in (a,b)$. Demostrar que existe $d \in (a,b)$ tal que $f'(d) < 0$ (*sugerencia:* usar el Teorema de Weierstrass para hallar el maximo y luego el Teorema de Fermat).
+
+8. Calcular los siguientes limites utilizando la Regla de L'Hopital:
+    - (a) $\displaystyle\lim_{x \to 0} \frac{\sin x - x}{x^3}$.
+    - (b) $\displaystyle\lim_{x \to 0} \frac{e^x - 1 - x}{x^2}$.
+    - (c) $\displaystyle\lim_{x \to \infty} \frac{\ln x}{x}$.
+
+9. Sea $f:(a,b) \to \mathbb{R}$ derivable. Supongamos que $f$ tiene un maximo local en $c \in (a,b)$ y que $f''(c)$ existe. Demostrar que $f''(c) \leq 0$ (*sugerencia:* por el Teorema de Fermat, $f'(c) = 0$; analizar el signo del cociente incremental de $f'$ en $c$).
+
+10. Sea $f:[a,b] \to [a,b]$ continua en $[a,b]$ y derivable en $(a,b)$ con $|f'(x)| < 1$ para todo $x \in (a,b)$. Demostrar que $f$ tiene a lo sumo un punto fijo (*sugerencia:* si $f(p) = p$ y $f(q) = q$ con $p \neq q$, aplicar el Teorema del Valor Medio a $f(p) - f(q)$).
+
+## Integrales
+
+1. Sea $f:[0,1] \to \mathbb{R}$ definida por $f(x) = x^2$ y sea $\Pi = \{0, 1/4, 1/2, 3/4, 1\}$ una particion de $[0,1]$. Calcular la suma inferior $s_\Pi(f)$ y la suma superior $S_\Pi(f)$.
+
+2. Sea $f:[0,1] \to \mathbb{R}$ definida por $f(x) = x$. Considerar la particion regular $\Pi_n = \{0, 1/n, 2/n, \ldots, 1\}$. Calcular $s_{\Pi_n}(f)$ y $S_{\Pi_n}(f)$, y luego tomar limite cuando $n \to \infty$ para concluir que $f$ es integrable y que $\displaystyle\int_0^1 x\,dx = 1/2$ (*sugerencia:* usar la formula $\sum_{k=1}^{n} k = n(n+1)/2$).
+
+3. Sea $f:[a,b] \to \mathbb{R}$ monotona creciente y acotada. Demostrar que $f$ es integrable en $[a,b]$ (*sugerencia:* considerar la particion regular $\Pi_n$ y acotar $S_{\Pi_n}(f) - s_{\Pi_n}(f)$ usando que $m_k = f(x_{k-1})$ y $M_k = f(x_k)$, obteniendo una suma telescopica).
+
+4. Sean $f, g:[a,b] \to \mathbb{R}$ integrables y sea $\lambda \in \mathbb{R}$. Demostrar que $f + g$ y $\lambda f$ son integrables y que:
+    - (a) $\displaystyle\int_a^b (f + g)(x)\,dx = \int_a^b f(x)\,dx + \int_a^b g(x)\,dx$.
+    - (b) $\displaystyle\int_a^b (\lambda f)(x)\,dx = \lambda \int_a^b f(x)\,dx$.
+
+5. Sean $f, g:[a,b] \to \mathbb{R}$ integrables con $f(x) \leq g(x)$ para todo $x \in [a,b]$. Demostrar que $\displaystyle\int_a^b f(x)\,dx \leq \int_a^b g(x)\,dx$.
+
+6. Calcular las siguientes integrales utilizando el Teorema Fundamental del Calculo:
+    - (a) $\displaystyle\int_0^1 3x^2\,dx$.
+    - (b) $\displaystyle\int_1^e \frac{1}{x}\,dx$.
+    - (c) $\displaystyle\int_0^{\pi} \sin x\,dx$.
+
+7. Sea $F(x) = \displaystyle\int_0^x e^{-t^2}\,dt$. Demostrar que $F$ es derivable en todo $\mathbb{R}$ y calcular $F'(x)$ (*sugerencia:* aplicar directamente la parte 2 del Teorema Fundamental del Calculo).
+
+8. Calcular, utilizando integracion por partes:
+    - (a) $\displaystyle\int_0^1 x\,e^x\,dx$.
+    - (b) $\displaystyle\int_1^e \ln x\,dx$.
